@@ -1,4 +1,4 @@
-import { createTheme, NextUIProvider } from "@nextui-org/react";
+import { createTheme, NextUIProvider, useSSR } from "@nextui-org/react";
 import useBlobity from "blobity/lib/react/useBlobity";
 import { Inter } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -18,6 +18,7 @@ export const useBlobityInstance = () => {
 };
 
 function MyApp({ Component, pageProps }) {
+  const { isBrowser } = useSSR();
   // const blobityInstance = useBlobity({
   //   licenseKey: "gmrchk",
   //   zIndex: 1,
@@ -48,15 +49,17 @@ function MyApp({ Component, pageProps }) {
   });
 
   return (
-    <NextUIProvider theme={theme}>
-      <BlobityContext.Provider value={null}>
-        <QueryClientProvider client={queryClient}>
-          <div style={{ ...inter.style }}>
-            <Component {...pageProps} />
-          </div>
-        </QueryClientProvider>
-      </BlobityContext.Provider>
-    </NextUIProvider>
+    isBrowser && (
+      <NextUIProvider theme={theme}>
+        <BlobityContext.Provider value={null}>
+          <QueryClientProvider client={queryClient}>
+            <div style={{ ...inter.style }}>
+              <Component {...pageProps} />
+            </div>
+          </QueryClientProvider>
+        </BlobityContext.Provider>
+      </NextUIProvider>
+    )
   );
 }
 
