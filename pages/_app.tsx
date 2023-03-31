@@ -40,8 +40,21 @@ function MyApp({ Component, pageProps }) {
     type: "light",
     theme: {
       colors: {
-        //primary: "$red600",
-        link: "$red600",
+        primary: "$red800",
+        //link: "$red600",
+        primaryLight: "$gray200",
+        primaryLightHover: "$red400", // commonly used on pressed state
+
+        primaryActive: "$red400", // commonly used on pressed state
+        primaryLightActive: "$red400", // commonly used on pressed state
+        primaryLightContrast: "$red800", // commonly used for text inside the component
+        primaryBorder: "$red500",
+        primaryBorderHover: "$red600",
+        primarySolidHover: "$red700",
+        primarySolid: "$red700",
+
+        primaryShadow: "$red500",
+
         gradient:
           "linear-gradient(112deg, $red600 -25%, $red800 85%, $red900 100%)",
       },

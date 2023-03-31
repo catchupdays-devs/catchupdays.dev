@@ -203,18 +203,16 @@ const Label = ({
         size="sm"
         css={{
           cursor: "pointer",
-          background: "$neutral",
+          background: "$gray800",
           color: "#fff",
+          textAlign: "center",
+          lineHeight: "11px",
+          display: "inline-block",
+          padding: "0 1px 0 0",
         }}
         onClick={removeItem}
       >
-        <Badge
-          enableShadow={isActive}
-          color={color}
-          disableOutline
-          variant="flat"
-          isSquared
-        >
+        <Badge enableShadow={isActive} disableOutline variant="flat" isSquared>
           {text}
         </Badge>
       </Badge>
@@ -363,7 +361,7 @@ export const WishlistForm = () => {
 
             return (
               <Grid key={key}>
-                <Dropdown>
+                <Dropdown placement="bottom-left">
                   {activeOfType.length ? (
                     <Badge
                       color="neutral"
@@ -374,16 +372,16 @@ export const WishlistForm = () => {
                       size="sm"
                       css={{
                         cursor: "pointer",
-                        background: "$neutral",
+                        background: "$red800",
                         color: "#fff",
                       }}
                     >
-                      <Dropdown.Button flat color={value.color}>
+                      <Dropdown.Button flat color="neutral">
                         {value.title}
                       </Dropdown.Button>
                     </Badge>
                   ) : (
-                    <Dropdown.Button flat color={value.color}>
+                    <Dropdown.Button flat color="neutral">
                       {value.title}
                     </Dropdown.Button>
                   )}
