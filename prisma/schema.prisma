@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Repository {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  labels    Label[]
+  languages Language[]
+  libraries Library[]
+}
+
+model Label {
+  id           Int         @id @default(autoincrement())
+  name         String      @unique
+  Repository   Repository? @relation(fields: [repositoryId], references: [id])
+  repositoryId Int?
+}
+
+model Language {
+  id           Int         @id @default(autoincrement())
+  name         String      @unique
+  Repository   Repository? @relation(fields: [repositoryId], references: [id])
+  repositoryId Int?
+}
+
+model Library {
+  id           Int         @id @default(autoincrement())
+  name         String      @unique
+  Repository   Repository? @relation(fields: [repositoryId], references: [id])
+  repositoryId Int?
+}

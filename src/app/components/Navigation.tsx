@@ -6,7 +6,7 @@ import { useBlobityInstance } from "../../../pages/_app";
 
 export const Navigation = () => {
   return (
-    <Navbar isBordered variant={"floating"}>
+    <Navbar isBordered variant={"floating"} css={{ zIndex: 1000 }}>
       <Navbar.Brand>
         <Link href="/">
           <Image

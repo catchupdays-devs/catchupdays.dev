@@ -8,13 +8,14 @@ import {
   Loading,
   Tooltip,
   User,
+  Badge,
 } from "@nextui-org/react";
 import Head from "next/head";
 import { useQuery } from "react-query";
 import { WishlistForm } from "@/app/components/WishlistForm";
 import { createStyled } from "@stitches/styled";
 import React, { useEffect, useState } from "react";
-import { WishlistResponse } from "@/app/types";
+import { FiltersResponse, WishlistResponse } from "@/app/types";
 
 const { styled } = createStyled({});
 
@@ -61,42 +62,23 @@ const Reaction = ({ num, icon }: { num: number; icon: string }) => {
   );
 };
 
-export const attributes: Record<
-  string,
-  {
-    title: string;
-    key: string;
-    items: string[];
-    color: string;
-  }
-> = {
-  repos: {
-    title: "Repository",
-    key: "repo",
-    items: ["webpack/webpack", "vercel/next.js"],
-    color: "primary",
-  },
-  libraries: {
-    title: "Libraries",
-    key: "library",
-    items: ["React", "Vue"],
-    color: "secondary",
-  },
-  labels: {
-    title: "Labels",
-    key: "label",
-    items: ["FE", "BE"],
-    color: "warning",
-  },
-  languages: {
-    title: "Language",
-    key: "language",
-    items: ["JavaScript", "TypeScript", "GoLang", "Rust"],
-    color: "success",
-  },
-};
-
 export default function Wishlist() {
+  const {
+    data: filters,
+    isLoading: isFilterLoading,
+    isError: isFilterError,
+  } = useQuery(
+    ["filters"],
+    async () => {
+      const url = new URL(window.location.origin + "/api/filter");
+
+      const filters = (await fetch(url)).json();
+
+      return filters as FiltersResponse;
+    },
+    {}
+  );
+
   const [focusedAttribute, setFocusedAttribute] = React.useState<string | null>(
     null
   );
@@ -142,12 +124,7 @@ export default function Wishlist() {
     setActiveAttributes(new Set());
   };
 
-  const {
-    isLoading,
-    isError,
-    error,
-    data: issues,
-  } = useQuery(
+  const { isLoading, isError, error, data } = useQuery(
     ["wishlist", [...activeAttributes].reduce((prev, a) => prev + a, "")],
     async ({ queryKey: [key, attr] }) => {
       const url = new URL(window.location.origin + "/api/wishlist");
@@ -158,9 +135,9 @@ export default function Wishlist() {
         url.searchParams.append(type, name);
       });
 
-      const issues = (await fetch(url)).json();
+      const response = (await fetch(url)).json() as WishlistResponse;
 
-      return issues as WishlistResponse;
+      return response;
     },
     {}
   );
@@ -240,21 +217,71 @@ export default function Wishlist() {
         <Spacer y={2} />
       </Container>
       <Container sm>
-        <WishlistForm
-          reset={reset}
-          attributes={attributes}
-          focusedAttribute={focusedAttribute}
-          addAttribute={addAttribute}
-          deleteAttribute={deleteAttribute}
-          updateAttributes={updateAttributes}
-          setFocusedAttribute={setFocusedAttribute}
-          activeAttributes={activeAttributes}
-        />
+        {!isFilterLoading ? (
+          <WishlistForm
+            reset={reset}
+            attributes={filters}
+            focusedAttribute={focusedAttribute}
+            addAttribute={addAttribute}
+            deleteAttribute={deleteAttribute}
+            updateAttributes={updateAttributes}
+            setFocusedAttribute={setFocusedAttribute}
+            activeAttributes={activeAttributes}
+          />
+        ) : (
+          <Row justify={"center"}>
+            <Loading />
+          </Row>
+        )}
       </Container>
+      {!isFilterLoading && data?.repos.length > 0 ? (
+        <Container xs>
+          <Text
+            color={"$gray800"}
+            size={12}
+            css={{
+              textAlign: "center",
+              lineHeight: 1.4,
+            }}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                margin: "0 0 5px 0",
+              }}
+            >
+              Following repositories are being queries based on your filter:
+            </span>
+            {data?.repos.map((repo) => (
+              <Badge
+                css={{ margin: "0 0 5px 5px" }}
+                disableOutline
+                variant="flat"
+                isSquared
+                size={"xs"}
+              >
+                {repo}
+              </Badge>
+            ))}
+          </Text>
+          <Spacer y={1} />
+        </Container>
+      ) : (
+        <Text
+          color={"$gray800"}
+          size={12}
+          css={{
+            textAlign: "center",
+            lineHeight: 1.4,
+          }}
+        >
+          No repositories are being queried. Please adjust filter.
+        </Text>
+      )}
       <Container sm>
         {!isLoading ? (
           <Grid.Container gap={1} justify="center">
-            {issues?.map((issue) => {
+            {data.issues?.map((issue) => {
               return (
                 <Grid key={issue.id} xs={12}>
                   <Card
@@ -273,11 +300,13 @@ export default function Wishlist() {
                             <Text h4>{issue.title}</Text>
                           </Row>
                           <Row justify={"flex-start"}>
-                            <User
-                              src={issue.author.avatarUrl}
-                              name={issue.author.login}
-                              size={"xs"}
-                            />
+                            {issue.author ? (
+                              <User
+                                src={issue.author.avatarUrl}
+                                name={issue.author.login}
+                                size={"xs"}
+                              />
+                            ) : null}
                           </Row>
                         </Grid.Container>
                         <Grid.Container>
@@ -312,6 +341,14 @@ export default function Wishlist() {
                                   <Reaction
                                     num={issue.reactions.ROCKET}
                                     icon="🚀"
+                                  />
+                                  <Reaction
+                                    num={issue.reactions.THUMBS_DOWN}
+                                    icon="👎"
+                                  />
+                                  <Reaction
+                                    num={issue.reactions.THUMBS_UP}
+                                    icon="👍"
                                   />
                                 </ReactionHolder>
                               </Row>

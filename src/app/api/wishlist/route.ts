@@ -1,213 +1,25 @@
 import { WishlistResponse } from "@/app/types";
 
+import { PrismaClient } from "@prisma/client";
+
 const { Octokit } = require("@octokit/core");
 
 const TESTING = false;
 
+const prisma = new PrismaClient();
 const octokit = new Octokit({
   auth: process.env.GH_TOKEN,
 });
 
-const testData = [
-  {
-    url: "https://api.github.com/repos/swup/swup/issues/639",
-    repository_url: "https://api.github.com/repos/swup/swup",
-    labels_url:
-      "https://api.github.com/repos/swup/swup/issues/639/labels{/name}",
-    comments_url: "https://api.github.com/repos/swup/swup/issues/639/comments",
-    events_url: "https://api.github.com/repos/swup/swup/issues/639/events",
-    html_url: "https://github.com/swup/swup/issues/639",
-    id: 164789833737,
-    node_id: "I_kwDOBlayi85iN_KJ",
-    number: 639,
-    title: "Some nice little title of the issue",
-    user: {
-      login: "gmrchk",
-      id: 9338324,
-      node_id: "MDQ6VXNlcjkzMzgzMjQ=",
-      avatar_url: "https://avatars.githubusercontent.com/u/9338324?v=4",
-      gravatar_id: "",
-      url: "https://api.github.com/users/gmrchk",
-      html_url: "https://github.com/gmrchk",
-      followers_url: "https://api.github.com/users/gmrchk/followers",
-      following_url:
-        "https://api.github.com/users/gmrchk/following{/other_user}",
-      gists_url: "https://api.github.com/users/gmrchk/gists{/gist_id}",
-      starred_url: "https://api.github.com/users/gmrchk/starred{/owner}{/repo}",
-      subscriptions_url: "https://api.github.com/users/gmrchk/subscriptions",
-      organizations_url: "https://api.github.com/users/gmrchk/orgs",
-      repos_url: "https://api.github.com/users/gmrchk/repos",
-      events_url: "https://api.github.com/users/gmrchk/events{/privacy}",
-      received_events_url:
-        "https://api.github.com/users/gmrchk/received_events",
-      type: "User",
-      site_admin: false,
-    },
-    labels: [[Object]],
-    state: "open",
-    locked: false,
-    assignee: null,
-    assignees: [],
-    milestone: null,
-    comments: 0,
-    created_at: "2023-03-30T15:16:32Z",
-    updated_at: "2023-03-30T15:16:32Z",
-    closed_at: null,
-    author_association: "MEMBER",
-    active_lock_reason: null,
-    body: "Just a test...",
-    reactions: {
-      url: "https://api.github.com/repos/swup/swup/issues/639/reactions",
-      total_count: 10,
-      "+1": 0,
-      "-1": 0,
-      laugh: 0,
-      hooray: 0,
-      confused: 3,
-      heart: 0,
-      rocket: 5,
-      eyes: 1,
-    },
-    timeline_url: "https://api.github.com/repos/swup/swup/issues/639/timeline",
-    performed_via_github_app: null,
-    state_reason: null,
-  },
-  {
-    url: "https://api.github.com/repos/swup/swup/issues/639",
-    repository_url: "https://api.github.com/repos/swup/swup",
-    labels_url:
-      "https://api.github.com/repos/swup/swup/issues/639/labels{/name}",
-    comments_url: "https://api.github.com/repos/swup/swup/issues/639/comments",
-    events_url: "https://api.github.com/repos/swup/swup/issues/639/events",
-    html_url: "https://github.com/swup/swup/issues/639",
-    id: 164782333737,
-    node_id: "I_kwDOBlayi85iN_KJ",
-    number: 639,
-    title: "TEST",
-    user: {
-      login: "gmrchk",
-      id: 9338324,
-      node_id: "MDQ6VXNlcjkzMzgzMjQ=",
-      avatar_url: "https://avatars.githubusercontent.com/u/9338324?v=4",
-      gravatar_id: "",
-      url: "https://api.github.com/users/gmrchk",
-      html_url: "https://github.com/gmrchk",
-      followers_url: "https://api.github.com/users/gmrchk/followers",
-      following_url:
-        "https://api.github.com/users/gmrchk/following{/other_user}",
-      gists_url: "https://api.github.com/users/gmrchk/gists{/gist_id}",
-      starred_url: "https://api.github.com/users/gmrchk/starred{/owner}{/repo}",
-      subscriptions_url: "https://api.github.com/users/gmrchk/subscriptions",
-      organizations_url: "https://api.github.com/users/gmrchk/orgs",
-      repos_url: "https://api.github.com/users/gmrchk/repos",
-      events_url: "https://api.github.com/users/gmrchk/events{/privacy}",
-      received_events_url:
-        "https://api.github.com/users/gmrchk/received_events",
-      type: "User",
-      site_admin: false,
-    },
-    labels: [[Object]],
-    state: "open",
-    locked: false,
-    assignee: null,
-    assignees: [],
-    milestone: null,
-    comments: 0,
-    created_at: "2023-03-30T15:16:32Z",
-    updated_at: "2023-03-30T15:16:32Z",
-    closed_at: null,
-    author_association: "MEMBER",
-    active_lock_reason: null,
-    body: "Just a test...",
-    reactions: {
-      url: "https://api.github.com/repos/swup/swup/issues/639/reactions",
-      total_count: 1,
-      "+1": 0,
-      "-1": 0,
-      laugh: 0,
-      hooray: 0,
-      confused: 0,
-      heart: 0,
-      rocket: 0,
-      eyes: 1,
-    },
-    timeline_url: "https://api.github.com/repos/swup/swup/issues/639/timeline",
-    performed_via_github_app: null,
-    state_reason: null,
-  },
-  {
-    url: "https://api.github.com/repos/swup/swup/issues/639",
-    repository_url: "https://api.github.com/repos/swup/swup",
-    labels_url:
-      "https://api.github.com/repos/swup/swup/issues/639/labels{/name}",
-    comments_url: "https://api.github.com/repos/swup/swup/issues/639/comments",
-    events_url: "https://api.github.com/repos/swup/swup/issues/639/events",
-    html_url: "https://github.com/swup/swup/issues/639",
-    id: 16423833737,
-    node_id: "I_kwDOBlayi85iN_KJ",
-    number: 639,
-    title: "TEST",
-    user: {
-      login: "gmrchk",
-      id: 9338324,
-      node_id: "MDQ6VXNlcjkzMzgzMjQ=",
-      avatar_url: "https://avatars.githubusercontent.com/u/9338324?v=4",
-      gravatar_id: "",
-      url: "https://api.github.com/users/gmrchk",
-      html_url: "https://github.com/gmrchk",
-      followers_url: "https://api.github.com/users/gmrchk/followers",
-      following_url:
-        "https://api.github.com/users/gmrchk/following{/other_user}",
-      gists_url: "https://api.github.com/users/gmrchk/gists{/gist_id}",
-      starred_url: "https://api.github.com/users/gmrchk/starred{/owner}{/repo}",
-      subscriptions_url: "https://api.github.com/users/gmrchk/subscriptions",
-      organizations_url: "https://api.github.com/users/gmrchk/orgs",
-      repos_url: "https://api.github.com/users/gmrchk/repos",
-      events_url: "https://api.github.com/users/gmrchk/events{/privacy}",
-      received_events_url:
-        "https://api.github.com/users/gmrchk/received_events",
-      type: "User",
-      site_admin: false,
-    },
-    labels: [[Object]],
-    state: "open",
-    locked: false,
-    assignee: null,
-    assignees: [],
-    milestone: null,
-    comments: 0,
-    created_at: "2023-03-30T15:16:32Z",
-    updated_at: "2023-03-30T15:16:32Z",
-    closed_at: null,
-    author_association: "MEMBER",
-    active_lock_reason: null,
-    body: "Just a test...",
-    reactions: {
-      url: "https://api.github.com/repos/swup/swup/issues/639/reactions",
-      total_count: 1,
-      "+1": 0,
-      "-1": 0,
-      laugh: 0,
-      hooray: 0,
-      confused: 0,
-      heart: 0,
-      rocket: 0,
-      eyes: 1,
-    },
-    timeline_url: "https://api.github.com/repos/swup/swup/issues/639/timeline",
-    performed_via_github_app: null,
-    state_reason: null,
-  },
-];
-
 const getRepoIssues = async (owner: string, repo: string) => {
   const response = await octokit.graphql(
     `
-      query {
-        repository(owner: "swup", name: "swup") {
+      query($owner: String!, $name: String!) {
+        repository(owner: $owner, name: $name) {
           issues(
             first: 20
-            filterBy: { labels: ["catchup-days", "good-first-issue"] }
+            filterBy: { labels: ["catchup-days", "good-first-issue", "good first issue"] }
+            orderBy: { direction: DESC, field: COMMENTS }
           ) {
             edges {
               node {
@@ -234,7 +46,11 @@ const getRepoIssues = async (owner: string, repo: string) => {
           }
         }
       }
-    `
+    `,
+    {
+      owner,
+      name: repo,
+    }
   );
 
   return {
@@ -244,10 +60,12 @@ const getRepoIssues = async (owner: string, repo: string) => {
         body: node.body,
         createdAt: node.createdAt,
         updatedAt: node.updatedAt,
-        author: {
-          login: node.author.login,
-          avatarUrl: node.author.avatarUrl,
-        },
+        author: node.author?.login
+          ? {
+              login: node.author?.login,
+              avatarUrl: node.author?.avatarUrl,
+            }
+          : undefined,
         url: node.url,
         id: node.id,
         reactions: node.reactionGroups.reduce(
@@ -270,11 +88,37 @@ const getRepoIssues = async (owner: string, repo: string) => {
 
 export async function GET(request: Request) {
   if (TESTING) {
-    return new Response(JSON.stringify(testData));
+    return new Response(JSON.stringify([]));
   } else {
-    const repos = ["swup/swup"];
+    const url = new URL(request.url);
+    const repos = url.searchParams.getAll("repo");
+    const languages = url.searchParams.getAll("language");
+    const libraries = url.searchParams.getAll("library");
+    const labels = url.searchParams.getAll("label");
+
+    const repositoryListToQuery = (
+      await prisma.repository.findMany({
+        where: {
+          OR: [
+            ...repos.map((repo) => ({
+              name: repo,
+            })),
+            ...languages.map((lang) => ({
+              languages: { some: { name: lang } },
+            })),
+            ...libraries.map((lib) => ({
+              libraries: { some: { name: lib } },
+            })),
+            ...labels.map((label) => ({
+              labels: { some: { name: label } },
+            })),
+          ],
+        },
+      })
+    ).map((repo) => repo.name);
+
     const issuesOfAllRepos = await Promise.all(
-      repos.map((repo) => {
+      repositoryListToQuery.map((repo) => {
         const [owner, name] = repo.split("/");
         return getRepoIssues(owner, name);
       })
@@ -296,6 +140,14 @@ export async function GET(request: Request) {
       )
       .flatMap((i) => i);
 
-    return new Response(JSON.stringify(issues));
+    issues.sort((issueA, issueB) => {
+      return issueB?.reactions?.TOTAL - issueA?.reactions?.TOTAL;
+    });
+
+    await prisma.$disconnect();
+
+    return new Response(
+      JSON.stringify({ issues, repos: repositoryListToQuery })
+    );
   }
 }
