@@ -14,6 +14,7 @@ import { useQuery } from "react-query";
 import { WishlistForm } from "@/app/components/WishlistForm";
 import { createStyled } from "@stitches/styled";
 import React, { useEffect, useState } from "react";
+import { WishlistResponse } from "@/app/types";
 
 const { styled } = createStyled({});
 
@@ -141,7 +142,12 @@ export default function Wishlist() {
     setActiveAttributes(new Set());
   };
 
-  const { isLoading, isError, error, data } = useQuery(
+  const {
+    isLoading,
+    isError,
+    error,
+    data: issues,
+  } = useQuery(
     ["wishlist", [...activeAttributes].reduce((prev, a) => prev + a, "")],
     async ({ queryKey: [key, attr] }) => {
       const url = new URL(window.location.origin + "/api/wishlist");
@@ -154,7 +160,7 @@ export default function Wishlist() {
 
       const issues = (await fetch(url)).json();
 
-      return issues;
+      return issues as WishlistResponse;
     },
     {}
   );
@@ -248,17 +254,15 @@ export default function Wishlist() {
       <Container sm>
         {!isLoading ? (
           <Grid.Container gap={1} justify="center">
-            {data.map((task) => {
-              const repo = task.repository_url.split("/").slice(-2).join("/");
-
+            {issues?.map((issue) => {
               return (
-                <Grid key={task.id} xs={12}>
+                <Grid key={issue.id} xs={12}>
                   <Card
                     isPressable
                     isHoverable
                     variant="bordered"
                     as={"a"}
-                    href={task.html_url}
+                    href={issue.url}
                     data-blobity-offset-x={0}
                     data-blobity-offset-y={0}
                   >
@@ -266,12 +270,12 @@ export default function Wishlist() {
                       <Row justify={"space-between"}>
                         <Grid.Container>
                           <Row justify={"flex-start"}>
-                            <Text h4>{task.title}</Text>
+                            <Text h4>{issue.title}</Text>
                           </Row>
                           <Row justify={"flex-start"}>
                             <User
-                              src={task.user.avatar_url}
-                              name={task.user.login}
+                              src={issue.author.avatarUrl}
+                              name={issue.author.login}
                               size={"xs"}
                             />
                           </Row>
@@ -279,34 +283,34 @@ export default function Wishlist() {
                         <Grid.Container>
                           <Row justify={"flex-end"}>
                             <Spacer y={1}></Spacer>
-                            {task.reactions.total_count ? (
+                            {issue.reactions.TOTAL ? (
                               <Row justify={"flex-end"}>
                                 <ReactionHolder>
                                   <ReactionFullAmount>
-                                    {task.reactions.total_count}
+                                    {issue.reactions.TOTAL}
                                   </ReactionFullAmount>
                                   <Reaction
-                                    num={task.reactions.laugh}
+                                    num={issue.reactions.LAUGH}
                                     icon="😄"
                                   />
                                   <Reaction
-                                    num={task.reactions.hooray}
+                                    num={issue.reactions.HOORAY}
                                     icon="🎉"
                                   />
                                   <Reaction
-                                    num={task.reactions.confused}
+                                    num={issue.reactions.CONFUSED}
                                     icon="😕"
                                   />
                                   <Reaction
-                                    num={task.reactions.heart}
+                                    num={issue.reactions.HEART}
                                     icon="❤️"
                                   />
                                   <Reaction
-                                    num={task.reactions.eyes}
+                                    num={issue.reactions.EYES}
                                     icon="👀"
                                   />
                                   <Reaction
-                                    num={task.reactions.rocket}
+                                    num={issue.reactions.ROCKET}
                                     icon="🚀"
                                   />
                                 </ReactionHolder>
@@ -315,13 +319,13 @@ export default function Wishlist() {
                           </Row>
 
                           <Row justify={"flex-end"}>
-                            <Text color={"$gray800"}>{repo}</Text>
+                            <Text color={"$gray800"}>{issue.repository}</Text>
                           </Row>
                           <Row justify={"flex-end"}>
                             <Text color={"$gray800"}>
                               {new Intl.DateTimeFormat("en-GB", {
                                 dateStyle: "full",
-                              }).format(new Date(task.created_at))}
+                              }).format(new Date(issue.createdAt))}
                             </Text>
                           </Row>
                         </Grid.Container>

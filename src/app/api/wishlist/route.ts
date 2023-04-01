@@ -1,6 +1,8 @@
+import { WishlistResponse } from "@/app/types";
+
 const { Octokit } = require("@octokit/core");
 
-const TESTING = true;
+const TESTING = false;
 
 const octokit = new Octokit({
   auth: process.env.GH_TOKEN,
@@ -198,18 +200,102 @@ const testData = [
   },
 ];
 
+const getRepoIssues = async (owner: string, repo: string) => {
+  const response = await octokit.graphql(
+    `
+      query {
+        repository(owner: "swup", name: "swup") {
+          issues(
+            first: 20
+            filterBy: { labels: ["catchup-days", "good-first-issue"] }
+          ) {
+            edges {
+              node {
+                id
+                url
+                title
+                bodyHTML
+                createdAt
+                updatedAt
+                author {
+                  login
+                  avatarUrl
+                }
+                reactionGroups {
+                  content
+                  reactors(first: 100) {
+                    edges {
+                      __typename
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+  );
+
+  return {
+    [`${owner}/${repo}`]: response.repository.issues.edges.map(({ node }) => {
+      return {
+        title: node.title,
+        body: node.body,
+        createdAt: node.createdAt,
+        updatedAt: node.updatedAt,
+        author: {
+          login: node.author.login,
+          avatarUrl: node.author.avatarUrl,
+        },
+        url: node.url,
+        id: node.id,
+        reactions: node.reactionGroups.reduce(
+          (prev, curr) => {
+            return {
+              ...prev,
+              [curr.content]: curr.reactors.edges.length,
+            };
+          },
+          {
+            TOTAL: node.reactionGroups.reduce((prev, curr) => {
+              return prev + curr.reactors.edges.length;
+            }, 0),
+          }
+        ),
+      };
+    }),
+  };
+};
+
 export async function GET(request: Request) {
   if (TESTING) {
     return new Response(JSON.stringify(testData));
   } else {
-    const issues = await octokit.request("GET /repos/swup/swup/issues", {
-      labels: "test",
-      state: "open",
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    });
+    const repos = ["swup/swup"];
+    const issuesOfAllRepos = await Promise.all(
+      repos.map((repo) => {
+        const [owner, name] = repo.split("/");
+        return getRepoIssues(owner, name);
+      })
+    );
 
-    return new Response(JSON.stringify(issues.data));
+    const issues: unknown[] = issuesOfAllRepos
+      .flatMap((repoIssues) =>
+        Object.entries(repoIssues).reduce((prev, [repo, issues]) => {
+          return [
+            ...prev,
+            issues.map((issues) => {
+              return {
+                repository: repo,
+                ...issues,
+              };
+            }),
+          ];
+        }, [])
+      )
+      .flatMap((i) => i);
+
+    return new Response(JSON.stringify(issues));
   }
 }
