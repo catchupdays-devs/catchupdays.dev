@@ -14,6 +14,7 @@ import {
   Card,
   Text,
 } from "@nextui-org/react";
+import { attributes } from "../../../pages/wishlist";
 
 const Input = ({
   value,
@@ -220,78 +221,27 @@ const Label = ({
   );
 };
 
-const attributes = {
-  repos: {
-    title: "Repository",
-    key: "repo",
-    items: ["webpack/webpack", "vercel/next.js"],
-    color: "primary",
-  },
-  libraries: {
-    title: "Libraries",
-    key: "library",
-    items: ["React", "Vue"],
-    color: "secondary",
-  },
-  labels: {
-    title: "Labels",
-    key: "label",
-    items: ["FE", "BE"],
-    color: "warning",
-  },
-  languages: {
-    title: "Language",
-    key: "language",
-    items: ["JavaScript", "TypeScript", "GoLang", "Rust"],
-    color: "success",
-  },
-};
-
-export const WishlistForm = () => {
+export const WishlistForm = ({
+  attributes,
+  focusedAttribute,
+  addAttribute,
+  deleteAttribute,
+  updateAttributes,
+  setFocusedAttribute,
+  activeAttributes,
+}: {
+  attributes: typeof attributes;
+  focusedAttribute: string | null;
+  activeAttributes: Set<string>;
+  addAttribute: (attr: string) => void;
+  deleteAttribute: (attr: string) => void;
+  updateAttributes: (type: string, attr: Set<string>) => void;
+  setFocusedAttribute: (attr: string | null) => void;
+}) => {
   const [inputText, setInputText] = useState([]);
 
-  const [focusedAttribute, setFocusedAttribute] = React.useState<string | null>(
-    null
-  );
-  const [activeAttributes, setActiveAttributes] = React.useState(new Set([]));
-  const updateAttributes = (type: string, attrs: typeof activeAttributes) => {
-    const currentSet = new Set([...activeAttributes]);
-
-    currentSet.forEach((a) => {
-      if (!attrs.has(a) && a.includes(type)) {
-        currentSet.delete(a);
-      }
-    });
-
-    attrs.forEach((a) => {
-      if (!currentSet.has(a)) {
-        currentSet.add(a);
-      }
-    });
-
-    setActiveAttributes(currentSet);
-  };
-  const addAttribute = (attr: string) => {
-    const currentSet = new Set([...activeAttributes]);
-
-    currentSet.add(attr);
-
-    setActiveAttributes(currentSet);
-  };
-  const deleteAttribute = (attr: string) => {
-    const currentSet = new Set([...activeAttributes]);
-
-    currentSet.forEach((a) => {
-      if (a.includes(attr)) {
-        currentSet.delete(a);
-      }
-    });
-
-    setActiveAttributes(currentSet);
-  };
-
   useEffect(() => {
-    const attributesString = Array.from(activeAttributes).map((attribute) => {
+    const attributesElements = Array.from(activeAttributes).map((attribute) => {
       const [typeOfKey, name] = attribute.split(":");
       const type = Object.values(attributes).find((a) => a.key === typeOfKey);
 
@@ -306,7 +256,7 @@ export const WishlistForm = () => {
       );
     });
 
-    setInputText(attributesString);
+    setInputText(attributesElements);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAttributes, focusedAttribute]);
 
@@ -362,6 +312,7 @@ export const WishlistForm = () => {
             return (
               <Grid key={key}>
                 <Dropdown placement="bottom-left">
+                  {/* // @ts-ignore */}
                   {activeOfType.length ? (
                     <Badge
                       color="neutral"
