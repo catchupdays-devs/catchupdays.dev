@@ -13,6 +13,7 @@ import {
   Badge,
   Card,
   Text,
+  Button,
 } from "@nextui-org/react";
 import { attributes } from "../../../pages/wishlist";
 
@@ -229,6 +230,7 @@ export const WishlistForm = ({
   updateAttributes,
   setFocusedAttribute,
   activeAttributes,
+  reset,
 }: {
   attributes: typeof attributes;
   focusedAttribute: string | null;
@@ -237,6 +239,7 @@ export const WishlistForm = ({
   deleteAttribute: (attr: string) => void;
   updateAttributes: (type: string, attr: Set<string>) => void;
   setFocusedAttribute: (attr: string | null) => void;
+  reset: () => void;
 }) => {
   const [inputText, setInputText] = useState([]);
 
@@ -300,7 +303,7 @@ export const WishlistForm = ({
         />
       </Row>
       <Spacer y={1} />
-      <Row justify={"flex-start"}>
+      <Row justify={"space-between"} align={"center"}>
         <Grid.Container gap={1} justify="start">
           {Object.entries(attributes).map(([key, value]) => {
             const activeOfType = value.items
@@ -356,6 +359,12 @@ export const WishlistForm = ({
             );
           })}
         </Grid.Container>
+
+        <Grid justify="flex-end">
+          <Button onClick={reset} ghost color={"neutral"}>
+            Reset
+          </Button>
+        </Grid>
       </Row>
       <Spacer y={1} />
     </Grid>

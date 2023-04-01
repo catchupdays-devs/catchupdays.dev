@@ -137,6 +137,9 @@ export default function Wishlist() {
 
     setActiveAttributes(currentSet);
   };
+  const reset = () => {
+    setActiveAttributes(new Set());
+  };
 
   const { isLoading, isError, error, data } = useQuery(
     ["wishlist", [...activeAttributes].reduce((prev, a) => prev + a, "")],
@@ -232,6 +235,7 @@ export default function Wishlist() {
       </Container>
       <Container sm>
         <WishlistForm
+          reset={reset}
           attributes={attributes}
           focusedAttribute={focusedAttribute}
           addAttribute={addAttribute}
