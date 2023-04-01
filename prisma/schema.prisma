@@ -10,31 +10,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Organization {
+  id           Int                           @id @default(autoincrement())
+  name         String                        @unique
+  url          String                        @unique
+  repositories RepositoriesOnOrganizations[]
+}
+
 model Repository {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  labels    Label[]
-  languages Language[]
-  libraries Library[]
+  id           Int                           @id @default(autoincrement())
+  name         String                        @unique
+  repositories RepositoriesOnOrganizations[]
+  labels       LabelsOnRepositories[]
+  languages    LanguagesOnRepositories[]
+  libraries    LibrariesOnRepositories[]
+}
+
+model RepositoriesOnOrganizations {
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  repository     Repository   @relation(fields: [repositoryId], references: [id])
+  repositoryId   Int
+  assignedAt     DateTime     @default(now())
+  assignedBy     String
+
+  @@id([organizationId, repositoryId])
 }
 
 model Label {
-  id           Int         @id @default(autoincrement())
-  name         String      @unique
-  Repository   Repository? @relation(fields: [repositoryId], references: [id])
-  repositoryId Int?
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @unique
+  LabelsOnRepositories LabelsOnRepositories[]
+}
+
+model LabelsOnRepositories {
+  label        Label      @relation(fields: [labelId], references: [id])
+  labelId      Int
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  repositoryId Int
+  assignedAt   DateTime   @default(now())
+  assignedBy   String
+
+  @@id([labelId, repositoryId])
 }
 
 model Language {
-  id           Int         @id @default(autoincrement())
-  name         String      @unique
-  Repository   Repository? @relation(fields: [repositoryId], references: [id])
-  repositoryId Int?
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @unique
+  LanguagesOnRepositories LanguagesOnRepositories[]
+}
+
+model LanguagesOnRepositories {
+  language     Language   @relation(fields: [languageId], references: [id])
+  languageId   Int
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  repositoryId Int
+  assignedAt   DateTime   @default(now())
+  assignedBy   String
+
+  @@id([languageId, repositoryId])
 }
 
 model Library {
-  id           Int         @id @default(autoincrement())
-  name         String      @unique
-  Repository   Repository? @relation(fields: [repositoryId], references: [id])
-  repositoryId Int?
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @unique
+  LibrariesOnRepositories LibrariesOnRepositories[]
+}
+
+model LibrariesOnRepositories {
+  library      Library    @relation(fields: [libraryId], references: [id])
+  libraryId    Int
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  repositoryId Int
+  assignedAt   DateTime   @default(now())
+  assignedBy   String
+
+  @@id([libraryId, repositoryId])
 }

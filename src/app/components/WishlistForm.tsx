@@ -14,8 +14,8 @@ import {
   Card,
   Text,
   Button,
+  Tooltip,
 } from "@nextui-org/react";
-import { attributes } from "../../../pages/wishlist";
 
 const Input = ({
   value,
@@ -46,6 +46,7 @@ const Input = ({
   const focusInput = () => {
     inputRef.current?.focus();
   };
+
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (text === "") {
       if (event.key === "Backspace" && value.length) {
@@ -183,11 +184,13 @@ const Label = ({
   color = "neutral",
   removeItem,
   isActive = false,
+  isDisabled = false,
 }: {
   text: string;
   color: string;
   removeItem: () => void;
   isActive?: boolean;
+  isDisabled?: boolean;
 }) => {
   return (
     <span
@@ -196,28 +199,67 @@ const Label = ({
         margin: "0 8px 8px 0",
       }}
     >
-      <Badge
-        color="neutral"
-        variant="flat"
-        content="&times;"
-        enableShadow
-        disableOutline
-        size="sm"
-        css={{
-          cursor: "pointer",
-          background: "$gray800",
-          color: "#fff",
-          textAlign: "center",
-          lineHeight: "11px",
-          display: "inline-block",
-          padding: "0 1px 0 0",
-        }}
-        onClick={removeItem}
-      >
-        <Badge enableShadow={isActive} disableOutline variant="flat" isSquared>
-          {text}
+      {isDisabled ? (
+        <Tooltip content={"Disabled due to Repository filter."}>
+          <Badge
+            color="neutral"
+            variant="flat"
+            content="&times;"
+            enableShadow
+            disableOutline
+            size="sm"
+            css={{
+              cursor: "pointer",
+              background: "$gray800",
+              color: "#fff",
+              textAlign: "center",
+              lineHeight: "11px",
+              display: "inline-block",
+              padding: "0 1px 0 0",
+            }}
+            onClick={removeItem}
+          >
+            <Badge
+              enableShadow={isActive}
+              disableOutline
+              variant="flat"
+              isSquared
+              css={{ opacity: isDisabled ? 0.6 : 1 }}
+            >
+              {text}
+            </Badge>
+          </Badge>
+        </Tooltip>
+      ) : (
+        <Badge
+          color="neutral"
+          variant="flat"
+          content="&times;"
+          enableShadow
+          disableOutline
+          size="sm"
+          css={{
+            cursor: "pointer",
+            background: "$gray800",
+            color: "#fff",
+            textAlign: "center",
+            lineHeight: "11px",
+            display: "inline-block",
+            padding: "0 1px 0 0",
+          }}
+          onClick={removeItem}
+        >
+          <Badge
+            enableShadow={isActive}
+            disableOutline
+            variant="flat"
+            isSquared
+            css={{ opacity: isDisabled ? 0.6 : 1 }}
+          >
+            {text}
+          </Badge>
         </Badge>
-      </Badge>
+      )}
     </span>
   );
 };
@@ -242,11 +284,15 @@ export const WishlistForm = ({
   reset: () => void;
 }) => {
   const [inputText, setInputText] = useState([]);
+  const hasExistingFilterForRepository = !!(
+    [...activeAttributes].find((a) => a.startsWith("repo:")) || []
+  ).length;
 
   useEffect(() => {
     const attributesElements = Array.from(activeAttributes).map((attribute) => {
       const [typeOfKey, name] = attribute.split(":");
       const type = Object.values(attributes).find((a) => a.key === typeOfKey);
+      const isDisabled = hasExistingFilterForRepository && typeOfKey !== "repo";
 
       return (
         <Label
@@ -255,6 +301,7 @@ export const WishlistForm = ({
           color={type.color}
           isActive={focusedAttribute === attribute}
           removeItem={() => deleteAttribute(attribute)}
+          isDisabled={isDisabled}
         />
       );
     });

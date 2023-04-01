@@ -96,26 +96,35 @@ export async function GET(request: Request) {
     const libraries = url.searchParams.getAll("library");
     const labels = url.searchParams.getAll("label");
 
-    const repositoryListToQuery = (
-      await prisma.repository.findMany({
-        where: {
-          OR: [
-            ...repos.map((repo) => ({
-              name: repo,
-            })),
-            ...languages.map((lang) => ({
-              languages: { some: { name: lang } },
-            })),
-            ...libraries.map((lib) => ({
-              libraries: { some: { name: lib } },
-            })),
-            ...labels.map((label) => ({
-              labels: { some: { name: label } },
-            })),
-          ],
-        },
-      })
-    ).map((repo) => repo.name);
+    const repositoryListToQuery = repos.length
+      ? (
+          await prisma.repository.findMany({
+            where: {
+              OR: [
+                ...repos.map((repo) => ({
+                  name: repo,
+                })),
+              ],
+            },
+          })
+        ).map((repo) => repo.name)
+      : (
+          await prisma.repository.findMany({
+            where: {
+              OR: [
+                ...languages.map((lang) => ({
+                  languages: { some: { language: { name: lang } } },
+                })),
+                ...libraries.map((lib) => ({
+                  libraries: { some: { library: { name: lib } } },
+                })),
+                ...labels.map((label) => ({
+                  labels: { some: { label: { name: label } } },
+                })),
+              ],
+            },
+          })
+        ).map((repo) => repo.name);
 
     const issuesOfAllRepos = await Promise.all(
       repositoryListToQuery.map((repo) => {
