@@ -83,6 +83,10 @@ export default function Wishlist() {
     },
     {}
   );
+  const randomRepoSuggestion =
+    filters?.repos.items[
+      Math.floor(Math.random() * filters?.repos.items.length || 0)
+    ];
 
   const [focusedAttribute, setFocusedAttribute] = React.useState<string | null>(
     null
@@ -430,7 +434,7 @@ export default function Wishlist() {
                 >
                   <Link
                     css={{ color: "$gray800" }}
-                    onClick={() => addAttribute("repo:vercel/next.js")}
+                    onClick={() => addAttribute(`repo:${randomRepoSuggestion}`)}
                   >
                     <span
                       style={{
@@ -448,7 +452,7 @@ export default function Wishlist() {
                       isSquared
                       size={"xs"}
                     >
-                      vercel/next.js
+                      {randomRepoSuggestion}
                     </Badge>
                     <span
                       style={{

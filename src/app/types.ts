@@ -30,7 +30,7 @@ export type WishlistResponse = {
 };
 
 export type FiltersResponse = Record<
-  string,
+  "repos" | "labels" | "languages" | "libraries",
   {
     title: string;
     key: string;
