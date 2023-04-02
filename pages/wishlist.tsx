@@ -9,6 +9,9 @@ import {
   Tooltip,
   User,
   Badge,
+  Table,
+  Link,
+  Avatar,
 } from "@nextui-org/react";
 import Head from "next/head";
 import { useQuery } from "react-query";
@@ -23,7 +26,7 @@ const ReactionFullAmount = styled("span", {
   opacity: 1,
   transition: "opacity .2s ease",
   margin: "0 20px 0 0",
-  fontWeight: "bold",
+  //fontWeight: "bold",
 });
 
 const ReactionWrapper = styled("span", {
@@ -42,6 +45,8 @@ const ReactionWrapper = styled("span", {
 });
 
 const ReactionHolder = styled("span", {
+  cursor: "default",
+
   [`&:hover ${ReactionWrapper}`]: {
     margin: "0 0 0 2px",
   },
@@ -250,7 +255,7 @@ export default function Wishlist() {
                 margin: "0 0 5px 0",
               }}
             >
-              Following repositories are being queries based on your filter:
+              Following repositories are being queried based on your filter:
             </span>
             {data?.repos.map((repo) => (
               <Badge
@@ -281,97 +286,173 @@ export default function Wishlist() {
       <Container sm>
         {!isLoading ? (
           <Grid.Container gap={1} justify="center">
-            {data.issues?.map((issue) => {
-              return (
-                <Grid key={issue.id} xs={12}>
-                  <Card
-                    isPressable
-                    isHoverable
-                    variant="bordered"
-                    as={"a"}
-                    href={issue.url}
-                    data-blobity-offset-x={0}
-                    data-blobity-offset-y={0}
+            {data?.repos.length ? (
+              <Table
+                striped
+                sticked
+                compact
+                selectionMode="none"
+                aria-label="Wishlist based on filters above"
+                css={{
+                  height: "auto",
+                  minWidth: "912px",
+                }}
+              >
+                <Table.Header>
+                  <Table.Column></Table.Column>
+                  <Table.Column>Title</Table.Column>
+                  {/*<Table.Column>Added</Table.Column>*/}
+                  {/*<Table.Column>Author</Table.Column>*/}
+                  <Table.Column
+                    css={{
+                      minWidth: "240px",
+                      textAlign: "right",
+                    }}
                   >
-                    <Card.Body css={{ padding: "8px 10px" }}>
-                      <Row justify={"space-between"}>
-                        <Grid.Container>
-                          <Row justify={"flex-start"}>
-                            <Text h4>{issue.title}</Text>
-                          </Row>
-                          <Row justify={"flex-start"}>
-                            {issue.author ? (
-                              <User
-                                src={issue.author.avatarUrl}
-                                name={issue.author.login}
-                                size={"xs"}
-                              />
-                            ) : null}
-                          </Row>
-                        </Grid.Container>
-                        <Grid.Container>
-                          <Row justify={"flex-end"}>
-                            <Spacer y={1}></Spacer>
-                            {issue.reactions.TOTAL ? (
-                              <Row justify={"flex-end"}>
-                                <ReactionHolder>
-                                  <ReactionFullAmount>
-                                    {issue.reactions.TOTAL}
-                                  </ReactionFullAmount>
-                                  <Reaction
-                                    num={issue.reactions.LAUGH}
-                                    icon="😄"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.HOORAY}
-                                    icon="🎉"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.CONFUSED}
-                                    icon="😕"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.HEART}
-                                    icon="❤️"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.EYES}
-                                    icon="👀"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.ROCKET}
-                                    icon="🚀"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.THUMBS_DOWN}
-                                    icon="👎"
-                                  />
-                                  <Reaction
-                                    num={issue.reactions.THUMBS_UP}
-                                    icon="👍"
-                                  />
-                                </ReactionHolder>
-                              </Row>
-                            ) : null}
-                          </Row>
-
-                          <Row justify={"flex-end"}>
-                            <Text color={"$gray800"}>{issue.repository}</Text>
-                          </Row>
-                          <Row justify={"flex-end"}>
-                            <Text color={"$gray800"}>
-                              {new Intl.DateTimeFormat("en-GB", {
-                                dateStyle: "full",
-                              }).format(new Date(issue.createdAt))}
+                    Reactions
+                  </Table.Column>
+                </Table.Header>
+                <Table.Body>
+                  {data?.issues.map((issue) => {
+                    return (
+                      <Table.Row key={issue.id}>
+                        <Table.Cell
+                          css={{
+                            maxWidth: "50px",
+                          }}
+                        >
+                          <Avatar
+                            size={"xs"}
+                            squared
+                            src={issue.owner?.avatarUrl}
+                          />
+                        </Table.Cell>
+                        <Table.Cell
+                          css={{
+                            maxWidth: "400px",
+                          }}
+                        >
+                          <Link href={issue.url}>
+                            <Text>{issue.title}</Text>
+                            <Text
+                              css={{
+                                display: "inline-block",
+                                color: "$gray700",
+                              }}
+                            >
+                              {" | "}
+                              {issue.repository}
                             </Text>
-                          </Row>
-                        </Grid.Container>
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                </Grid>
-              );
-            })}
+                          </Link>
+                        </Table.Cell>
+                        {/*<Table.Cell>*/}
+                        {/*  {new Intl.DateTimeFormat("en-GB", {*/}
+                        {/*    dateStyle: "full",*/}
+                        {/*  }).format(new Date(issue.createdAt))}*/}
+                        {/*</Table.Cell>*/}
+                        {/*<Table.Cell>*/}
+                        {/*  {issue.author ? (*/}
+                        {/*    <User*/}
+                        {/*      src={issue.author.avatarUrl}*/}
+                        {/*      name={issue.author.login}*/}
+                        {/*      size={"xs"}*/}
+                        {/*    />*/}
+                        {/*  ) : null}*/}
+                        {/*</Table.Cell>*/}
+                        <Table.Cell>
+                          {issue.reactions.TOTAL ? (
+                            <Row justify={"flex-end"}>
+                              <ReactionHolder>
+                                <ReactionFullAmount>
+                                  {issue.reactions.TOTAL}
+                                </ReactionFullAmount>
+                                <Reaction
+                                  num={issue.reactions.LAUGH}
+                                  icon="😄"
+                                />
+                                <Reaction
+                                  num={issue.reactions.HOORAY}
+                                  icon="🎉"
+                                />
+                                <Reaction
+                                  num={issue.reactions.CONFUSED}
+                                  icon="😕"
+                                />
+                                <Reaction
+                                  num={issue.reactions.HEART}
+                                  icon="❤️"
+                                />
+                                <Reaction
+                                  num={issue.reactions.EYES}
+                                  icon="👀"
+                                />
+                                <Reaction
+                                  num={issue.reactions.ROCKET}
+                                  icon="🚀"
+                                />
+                                <Reaction
+                                  num={issue.reactions.THUMBS_DOWN}
+                                  icon="👎"
+                                />
+                                <Reaction
+                                  num={issue.reactions.THUMBS_UP}
+                                  icon="👍"
+                                />
+                              </ReactionHolder>
+                            </Row>
+                          ) : null}
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  })}
+                </Table.Body>
+              </Table>
+            ) : (
+              <Container>
+                <Spacer y={5} />
+                <Text
+                  color={"$gray800"}
+                  size={12}
+                  css={{
+                    textAlign: "center",
+                    lineHeight: 1.4,
+                  }}
+                >
+                  <Link
+                    css={{ color: "$gray800" }}
+                    onClick={() => addAttribute("repo:vercel/next.js")}
+                  >
+                    <span
+                      style={{
+                        color: "$gray800",
+                        display: "inline-block",
+                      }}
+                    >
+                      Select some repositories to display the active issues. How
+                      about
+                    </span>
+                    <Badge
+                      css={{ margin: "0 5px" }}
+                      disableOutline
+                      variant="flat"
+                      isSquared
+                      size={"xs"}
+                    >
+                      vercel/next.js
+                    </Badge>
+                    <span
+                      style={{
+                        color: "$gray800",
+                        display: "inline-block",
+                      }}
+                    >
+                      ?
+                    </span>
+                  </Link>
+                </Text>
+                <Spacer y={5} />
+              </Container>
+            )}
           </Grid.Container>
         ) : (
           <Row justify={"center"}>

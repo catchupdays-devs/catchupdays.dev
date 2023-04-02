@@ -20,6 +20,7 @@ export const Footer = () => {
           z.ú. All rights reserved.
         </Text>
       </Row>
+      <Spacer y={2} />
     </Container>
   );
 };

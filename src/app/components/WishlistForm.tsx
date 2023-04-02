@@ -199,67 +199,35 @@ const Label = ({
         margin: "0 8px 8px 0",
       }}
     >
-      {isDisabled ? (
-        <Tooltip content={"Disabled due to Repository filter."}>
-          <Badge
-            color="neutral"
-            variant="flat"
-            content="&times;"
-            enableShadow
-            disableOutline
-            size="sm"
-            css={{
-              cursor: "pointer",
-              background: "$gray800",
-              color: "#fff",
-              textAlign: "center",
-              lineHeight: "11px",
-              display: "inline-block",
-              padding: "0 1px 0 0",
-            }}
-            onClick={removeItem}
-          >
-            <Badge
-              enableShadow={isActive}
-              disableOutline
-              variant="flat"
-              isSquared
-              css={{ opacity: isDisabled ? 0.6 : 1 }}
-            >
-              {text}
-            </Badge>
-          </Badge>
-        </Tooltip>
-      ) : (
+      <Badge
+        color="neutral"
+        variant="flat"
+        content="&times;"
+        enableShadow
+        disableOutline
+        size="sm"
+        css={{
+          cursor: "pointer",
+          background: "$gray800",
+          color: "#fff",
+          textAlign: "center",
+          lineHeight: "11px",
+          display: "inline-block",
+          padding: "0 1px 0 0",
+        }}
+        onClick={removeItem}
+      >
         <Badge
-          color="neutral"
-          variant="flat"
-          content="&times;"
-          enableShadow
+          enableShadow={isActive}
           disableOutline
-          size="sm"
-          css={{
-            cursor: "pointer",
-            background: "$gray800",
-            color: "#fff",
-            textAlign: "center",
-            lineHeight: "11px",
-            display: "inline-block",
-            padding: "0 1px 0 0",
-          }}
-          onClick={removeItem}
+          variant="flat"
+          isSquared
+          color={text.startsWith("repo:") ? "secondary" : undefined}
+          // css={{ opacity: isDisabled ? 0.6 : 1 }}
         >
-          <Badge
-            enableShadow={isActive}
-            disableOutline
-            variant="flat"
-            isSquared
-            css={{ opacity: isDisabled ? 0.6 : 1 }}
-          >
-            {text}
-          </Badge>
+          {text}
         </Badge>
-      )}
+      </Badge>
     </span>
   );
 };
@@ -377,12 +345,18 @@ export const WishlistForm = ({
                         color: "#fff",
                       }}
                     >
-                      <Dropdown.Button flat color="neutral">
+                      <Dropdown.Button
+                        flat
+                        color={value.key === "repo" ? "secondary" : "neutral"}
+                      >
                         {value.title}
                       </Dropdown.Button>
                     </Badge>
                   ) : (
-                    <Dropdown.Button flat color="neutral">
+                    <Dropdown.Button
+                      flat
+                      color={value.key === "repo" ? "secondary" : "neutral"}
+                    >
                       {value.title}
                     </Dropdown.Button>
                   )}

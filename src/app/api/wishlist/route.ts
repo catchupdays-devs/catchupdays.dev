@@ -16,10 +16,14 @@ const getRepoIssues = async (owner: string, repo: string) => {
     `
       query($owner: String!, $name: String!) {
         repository(owner: $owner, name: $name) {
+          owner {
+            avatarUrl
+          }
           issues(
             first: 20
             filterBy: { labels: ["catchup-days", "good-first-issue", "good first issue"] }
             orderBy: { direction: DESC, field: COMMENTS }
+            states: [OPEN]
           ) {
             edges {
               node {
@@ -66,6 +70,11 @@ const getRepoIssues = async (owner: string, repo: string) => {
               avatarUrl: node.author?.avatarUrl,
             }
           : undefined,
+        owner: response.repository.owner?.avatarUrl
+          ? {
+              avatarUrl: response.repository.owner?.avatarUrl,
+            }
+          : undefined,
         url: node.url,
         id: node.id,
         reactions: node.reactionGroups.reduce(
@@ -87,76 +96,95 @@ const getRepoIssues = async (owner: string, repo: string) => {
 };
 
 export async function GET(request: Request) {
-  if (TESTING) {
-    return new Response(JSON.stringify([]));
-  } else {
-    const url = new URL(request.url);
-    const repos = url.searchParams.getAll("repo");
-    const languages = url.searchParams.getAll("language");
-    const libraries = url.searchParams.getAll("library");
-    const labels = url.searchParams.getAll("label");
+  const url = new URL(request.url);
+  const repos = url.searchParams.getAll("repo");
+  const languages = url.searchParams.getAll("language");
+  const libraries = url.searchParams.getAll("library");
+  const labels = url.searchParams.getAll("label");
 
-    const repositoryListToQuery = repos.length
-      ? (
-          await prisma.repository.findMany({
-            where: {
-              OR: [
-                ...repos.map((repo) => ({
-                  name: repo,
-                })),
-              ],
-            },
-          })
-        ).map((repo) => repo.name)
-      : (
-          await prisma.repository.findMany({
-            where: {
-              OR: [
-                ...languages.map((lang) => ({
-                  languages: { some: { language: { name: lang } } },
-                })),
-                ...libraries.map((lib) => ({
-                  libraries: { some: { library: { name: lib } } },
-                })),
-                ...labels.map((label) => ({
-                  labels: { some: { label: { name: label } } },
-                })),
-              ],
-            },
-          })
-        ).map((repo) => repo.name);
+  let repositoryListToQuery;
 
-    const issuesOfAllRepos = await Promise.all(
-      repositoryListToQuery.map((repo) => {
-        const [owner, name] = repo.split("/");
-        return getRepoIssues(owner, name);
+  if (repos.length) {
+    repositoryListToQuery = (
+      await prisma.repository.findMany({
+        where: {
+          OR: [
+            ...repos.map((repo) => ({
+              name: repo,
+            })),
+          ],
+        },
+        include: {
+          labels: { select: { label: true } },
+          libraries: { select: { library: true } },
+          languages: { select: { language: true } },
+        },
       })
-    );
-
-    const issues: unknown[] = issuesOfAllRepos
-      .flatMap((repoIssues) =>
-        Object.entries(repoIssues).reduce((prev, [repo, issues]) => {
-          return [
-            ...prev,
-            issues.map((issues) => {
-              return {
-                repository: repo,
-                ...issues,
-              };
-            }),
-          ];
-        }, [])
-      )
-      .flatMap((i) => i);
-
-    issues.sort((issueA, issueB) => {
-      return issueB?.reactions?.TOTAL - issueA?.reactions?.TOTAL;
-    });
-
-    await prisma.$disconnect();
-
-    return new Response(
-      JSON.stringify({ issues, repos: repositoryListToQuery })
-    );
+    )
+      .filter((repo) => {
+        return repo.labels.reduce((prev, label) => {
+          return prev || labels.includes(label.label.name);
+        }, labels.length === 0);
+      })
+      .filter((repo) => {
+        return repo.libraries.reduce((prev, library) => {
+          return prev || libraries.includes(library.library.name);
+        }, libraries.length === 0);
+      })
+      .filter((repo) => {
+        return repo.languages.reduce((prev, language) => {
+          return prev || languages.includes(language.language.name);
+        }, languages.length === 0);
+      })
+      .map((repo) => repo.name);
+  } else {
+    repositoryListToQuery = (
+      await prisma.repository.findMany({
+        where: {
+          OR: [
+            ...languages.map((lang) => ({
+              languages: { some: { language: { name: lang } } },
+            })),
+            ...libraries.map((lib) => ({
+              libraries: { some: { library: { name: lib } } },
+            })),
+            ...labels.map((label) => ({
+              labels: { some: { label: { name: label } } },
+            })),
+          ],
+        },
+      })
+    ).map((repo) => repo.name);
   }
+
+  const issuesOfAllRepos = await Promise.all(
+    repositoryListToQuery.map((repo) => {
+      const [owner, name] = repo.split("/");
+      return getRepoIssues(owner, name);
+    })
+  );
+
+  const issues: unknown[] = issuesOfAllRepos
+    .flatMap((repoIssues) =>
+      Object.entries(repoIssues).reduce((prev, [repo, issues]) => {
+        return [
+          ...prev,
+          issues.map((issues) => {
+            return {
+              repository: repo,
+              ...issues,
+            };
+          }),
+        ];
+      }, [])
+    )
+    .flatMap((i) => i);
+
+  issues.sort((issueA, issueB) => {
+    return issueB?.reactions?.TOTAL - issueA?.reactions?.TOTAL;
+  });
+
+  await prisma.$disconnect();
+
+  return new Response(JSON.stringify({ issues, repos: repositoryListToQuery }));
 }

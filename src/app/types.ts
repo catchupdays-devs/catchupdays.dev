@@ -9,6 +9,9 @@ export type WishlistResponse = {
       login: string;
       avatarUrl: string;
     };
+    owner?: {
+      avatarUrl: string;
+    };
     reactions: {
       TOTAL: number;
       THUMBS_UP: number;
