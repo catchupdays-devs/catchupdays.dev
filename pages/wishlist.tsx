@@ -279,7 +279,8 @@ export default function Wishlist() {
                   margin: "0 0 5px 0",
                 }}
               >
-                If you want some other repositories, please specify which.
+                If you want some other repositories, please specify which or
+                make the filter more restrictive.
               </span>
             </div>
           </Text>
