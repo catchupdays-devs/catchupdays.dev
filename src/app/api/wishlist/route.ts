@@ -153,9 +153,32 @@ export async function GET(request: Request) {
             })),
           ],
         },
+        include: {
+          labels: { select: { label: true } },
+          libraries: { select: { library: true } },
+          languages: { select: { language: true } },
+        },
       })
-    ).map((repo) => repo.name);
+    )
+      .filter((repo) => {
+        return repo.labels.reduce((prev, label) => {
+          return prev || labels.includes(label.label.name);
+        }, labels.length === 0);
+      })
+      .filter((repo) => {
+        return repo.libraries.reduce((prev, library) => {
+          return prev || libraries.includes(library.library.name);
+        }, libraries.length === 0);
+      })
+      .filter((repo) => {
+        return repo.languages.reduce((prev, language) => {
+          return prev || languages.includes(language.language.name);
+        }, languages.length === 0);
+      })
+      .map((repo) => repo.name);
   }
+
+  repositoryListToQuery = repositoryListToQuery.slice(0, 10);
 
   const issuesOfAllRepos = await Promise.all(
     repositoryListToQuery.map((repo) => {

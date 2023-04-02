@@ -21,12 +21,12 @@ export const Navigation = () => {
       <Navbar.Content hideIn="xs">
         <Navbar.Link href="/for-companies">For Companies</Navbar.Link>
         <Navbar.Link href="/for-os">For OS</Navbar.Link>
-        <Navbar.Link href="/about">About</Navbar.Link>
+        <Navbar.Link href="/wishlist">Wishlist</Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
         <Navbar.Item>
-          <Button color="black" ghost auto flat href="/wishlist" as={Link}>
-            Wishlist
+          <Button color="black" ghost auto flat href="#enroll" as={Link}>
+            Enroll
           </Button>
         </Navbar.Item>
       </Navbar.Content>

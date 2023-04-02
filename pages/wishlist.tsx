@@ -268,6 +268,16 @@ export default function Wishlist() {
                 {repo}
               </Badge>
             ))}
+            <div>
+              <span
+                style={{
+                  display: "inline-block",
+                  margin: "0 0 5px 0",
+                }}
+              >
+                If you want some other repositories, please specify which.
+              </span>
+            </div>
           </Text>
           <Spacer y={1} />
         </Container>
