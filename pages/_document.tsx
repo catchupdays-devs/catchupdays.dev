@@ -18,10 +18,8 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>{CssBaseline.flush()}</Head>
         <body>
-          <Navigation />
           <Main />
           <NextScript />
-          <Footer />
         </body>
       </Html>
     );

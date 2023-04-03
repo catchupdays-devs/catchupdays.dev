@@ -318,73 +318,95 @@ export const WishlistForm = ({
         />
       </Row>
       <Spacer y={1} />
-      <Row justify={"space-between"} align={"center"}>
-        <Grid.Container gap={1} justify="start">
-          {Object.entries(attributes).map(([key, value]) => {
-            const activeOfType = value.items
-              .filter((i) =>
-                [...activeAttributes].includes(`${value.key}:${i}`)
-              )
-              .map((i) => `${value.key}:${i}`);
+      <Row justify={"space-between"} align={"center"} wrap={"wrap"}>
+        <Grid xs={12} md={8}>
+          <Grid.Container gap={1} justify="start">
+            {Object.entries(attributes).map(([key, value]) => {
+              const activeOfType = value.items
+                .filter((i) =>
+                  [...activeAttributes].includes(`${value.key}:${i}`)
+                )
+                .map((i) => `${value.key}:${i}`);
 
-            return (
-              <Grid key={key}>
-                <Dropdown placement="bottom-left">
-                  {/* // @ts-ignore */}
-                  {activeOfType.length ? (
-                    <Badge
-                      color="neutral"
-                      variant="flat"
-                      content={activeOfType.length || null}
-                      enableShadow
-                      disableOutline
-                      size="sm"
-                      css={{
-                        cursor: "pointer",
-                        background: "$red800",
-                        color: "#fff",
-                      }}
-                    >
+              return (
+                <Grid
+                  key={key}
+                  xs={12}
+                  md={3}
+                  css={{
+                    justifyContent: "stretch",
+                    flexDirection: "column",
+                    alignItems: "stretch",
+                  }}
+                >
+                  <Dropdown placement="bottom-left">
+                    {/* // @ts-ignore */}
+                    {activeOfType.length ? (
+                      <Badge
+                        color="neutral"
+                        variant="flat"
+                        content={activeOfType.length || null}
+                        enableShadow
+                        disableOutline
+                        size="sm"
+                        css={{
+                          cursor: "pointer",
+                          background: "$red800",
+                          color: "#fff",
+                        }}
+                      >
+                        <Dropdown.Button
+                          flat
+                          css={{ width: "100%" }}
+                          color={value.key === "repo" ? "secondary" : "neutral"}
+                        >
+                          {value.title}
+                        </Dropdown.Button>
+                      </Badge>
+                    ) : (
                       <Dropdown.Button
                         flat
+                        css={{ width: "100%" }}
                         color={value.key === "repo" ? "secondary" : "neutral"}
                       >
                         {value.title}
                       </Dropdown.Button>
-                    </Badge>
-                  ) : (
-                    <Dropdown.Button
-                      flat
-                      color={value.key === "repo" ? "secondary" : "neutral"}
+                    )}
+                    <Dropdown.Menu
+                      aria-label="Repo"
+                      color="primary"
+                      selectionMode="multiple"
+                      selectedKeys={activeOfType}
+                      onSelectionChange={(attrs) =>
+                        updateAttributes(value.key, attrs)
+                      }
                     >
-                      {value.title}
-                    </Dropdown.Button>
-                  )}
-                  <Dropdown.Menu
-                    aria-label="Repo"
-                    color="primary"
-                    selectionMode="multiple"
-                    selectedKeys={activeOfType}
-                    onSelectionChange={(attrs) =>
-                      updateAttributes(value.key, attrs)
-                    }
-                  >
-                    {value.items.map((attr) => (
-                      <Dropdown.Item key={`${value.key}:${attr}`}>
-                        {attr}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Grid>
-            );
-          })}
-        </Grid.Container>
+                      {value.items.map((attr) => (
+                        <Dropdown.Item key={`${value.key}:${attr}`}>
+                          {attr}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Grid>
+              );
+            })}
+          </Grid.Container>
+        </Grid>
 
-        <Grid justify="flex-end">
-          <Button onClick={reset} ghost color={"neutral"}>
-            Reset
-          </Button>
+        <Grid xs={12} md={3} justify="flex-end">
+          <Grid.Container gap={1} justify="start">
+            <Grid css={{ width: "100%" }}>
+              <Button
+                css={{ width: "100%" }}
+                onClick={reset}
+                flat
+                color={"neutral"}
+              >
+                Reset
+              </Button>
+            </Grid>
+          </Grid.Container>
         </Grid>
       </Row>
       <Spacer y={1} />

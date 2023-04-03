@@ -239,7 +239,9 @@ export default function Wishlist() {
           />
         ) : (
           <Row justify={"center"}>
+            <Spacer y={4} />
             <Loading />
+            <Spacer y={4} />
           </Row>
         )}
       </Container>
@@ -311,6 +313,7 @@ export default function Wishlist() {
                 css={{
                   height: "auto",
                   minWidth: "912px",
+                  background: "#fff",
                 }}
               >
                 <Table.Header>
@@ -470,9 +473,13 @@ export default function Wishlist() {
             )}
           </Grid.Container>
         ) : (
-          <Row justify={"center"}>
-            <Loading />
-          </Row>
+          <Container>
+            <Spacer y={6} />
+            <Row justify={"center"}>
+              <Loading />
+            </Row>
+            <Spacer y={6} />
+          </Container>
         )}
       </Container>
     </main>

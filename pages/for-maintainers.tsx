@@ -15,10 +15,10 @@ export default function Index() {
   return (
     <main>
       <Head>
-        <title>For Companies | Catchup Days</title>
+        <title>For Maintainers | Catchup Days</title>
         <meta
           property="og:title"
-          content="For Companies | Catchup Days"
+          content="For Maintainers | Catchup Days"
           key="title"
         />
       </Head>
@@ -32,7 +32,7 @@ export default function Index() {
             lineHeight: 1.2,
           }}
         >
-          For Companies
+          For Maintainers
         </Text>
         <Text
           color={"$gray800"}
@@ -42,13 +42,13 @@ export default function Index() {
             lineHeight: 1.4,
           }}
         >
-          Did you know that your application can consist from open source
-          libraries and components from up to 90 %. That's a massive number, so
-          we better make sure it's a stable, well tested code.
+          Let's face it - the open source is broken. The biggest users of any OS
+          rely on it for their business, yet, just a fraction of those companies
+          supports the OS projects in any way. Let's change that together.
         </Text>
         <Spacer y={2} />
       </Container>
-      <SignupForm formKey={"xzbqjjog"} preselectedRole={"business"} />
+      <SignupForm formKey={"xzbqjjog"} preselectedRole={"maintainer"} />
     </main>
   );
 }

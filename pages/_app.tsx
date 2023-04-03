@@ -2,8 +2,11 @@ import { createTheme, NextUIProvider, useSSR } from "@nextui-org/react";
 import useBlobity from "blobity/lib/react/useBlobity";
 import { Inter } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { createContext, useContext, useEffect } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import Blobity from "blobity";
+import "@/app/globals.css";
+import { Navigation } from "@/app/components/Navigation";
+import { Footer } from "@/app/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -67,7 +70,9 @@ function MyApp({ Component, pageProps }) {
         <BlobityContext.Provider value={null}>
           <QueryClientProvider client={queryClient}>
             <div style={{ ...inter.style }}>
+              <Navigation />
               <Component {...pageProps} />
+              <Footer />
             </div>
           </QueryClientProvider>
         </BlobityContext.Provider>

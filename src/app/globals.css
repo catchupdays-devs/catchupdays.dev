@@ -12,6 +12,8 @@ body {
 
 body {
   background: #fff;
+  background: linear-gradient(90deg, #fff 20px, transparent 1%) center, linear-gradient(#fff 20px, transparent 1%) center, #bbb;
+  background-size: 21px 21px;
 }
 
 a {
