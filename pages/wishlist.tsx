@@ -3,11 +3,9 @@ import {
   Text,
   Spacer,
   Grid,
-  Card,
   Row,
   Loading,
   Tooltip,
-  User,
   Badge,
   Table,
   Link,
@@ -16,11 +14,9 @@ import {
 import Head from "next/head";
 import { useQuery } from "react-query";
 import { WishlistForm } from "@/app/components/WishlistForm";
-import { createStyled } from "@stitches/styled";
+import { styled } from "@stitches/react";
 import React, { useEffect, useState } from "react";
 import { FiltersResponse, WishlistResponse } from "@/app/types";
-
-const { styled } = createStyled({});
 
 const ReactionFullAmount = styled("span", {
   opacity: 1,
@@ -240,7 +236,12 @@ export default function Wishlist() {
         ) : (
           <Row justify={"center"}>
             <Spacer y={4} />
-            <Loading />
+            <Loading
+              css={{
+                "--nextui--loadingColor": "#000",
+              }}
+              type={"points"}
+            />
             <Spacer y={4} />
           </Row>
         )}
@@ -382,7 +383,9 @@ export default function Wishlist() {
                             <Row justify={"flex-end"}>
                               <ReactionHolder>
                                 <ReactionFullAmount>
-                                  {issue.reactions.TOTAL}
+                                  {issue.reactions.TOTAL === 100
+                                    ? "100+"
+                                    : issue.reactions.TOTAL}
                                 </ReactionFullAmount>
                                 <Reaction
                                   num={issue.reactions.LAUGH}
@@ -476,7 +479,12 @@ export default function Wishlist() {
           <Container>
             <Spacer y={6} />
             <Row justify={"center"}>
-              <Loading />
+              <Loading
+                css={{
+                  "--nextui--loadingColor": "#000",
+                }}
+                type={"points"}
+              />
             </Row>
             <Spacer y={6} />
           </Container>

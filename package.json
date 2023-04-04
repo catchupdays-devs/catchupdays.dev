@@ -13,7 +13,6 @@
     "@nextui-org/react": "^1.0.0-beta.12",
     "@octokit/core": "^4.2.0",
     "@prisma/client": "^4.12.0",
-    "@stitches/styled": "^9.0.0-alpha.8",
     "@types/node": "18.15.10",
     "@types/react": "18.0.30",
     "@types/react-dom": "18.0.11",
@@ -28,11 +27,6 @@
     "react-query": "^3.39.3",
     "scrl": "^2.0.0",
     "typescript": "5.0.2"
-  },
-  "overrides": {
-    "@stitches/styled@9.0.0-alpha.8": {
-      "react": "18"
-    }
   },
   "devDependencies": {
     "prisma": "^4.12.0"

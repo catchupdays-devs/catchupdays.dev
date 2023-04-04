@@ -37,12 +37,9 @@ const getRepoIssues = async (owner: string, repo: string) => {
                   login
                   avatarUrl
                 }
-                reactionGroups {
-                  content
-                  reactors(first: 100) {
-                    edges {
-                      __typename
-                    }
+                reactions(first: 100) {
+                  nodes {
+                    content
                   }
                 }
               }
@@ -77,17 +74,22 @@ const getRepoIssues = async (owner: string, repo: string) => {
           : undefined,
         url: node.url,
         id: node.id,
-        reactions: node.reactionGroups.reduce(
+        reactions: node.reactions.nodes.reduce(
           (prev, curr) => {
-            return {
-              ...prev,
-              [curr.content]: curr.reactors.edges.length,
-            };
+            if (prev[curr.content]) {
+              return {
+                ...prev,
+                [curr.content]: prev[curr.content] + 1,
+              };
+            } else {
+              return {
+                ...prev,
+                [curr.content]: 1,
+              };
+            }
           },
           {
-            TOTAL: node.reactionGroups.reduce((prev, curr) => {
-              return prev + curr.reactors.edges.length;
-            }, 0),
+            TOTAL: node.reactions.nodes.length,
           }
         ),
       };

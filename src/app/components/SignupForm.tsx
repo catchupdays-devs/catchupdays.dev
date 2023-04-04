@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import React, { useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
+import { Subtitle } from "@/app/components/Text";
 
 export const SignupForm = ({ formKey, preselectedRole }) => {
   const [role, setRole] = useState<"business" | "maintainer">(preselectedRole);
@@ -23,14 +24,7 @@ export const SignupForm = ({ formKey, preselectedRole }) => {
           <Grid.Container gap={1} justify="center">
             <Grid xs={12} md={10} justify={"center"}>
               <Container responsive>
-                <Text
-                  h3
-                  css={{
-                    textAlign: "center",
-                  }}
-                >
-                  Want to join us?
-                </Text>
+                <Subtitle>Want to join us?</Subtitle>
                 <Text
                   css={{
                     textAlign: "center",

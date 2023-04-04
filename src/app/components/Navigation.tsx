@@ -1,20 +1,22 @@
 import React from "react";
-import { Navbar, Button } from "@nextui-org/react";
-import Link from "next/link";
+import { Navbar, Button, Link } from "@nextui-org/react";
+import NextJsLink from "next/link";
 import Image from "next/image";
-import Scrl from "scrl";
-import { useBlobityInstance } from "../../../pages/_app";
 import { useRouter } from "next/router";
+
+const items = {
+  Companies: "/for-companies",
+  Maintainers: "/for-maintainers",
+  Wishlist: "/wishlist",
+};
 
 export const Navigation = () => {
   const { asPath } = useRouter();
 
-  console.log(asPath);
-
   return (
     <Navbar isBordered variant={"floating"} css={{ zIndex: 1000 }}>
       <Navbar.Brand>
-        <Link href="/">
+        <NextJsLink href="/">
           <Image
             src="/icon.png"
             alt="Catchup Days logo"
@@ -22,24 +24,14 @@ export const Navigation = () => {
             height={53}
             priority
           />
-        </Link>
+        </NextJsLink>
       </Navbar.Brand>
       <Navbar.Content hideIn="xs" activeColor="black">
-        <Navbar.Link
-          href="/for-companies"
-          isActive={asPath.startsWith("/for-companies")}
-        >
-          For Companies
-        </Navbar.Link>
-        <Navbar.Link
-          href="/for-maintainers"
-          isActive={asPath.startsWith("/for-maintainers")}
-        >
-          For Maintainers
-        </Navbar.Link>
-        <Navbar.Link href="/wishlist" isActive={asPath.startsWith("/wishlist")}>
-          Wishlist
-        </Navbar.Link>
+        {Object.entries(items).map(([title, href]) => (
+          <Navbar.Item key={href} isActive={asPath.startsWith(href)}>
+            <Navbar.Link href={href}>{title}</Navbar.Link>
+          </Navbar.Item>
+        ))}
       </Navbar.Content>
       <Navbar.Content>
         <Navbar.Item>
@@ -49,12 +41,45 @@ export const Navigation = () => {
             auto
             flat
             href={asPath.startsWith("/wishlist") ? "/#enroll" : "#enroll"}
-            as={Link}
+            as={NextJsLink}
           >
             Enroll
           </Button>
         </Navbar.Item>
+        <Navbar.Toggle showIn="xs" aria-label="toggle navigation" />
       </Navbar.Content>
+      <Navbar.Collapse
+        showIn="xs"
+        css={{
+          display: "flex",
+          justifyContent: "stretch",
+          flexGrow: "1",
+          width: "100%",
+          alignItems: "center",
+          background: "#fff",
+        }}
+      >
+        {Object.entries(items).map(([title, href]) => (
+          <Navbar.CollapseItem
+            key={href}
+            activeColor="black"
+            isActive={asPath.startsWith(href)}
+          >
+            <Link
+              color="inherit"
+              css={{
+                minWidth: "100%",
+                display: "block",
+                fontSize: "36px",
+                fontWeight: "900",
+              }}
+              href={href}
+            >
+              {title}
+            </Link>
+          </Navbar.CollapseItem>
+        ))}
+      </Navbar.Collapse>
     </Navbar>
   );
 };

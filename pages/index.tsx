@@ -1,47 +1,9 @@
-import {
-  Container,
-  Text,
-  Spacer,
-  Grid,
-  Card,
-  Link,
-  Row,
-} from "@nextui-org/react";
+import { Container, Text, Spacer, Grid, Link, Row } from "@nextui-org/react";
 import Head from "next/head";
-import { default as NextLink } from "next/link";
 import { SignupForm } from "@/app/components/SignupForm";
-import { createStyled } from "@stitches/styled";
-
-const { styled } = createStyled({});
-
-const Title = styled(Text, {
-  textAlign: "center",
-  lineHeight: 1.2,
-  fontWeight: "black",
-  fontSize: "12.2vw",
-
-  span: {
-    fontSize: "12.2vw",
-    fontWeight: "black",
-    display: "inline-block",
-  },
-
-  "@media only screen and (min-width: 520px)": {
-    fontSize: "8vw",
-
-    span: {
-      fontSize: "8vw",
-    },
-  },
-
-  "@media only screen and (min-width: 1280px)": {
-    fontSize: "100px",
-
-    span: {
-      fontSize: "100px",
-    },
-  },
-});
+import { MainTitle, Subtitle } from "@/app/components/Text";
+import React from "react";
+import { CardLink } from "@/app/components/CardLink";
 
 export default function Index() {
   return (
@@ -53,7 +15,7 @@ export default function Index() {
       <Container md>
         <Spacer y={4} />
         <Row justify={"center"}>
-          <Title h1 weight="black">
+          <MainTitle>
             Let's Make Open Source <br /> Better,{" "}
             <Text
               span
@@ -63,7 +25,7 @@ export default function Index() {
             >
               Together
             </Text>
-          </Title>
+          </MainTitle>
         </Row>
         <Spacer y={1} />
       </Container>
@@ -84,23 +46,7 @@ export default function Index() {
         <Spacer y={6} />
       </Container>
       <Container xs>
-        <Text
-          h1
-          css={{
-            textAlign: "center",
-          }}
-        >
-          What is{" "}
-          <Text
-            h1
-            weight="black"
-            css={{
-              display: "inline-block",
-            }}
-          >
-            Catchup Days
-          </Text>
-        </Text>
+        <Subtitle>What is Catchup Days</Subtitle>
         <Text>
           Companies all around the world rely on open-source software in their
           products. It's in their best interest to try and make such software
@@ -139,49 +85,32 @@ export default function Index() {
         </Text>
         <Spacer y={2} />
       </Container>
-      <Container md>
-        <Grid.Container gap={2} justify="center">
-          <Grid xs={12} sm={4}>
-            <Card
-              variant="bordered"
-              isPressable
-              isHoverable
-              href="/for-companies"
-              as={NextLink}
-            >
-              <Card.Body>
-                <Text h4 css={{ textAlign: "left", width: "100%" }}>
-                  For Companies
-                </Text>
-                <Text>
-                  Would you like to ensure your apps are as stable and as neat
-                  as possible?
-                </Text>
-              </Card.Body>
-            </Card>
+      <Container sm>
+        <Grid.Container gap={2} justify={"space-around"}>
+          <Grid xs={12} sm={5}>
+            <CardLink
+              title={"Companies"}
+              text={
+                "Would you like to ensure your apps are as stable and as neat as possible?"
+              }
+              href={"/for-companies"}
+              variant={"A"}
+              cta={"Read more"}
+            />
           </Grid>
-          <Grid xs={12} sm={4}>
-            <Card
-              variant="bordered"
-              isPressable
-              isHoverable
-              href="/for-maintainers"
-              as={NextLink}
-            >
-              <Card.Body>
-                <Text h4 css={{ textAlign: "left", width: "100%" }}>
-                  For Maintainers
-                </Text>
-                <Text>
-                  Would you like to get help with your project by the actual
-                  users?
-                </Text>
-              </Card.Body>
-            </Card>
+          <Grid xs={12} sm={5}>
+            <CardLink
+              title={"Maintainers"}
+              text={
+                "Would you like to get help with your project by the actual users?"
+              }
+              href={"/for-maintainers"}
+              variant={"B"}
+              cta={"Read more"}
+            />
           </Grid>
         </Grid.Container>
       </Container>
-
       <SignupForm formKey={"xzbqjjog"} />
     </main>
   );

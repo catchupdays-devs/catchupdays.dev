@@ -1,12 +1,4 @@
-import {
-  Container,
-  Text,
-  Spacer,
-  Grid,
-  Card,
-  Link,
-  Row,
-} from "@nextui-org/react";
+import { Container, Text, Spacer } from "@nextui-org/react";
 import Head from "next/head";
 import React from "react";
 import { SignupForm } from "@/app/components/SignupForm";
@@ -24,16 +16,7 @@ export default function Index() {
       </Head>
       <Container xs>
         <Spacer y={4} />
-        <Text
-          h1
-          weight="black"
-          css={{
-            textAlign: "center",
-            lineHeight: 1.2,
-          }}
-        >
-          For Maintainers
-        </Text>
+        <Title>For Maintainers</Title>
         <Text
           color={"$gray800"}
           size={20}

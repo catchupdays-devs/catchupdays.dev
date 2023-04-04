@@ -222,7 +222,7 @@ const Label = ({
           disableOutline
           variant="flat"
           isSquared
-          color={text.startsWith("repo:") ? "secondary" : undefined}
+          color={text.startsWith("repo:") ? "error" : undefined}
           // css={{ opacity: isDisabled ? 0.6 : 1 }}
         >
           {text}
@@ -358,7 +358,7 @@ export const WishlistForm = ({
                         <Dropdown.Button
                           flat
                           css={{ width: "100%" }}
-                          color={value.key === "repo" ? "secondary" : "neutral"}
+                          color={value.key === "repo" ? "error" : "neutral"}
                         >
                           {value.title}
                         </Dropdown.Button>
@@ -367,7 +367,7 @@ export const WishlistForm = ({
                       <Dropdown.Button
                         flat
                         css={{ width: "100%" }}
-                        color={value.key === "repo" ? "secondary" : "neutral"}
+                        color={value.key === "repo" ? "error" : "neutral"}
                       >
                         {value.title}
                       </Dropdown.Button>
