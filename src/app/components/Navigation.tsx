@@ -26,6 +26,7 @@ export const Navigation = () => {
           />
         </NextJsLink>
       </Navbar.Brand>
+      {/* @ts-ignore */}
       <Navbar.Content hideIn="xs" activeColor="black">
         {Object.entries(items).map(([title, href]) => (
           <Navbar.Item key={href} isActive={asPath.startsWith(href)}>
@@ -36,6 +37,7 @@ export const Navigation = () => {
       <Navbar.Content>
         <Navbar.Item>
           <Button
+            /* @ts-ignore */
             color="black"
             ghost
             auto
@@ -62,6 +64,7 @@ export const Navigation = () => {
         {Object.entries(items).map(([title, href]) => (
           <Navbar.CollapseItem
             key={href}
+            /* @ts-ignore */
             activeColor="black"
             isActive={asPath.startsWith(href)}
           >

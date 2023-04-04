@@ -70,12 +70,10 @@ export default function Wishlist() {
     isError: isFilterError,
   } = useQuery(
     ["filters"],
-    async () => {
+    async (): Promise<FiltersResponse> => {
       const url = new URL(window.location.origin + "/api/filter");
 
-      const filters = (await fetch(url)).json();
-
-      return filters as FiltersResponse;
+      return (await fetch(url)).json();
     },
     {}
   );
@@ -131,7 +129,7 @@ export default function Wishlist() {
 
   const { isLoading, isError, error, data } = useQuery(
     ["wishlist", [...activeAttributes].reduce((prev, a) => prev + a, "")],
-    async ({ queryKey: [key, attr] }) => {
+    async ({ queryKey: [key, attr] }): Promise<WishlistResponse> => {
       const url = new URL(window.location.origin + "/api/wishlist");
 
       [...activeAttributes].forEach((attr) => {
@@ -140,16 +138,14 @@ export default function Wishlist() {
         url.searchParams.append(type, name);
       });
 
-      const response = (await fetch(url)).json() as WishlistResponse;
-
-      return response;
+      return (await fetch(url)).json();
     },
     {}
   );
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    const attrs = new Set();
+    const attrs = new Set<string>();
 
     [...url.searchParams].forEach(([type, name]) => {
       attrs.add(`${type}:${name}`);
@@ -171,10 +167,6 @@ export default function Wishlist() {
     window.history.replaceState(null, "", url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAttributes]);
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
 
   return (
     <main>
@@ -247,7 +239,7 @@ export default function Wishlist() {
           </Row>
         )}
       </Container>
-      {!isFilterLoading && data?.repos.length > 0 ? (
+      {!isFilterLoading && data?.repos?.length && data.repos.length > 0 ? (
         <Container xs>
           <Text
             color={"$gray800"}
@@ -323,7 +315,7 @@ export default function Wishlist() {
                 }}
               >
                 <Table.Header>
-                  <Table.Column></Table.Column>
+                  <Table.Column> </Table.Column>
                   <Table.Column>Title</Table.Column>
                   {/*<Table.Column>Added</Table.Column>*/}
                   {/*<Table.Column>Author</Table.Column>*/}

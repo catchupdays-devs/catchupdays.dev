@@ -4,7 +4,7 @@ import React from "react";
 import { Card, Spacer, Text, useSSR, Button, Row } from "@nextui-org/react";
 
 const mapArray = [...Array(24)];
-const variantsArray: variants[] = [
+const variantsArray: string[] = [
   ...mapArray.map(() => "A"),
   ...mapArray.map(() => "B"),
 ];
@@ -161,15 +161,16 @@ const Bottle = styled("div", {
   },
 });
 
-export const Bottles: React.FC = ({ variant, children }) => {
+export const Bottles: React.FC<{ variant: string }> = ({ variant }) => {
   const { isBrowser } = useSSR();
 
   return (
     <Wrapper suppressHydrationWarning>
-      {children}
       {isBrowser &&
         mapArray.map((x, i) => (
+          // @ts-ignore
           <BottleWrapper key={i} positioning={`bottle${variant}${i}`}>
+            {/* @ts-ignore */}
             <Bottle positioning={`bottle${variant}${i}`} />
           </BottleWrapper>
         ))}
@@ -184,10 +185,21 @@ export const CardLink = ({
   variant,
   cta,
 }: {
+  title: string;
+  text: string;
+  href: string;
   variant: variants;
+  cta: string;
 }) => {
   return (
-    <Card variant="bordered" isPressable isHoverable href={href} as={"a"}>
+    <Card
+      variant="bordered"
+      isPressable
+      isHoverable
+      /* @ts-ignore */
+      href={href}
+      as={"a"}
+    >
       <StyledCard>
         <Shadow>
           <div>
@@ -217,6 +229,7 @@ export const CardLink = ({
         <Spacer y={2} />
         <Row justify={"center"}>
           <Button
+            /* @ts-ignore */
             color="black"
             bordered
             css={{

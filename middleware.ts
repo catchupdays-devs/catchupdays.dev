@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
 
   const redirect = new URL(req.url);
   redirect.pathname = "/wishlist";
-  repos?.forEach((repo) => {
+  repos?.forEach((repo: string) => {
     redirect.searchParams.append("repo", repo);
   });
 

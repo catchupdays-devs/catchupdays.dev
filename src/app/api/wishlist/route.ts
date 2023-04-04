@@ -55,45 +55,61 @@ const getRepoIssues = async (owner: string, repo: string) => {
   );
 
   return {
-    [`${owner}/${repo}`]: response.repository.issues.edges.map(({ node }) => {
-      return {
-        title: node.title,
-        body: node.body,
-        createdAt: node.createdAt,
-        updatedAt: node.updatedAt,
-        author: node.author?.login
-          ? {
-              login: node.author?.login,
-              avatarUrl: node.author?.avatarUrl,
+    [`${owner}/${repo}`]: response.repository.issues.edges.map(
+      ({
+        node,
+      }: {
+        node: {
+          title: string;
+          body: string;
+          createdAt: string;
+          updatedAt: string;
+          author?: { login: string; avatarUrl: string };
+          owner?: { login: string; avatarUrl: string };
+          url: string;
+          id: string;
+          reactions: { nodes: { content: string }[] };
+        };
+      }) => {
+        return {
+          title: node.title,
+          body: node.body,
+          createdAt: node.createdAt,
+          updatedAt: node.updatedAt,
+          author: node.author?.login
+            ? {
+                login: node.author?.login,
+                avatarUrl: node.author?.avatarUrl,
+              }
+            : undefined,
+          owner: response.repository.owner?.avatarUrl
+            ? {
+                avatarUrl: response.repository.owner?.avatarUrl,
+              }
+            : undefined,
+          url: node.url,
+          id: node.id,
+          reactions: node.reactions.nodes.reduce(
+            (prev: Record<string, number>, curr) => {
+              if (prev[curr.content]) {
+                return {
+                  ...prev,
+                  [curr.content]: prev[curr.content] + 1,
+                };
+              } else {
+                return {
+                  ...prev,
+                  [curr.content]: 1,
+                };
+              }
+            },
+            {
+              TOTAL: node.reactions.nodes.length,
             }
-          : undefined,
-        owner: response.repository.owner?.avatarUrl
-          ? {
-              avatarUrl: response.repository.owner?.avatarUrl,
-            }
-          : undefined,
-        url: node.url,
-        id: node.id,
-        reactions: node.reactions.nodes.reduce(
-          (prev, curr) => {
-            if (prev[curr.content]) {
-              return {
-                ...prev,
-                [curr.content]: prev[curr.content] + 1,
-              };
-            } else {
-              return {
-                ...prev,
-                [curr.content]: 1,
-              };
-            }
-          },
-          {
-            TOTAL: node.reactions.nodes.length,
-          }
-        ),
-      };
-    }),
+          ),
+        };
+      }
+    ),
   };
 };
 
@@ -192,10 +208,10 @@ export async function GET(request: Request) {
 
   const issues: unknown[] = issuesOfAllRepos
     .flatMap((repoIssues) =>
-      Object.entries(repoIssues).reduce((prev, [repo, issues]) => {
+      Object.entries(repoIssues).reduce((prev: any[], [repo, issues]) => {
         return [
           ...prev,
-          issues.map((issues) => {
+          issues.map((issues: any) => {
             return {
               repository: repo,
               ...issues,
@@ -206,7 +222,7 @@ export async function GET(request: Request) {
     )
     .flatMap((i) => i);
 
-  issues.sort((issueA, issueB) => {
+  issues.sort((issueA: any, issueB: any) => {
     return issueB?.reactions?.TOTAL - issueA?.reactions?.TOTAL;
   });
 

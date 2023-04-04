@@ -12,8 +12,16 @@ import React, { useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { Subtitle } from "@/app/components/Text";
 
-export const SignupForm = ({ formKey, preselectedRole }) => {
-  const [role, setRole] = useState<"business" | "maintainer">(preselectedRole);
+export const SignupForm = ({
+  formKey,
+  preselectedRole,
+}: {
+  formKey: string;
+  preselectedRole?: "business" | "maintainer";
+}) => {
+  const [role, setRole] = useState<"business" | "maintainer" | undefined>(
+    preselectedRole
+  );
   const [state, handleSubmit] = useForm(formKey);
 
   return (
@@ -65,6 +73,7 @@ export const SignupForm = ({ formKey, preselectedRole }) => {
             <form onSubmit={handleSubmit}>
               <Grid.Container gap={1} justify="center">
                 <Grid xs={12} justify={"center"}>
+                  {/* @ts-ignore */}
                   <Button.Group color="neutral">
                     <Button onClick={() => setRole("business")}>
                       <span
@@ -109,6 +118,7 @@ export const SignupForm = ({ formKey, preselectedRole }) => {
                     type="email"
                     name="email"
                     required
+                    /* @ts-ignore */
                     flat
                     shadow={false}
                     animated={false}

@@ -20,7 +20,13 @@ export const useBlobityInstance = () => {
   return blobity;
 };
 
-function MyApp({ Component, pageProps }) {
+function MyApp({
+  Component,
+  pageProps,
+}: {
+  Component: React.FC;
+  pageProps: any;
+}) {
   const { isBrowser } = useSSR();
   // const blobityInstance = useBlobity({
   //   licenseKey: "gmrchk",
