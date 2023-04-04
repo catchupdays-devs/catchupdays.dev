@@ -282,6 +282,9 @@ export default function Wishlist() {
                   margin: "0 0 5px 0",
                 }}
               >
+                {data?.ignoredRepos?.length
+                  ? `${data?.ignoredRepos.length} repositories were ignored because the filter is too broad. `
+                  : null}
                 If you want some other repositories, please specify which or
                 make the filter more restrictive.
               </span>

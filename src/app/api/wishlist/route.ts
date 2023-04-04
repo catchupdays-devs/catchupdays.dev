@@ -180,6 +180,7 @@ export async function GET(request: Request) {
       .map((repo) => repo.name);
   }
 
+  const repositoryListToIgnored = repositoryListToQuery.slice(10);
   repositoryListToQuery = repositoryListToQuery.slice(0, 10);
 
   const issuesOfAllRepos = await Promise.all(
@@ -211,5 +212,11 @@ export async function GET(request: Request) {
 
   await prisma.$disconnect();
 
-  return new Response(JSON.stringify({ issues, repos: repositoryListToQuery }));
+  return new Response(
+    JSON.stringify({
+      issues,
+      repos: repositoryListToQuery,
+      ignoredRepos: repositoryListToIgnored,
+    })
+  );
 }

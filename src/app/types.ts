@@ -27,6 +27,7 @@ export type WishlistResponse = {
     id: string;
   }[];
   repos: string[];
+  ignoredRepos: string[];
 };
 
 export type FiltersResponse = Record<
