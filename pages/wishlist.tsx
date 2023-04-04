@@ -206,7 +206,8 @@ export default function Wishlist() {
             lineHeight: 1.4,
           }}
         >
-          Here's where you can explore and find the issues that best suit you.
+          Here&apos;s where you can explore and find the issues that best suit
+          you.
         </Text>
         <Text
           color={"$gray800"}
@@ -266,6 +267,7 @@ export default function Wishlist() {
             </span>
             {data?.repos.map((repo) => (
               <Badge
+                key={repo}
                 css={{ margin: "0 0 5px 5px" }}
                 disableOutline
                 variant="flat"

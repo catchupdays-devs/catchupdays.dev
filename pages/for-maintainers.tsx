@@ -2,6 +2,7 @@ import { Container, Text, Spacer } from "@nextui-org/react";
 import Head from "next/head";
 import React from "react";
 import { SignupForm } from "@/app/components/SignupForm";
+import { Title } from "@/app/components/Text";
 
 export default function Index() {
   return (
@@ -25,9 +26,10 @@ export default function Index() {
             lineHeight: 1.4,
           }}
         >
-          Let's face it - the open source is broken. The biggest users of any OS
-          rely on it for their business, yet, just a fraction of those companies
-          supports the OS projects in any way. Let's change that together.
+          Let&apos;s face it - the open source is broken. The biggest users of
+          any OS rely on it for their business, yet, just a fraction of those
+          companies supports the OS projects in any way. Let&apos;s change that
+          together.
         </Text>
         <Spacer y={2} />
       </Container>

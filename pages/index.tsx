@@ -16,7 +16,7 @@ export default function Index() {
         <Spacer y={4} />
         <Row justify={"center"}>
           <MainTitle>
-            Let's Make Open Source <br /> Better,{" "}
+            Let&apos;s Make Open Source <br /> Better,{" "}
             <Text
               span
               css={{
@@ -49,13 +49,13 @@ export default function Index() {
         <Subtitle>What is Catchup Days</Subtitle>
         <Text>
           Companies all around the world rely on open-source software in their
-          products. It's in their best interest to try and make such software
-          better.
+          products. It&apos;s in their best interest to try and make such
+          software better.
         </Text>
         <Spacer y={1} />
         <Text>
-          That's where we come in - we help companies and employees organize
-          their time so employees can{" "}
+          That&apos;s where we come in - we help companies and employees
+          organize their time so employees can{" "}
           <Text
             css={{
               display: "inline-block",
@@ -65,8 +65,9 @@ export default function Index() {
           >
             catchup
           </Text>{" "}
-          on all those improvements to critical open-source libraries they've
-          been putting aside, while the open source maintainers help us keep the{" "}
+          on all those improvements to critical open-source libraries
+          they&apos;ve been putting aside, while the open source maintainers
+          help us keep the{" "}
           <Link
             color="text"
             href="/wishlist"
@@ -79,9 +80,9 @@ export default function Index() {
         </Text>
         <Spacer y={1} />
         <Text>
-          Whether you're an open-source maintainer interested in getting help
-          with your project, or a business interested in making the software you
-          rely on better, you're in the right place.
+          Whether you&apos;re an open-source maintainer interested in getting
+          help with your project, or a business interested in making the
+          software you rely on better, you&apos;re in the right place.
         </Text>
         <Spacer y={2} />
       </Container>

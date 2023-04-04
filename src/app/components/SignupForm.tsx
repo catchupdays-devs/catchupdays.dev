@@ -30,8 +30,8 @@ export const SignupForm = ({ formKey, preselectedRole }) => {
                     textAlign: "center",
                   }}
                 >
-                  Leave us your email and we'll reach out in no time. Let's see
-                  how we can make Open Source better, together.
+                  Leave us your email and we&apos;ll reach out in no time.
+                  Let&apos;s see how we can make Open Source better, together.
                 </Text>
               </Container>
             </Grid>
@@ -46,7 +46,7 @@ export const SignupForm = ({ formKey, preselectedRole }) => {
                   textAlign: "center",
                 }}
               >
-                Thanks for the submission. We'll get be to you{" "}
+                Thanks for the submission. We&apos;ll get be to you{" "}
                 <Text
                   css={{
                     fontWeight: "bold",
@@ -143,7 +143,7 @@ export const SignupForm = ({ formKey, preselectedRole }) => {
                       type="submit"
                       disabled={state.submitting}
                     >
-                      Let's talk!
+                      Let&apos;s talk!
                     </Button>
                   )}
                 </Grid>

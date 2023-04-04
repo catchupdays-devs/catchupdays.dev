@@ -27,8 +27,8 @@ export default function Index() {
           }}
         >
           Did you know that your application can consist from open source
-          libraries and components from up to 90 %. That's a massive number, so
-          we better make sure it's a stable, well tested code.
+          libraries and components from up to 90 %. That&apos;s a massive
+          number, so we better make sure it&apos;s a stable, well tested code.
         </Text>
         <Spacer y={2} />
       </Container>
