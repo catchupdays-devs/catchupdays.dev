@@ -1,4 +1,9 @@
-import { createTheme, NextUIProvider, useSSR } from "@nextui-org/react";
+import {
+  createTheme,
+  CssBaseline,
+  NextUIProvider,
+  useSSR,
+} from "@nextui-org/react";
 import useBlobity from "blobity/lib/react/useBlobity";
 import { Inter } from "next/font/google";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -7,6 +12,8 @@ import Blobity from "blobity";
 import "@/app/globals.css";
 import { Navigation } from "@/app/components/Navigation";
 import { Footer } from "@/app/components/Footer";
+import favicon from "@/app/favicon.ico";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,19 +78,24 @@ function MyApp({
   });
 
   return (
-    isBrowser && (
-      <NextUIProvider theme={theme}>
-        <BlobityContext.Provider value={null}>
-          <QueryClientProvider client={queryClient}>
-            <div style={{ ...inter.style }}>
-              <Navigation />
-              <Component {...pageProps} />
-              <Footer />
-            </div>
-          </QueryClientProvider>
-        </BlobityContext.Provider>
-      </NextUIProvider>
-    )
+    <>
+      <Head>
+        <link rel="icon" type="image/x-icon" href={favicon.src} />
+      </Head>
+      {isBrowser && (
+        <NextUIProvider theme={theme}>
+          <BlobityContext.Provider value={null}>
+            <QueryClientProvider client={queryClient}>
+              <div style={{ ...inter.style }}>
+                <Navigation />
+                <Component {...pageProps} />
+                <Footer />
+              </div>
+            </QueryClientProvider>
+          </BlobityContext.Provider>
+        </NextUIProvider>
+      )}
+    </>
   );
 }
 
