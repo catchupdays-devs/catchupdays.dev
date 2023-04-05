@@ -14,11 +14,19 @@ import {
   Card,
   Text,
   Button,
-  Tooltip,
 } from "@nextui-org/react";
 import { CollectionElement } from "@react-types/shared";
-import { FiltersResponse } from "@/app/types";
+import { styled } from "@stitches/react";
 
+const InputWrapper = styled("div", {
+  display: "block",
+  margin: "-4px 0 -12px 0",
+  minHeight: "38px",
+
+  "& > p": {
+    margin: 0,
+  },
+});
 const Input = ({
   value,
   deleteFocused,
@@ -115,13 +123,7 @@ const Input = ({
       <Card variant="bordered" xs>
         {/* @ts-ignore */}
         <Card.Body xs onClick={focusInput} css={{ cursor: "text" }}>
-          <div
-            style={{
-              display: "block",
-              margin: "-4px 0 -12px 0",
-              minHeight: "38px",
-            }}
-          >
+          <InputWrapper>
             <Text>
               {value}
               <input
@@ -140,7 +142,7 @@ const Input = ({
                 }}
               />
             </Text>
-          </div>
+          </InputWrapper>
         </Card.Body>
       </Card>
       {openAutocomplete && text.length >= 2 ? (
