@@ -40,8 +40,8 @@ export default function Index() {
       </Container>
       <Container xs>
         <Text>
-          <strong>Let's start with how we can help you!</strong> What we do is
-          help companies setup the process of working on critical open-source
+          <strong>Let&apos;s start with how we can help you!</strong> What we do
+          is help companies setup the process of working on critical open-source
           libraries used within the organization. We do that in several ways:
         </Text>
         <ul>
@@ -72,15 +72,15 @@ export default function Index() {
           <Text h4>The companies can benefit from:</Text>
           <ul>
             <li>
-              By building better apps for their customers. We can't stress this
-              enough, whatever SaaS you're building, majority of the code you
-              ship is OS code that you choose to use. It's in your best interest
-              for this software to be stable, tested, secure, and top-notch
-              overall.
+              By building better apps for their customers. We can&apos;t stress
+              this enough, whatever SaaS you&apos;re building, majority of the
+              code you ship is OS code that you choose to use. It&apos;s in your
+              best interest for this software to be stable, tested, secure, and
+              top-notch overall.
             </li>
             <li>
-              Let's be honest - the freedom to work on OS is a neat company
-              benefit for many, if not most, of your employees. It's also a
+              Let&apos;s be honest - the freedom to work on OS is a neat company
+              benefit for many, if not most, of your employees. It&apos;s also a
               great for their well-being, switching to something out-of-the-box
               from time to time.
             </li>
@@ -92,25 +92,26 @@ export default function Index() {
               Giving freedom to the employees to take decisions mean getting the
               best ideas from the bottom-up.
             </li>
-            <li>It's simply a good PR...</li>
+            <li>It&apos;s simply a good PR...</li>
           </ul>
           <Text>
-            We might be repeating ourselves a little going further, but let's go
-            on.
+            We might be repeating ourselves a little going further, but
+            let&apos;s go on.
           </Text>
           <Text h4>The employees can benefit from:</Text>
           <ul>
             <li>Better understanding of tools you use daily.</li>
             <li>
-              Better, more stable and secure apps you're building for a living.
+              Better, more stable and secure apps you&apos;re building for a
+              living.
             </li>
             <li>
-              Public record of the contributions you've done to OS - often
+              Public record of the contributions you&apos;ve done to OS - often
               better than a well filled up CV.
             </li>
             <li>
               Change of focus - honestly, everyone needs that from time to time.
-              It's simply critical for preventing burnout, and for mental
+              It&apos;s simply critical for preventing burnout, and for mental
               well-being in general.
             </li>
             <li>
@@ -124,8 +125,8 @@ export default function Index() {
             <li>Learning.</li>
           </ul>
           <Text>
-            The benefits for the OS probably don't need to be listed here, but
-            if you're still interested, check what the{" "}
+            The benefits for the OS probably don&apos;t need to be listed here,
+            but if you&apos;re still interested, check what the{" "}
             <Link href={"/for-maintainers"}>
               maintainers get by working with us
             </Link>
@@ -133,22 +134,22 @@ export default function Index() {
           </Text>
         </Collapse>
         <Spacer y={1} />
-        <Text>Anyways, let's start with the first point.</Text>
+        <Text>Anyways, let&apos;s start with the first point.</Text>
         <Spacer y={2} />
         <Subtitle>The process setup</Subtitle>
         <Text>
           The organizations working with us are usually relative large (100-1000
-          employees). That being said, it's not a trivial task to setup the
+          employees). That being said, it&apos;s not a trivial task to setup the
           process of contributing to OS in a way where employees are happy and
           have enough freedom to choose what they want to work on, while keeping
-          the companys' best interests in mind at all times.
+          the companys&apos; best interests in mind at all times.
         </Text>
         <Text>
-          We've been through this process, and we keep improving the best
+          We&apos;ve been through this process, and we keep improving the best
           practices while actively collecting feedback from all the companies
           working with us. Every organization is different, and each company
           culture is different, so the process needs to be built and adjusted
-          for each use case to fit the best - we're here to help with that.
+          for each use case to fit the best - we&apos;re here to help with that.
         </Text>
         <Text>
           This is always done in close collaboration with the company. In fact,
@@ -164,32 +165,32 @@ export default function Index() {
           comes first. Without it, there is simply no company.
         </Text>
         <Text>
-          That's why we create{" "}
+          That&apos;s why we create{" "}
           <Link href={"/wishlist"}>custom curated wishlist</Link> for each
           company working with us, where employees can filter the burning issues
           only for the software your company is relying on. You choose what OS
           is critical to you, and we make sure the maintainers keep the wishlist
-          up to date. Everyone's happy!
+          up to date. Everyone&apos;s happy!
         </Text>
         <Subtitle>Advertise!</Subtitle>
         <Text>
           Not convinced yet? You can advertise with us. The GitHub repositories
           and documentation sites of all those open-source organizations are
-          mainly visited by devs, so it's perfect opportunity to for you to
-          advertise if you're in need of a skilled workers using the same stack
-          you are.
+          mainly visited by devs, so it&apos;s perfect opportunity to for you to
+          advertise if you&apos;re in need of a skilled workers using the same
+          stack you are.
         </Text>
         <Text>
-          By working with us, you'll get access to a{" "}
+          By working with us, you&apos;ll get access to a{" "}
           <Underline>very&nbsp;specific</Underline> advertisement network that
-          you can't find anywhere else. Of course, this is totally optional and
-          additional benefit, where the funds are use fully for supporting all
-          the OS you choose to advertise on.
+          you can&apos;t find anywhere else. Of course, this is totally optional
+          and additional benefit, where the funds are use fully for supporting
+          all the OS you choose to advertise on.
         </Text>
         <Spacer y={2} />
         <Text>
-          Whether you're an engineer, engineering manager or CTO, reach out and
-          let's see how we can help each other. In fact, especially
+          Whether you&apos;re an engineer, engineering manager or CTO, reach out
+          and let&apos;s see how we can help each other. In fact, especially
         </Text>
       </Container>
       <SignupForm formKey={"xzbqjjog"} preselectedRole={"business"} />

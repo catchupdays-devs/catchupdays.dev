@@ -110,7 +110,10 @@ export const Circled = styled("span", {
   },
 });
 
-export const WithGradient = ({ children, black }) => (
+export const WithGradient: React.FC<{
+  black?: boolean;
+  children: JSX.Element | string;
+}> = ({ children, black }) => (
   <Text
     span
     css={{
