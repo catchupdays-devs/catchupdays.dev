@@ -3,6 +3,7 @@ import { Navbar, Button, Link } from "@nextui-org/react";
 import NextJsLink from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { styled } from "@stitches/react";
 
 const items = {
   Companies: "/for-companies",
@@ -10,13 +11,17 @@ const items = {
   Wishlist: "/wishlist",
 };
 
+const Logo = styled(NextJsLink, {
+  display: "flex",
+});
+
 export const Navigation = () => {
   const { asPath } = useRouter();
 
   return (
     <Navbar isBordered variant={"floating"} css={{ zIndex: 1000 }}>
       <Navbar.Brand>
-        <NextJsLink href="/">
+        <Logo href="/">
           <Image
             src="/icon.png"
             alt="Catchup Days logo"
@@ -24,7 +29,7 @@ export const Navigation = () => {
             height={53}
             priority
           />
-        </NextJsLink>
+        </Logo>
       </Navbar.Brand>
       {/* @ts-ignore */}
       <Navbar.Content hideIn="xs" activeColor="black">
