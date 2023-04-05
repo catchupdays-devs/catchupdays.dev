@@ -1,4 +1,9 @@
 import { styled } from "@stitches/react";
+import { default as NextLink } from "next/link";
+import underline from "@/app/images/underline.svg";
+import circled from "@/app/images/circled.svg";
+import { Text } from "@nextui-org/react";
+import React from "react";
 
 export const MainTitle = styled("h1", {
   textAlign: "center",
@@ -61,3 +66,58 @@ export const Subtitle = styled("h1", {
     },
   },
 });
+
+export const Link = styled(NextLink, {
+  textDecoration: "underline",
+  fontWeight: "bold",
+});
+
+export const Underline = styled("span", {
+  position: "relative",
+  fontWeight: "bold",
+
+  "&:after": {
+    content: "",
+    display: "block",
+    position: "absolute",
+    bottom: "-4px",
+    left: "-3px",
+    right: "-3px",
+    height: "5px",
+    background: `url(${underline.src})`,
+    backgroundSize: "100% auto",
+  },
+});
+
+export const Circled = styled("span", {
+  position: "relative",
+  fontWeight: "bold",
+  display: "inline-block",
+  margin: "0 2px",
+
+  "&:before": {
+    content: "",
+    display: "block",
+    position: "absolute",
+    top: "-6px",
+    bottom: "-6px",
+    left: "-4px",
+    right: "-8px",
+    background: `url(${circled.src})`,
+    backgroundSize: "100% auto",
+    zIndex: "0",
+    opacity: 0.6,
+  },
+});
+
+export const WithGradient = ({ children, black }) => (
+  <Text
+    span
+    css={{
+      fontWeight: black ? "black" : "bold",
+      textGradient: "135deg, $red600 -25%, $red800 85%, $red900 100%",
+    }}
+  >
+    {children}
+  </Text>
+);

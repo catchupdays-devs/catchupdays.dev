@@ -14,8 +14,22 @@ import { Navigation } from "@/app/components/Navigation";
 import { Footer } from "@/app/components/Footer";
 import favicon from "@/app/favicon.ico";
 import Head from "next/head";
+import { globalCss } from "@stitches/react";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const globalStyles = globalCss({
+  body: { margin: 0 },
+  p: {
+    ...inter.style,
+    margin: "0 auto 20px",
+  },
+  td: {
+    p: {
+      margin: 0,
+    },
+  },
+});
 
 const queryClient = new QueryClient();
 
@@ -35,6 +49,7 @@ function MyApp({
   pageProps: any;
 }) {
   const { isBrowser } = useSSR();
+  globalStyles();
   // const blobityInstance = useBlobity({
   //   licenseKey: "gmrchk",
   //   zIndex: 1,
@@ -73,6 +88,7 @@ function MyApp({
 
         gradient:
           "linear-gradient(112deg, $red600 -25%, $red800 85%, $red900 100%)",
+        code: "$red600",
       },
     },
   });

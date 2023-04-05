@@ -26,3 +26,11 @@ a {
     color-scheme: dark;
   }
 }
+
+ul {
+  list-style: outside;
+}
+
+li {
+  font-size: var(--nextui-fontSizes-base);
+}

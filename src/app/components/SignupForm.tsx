@@ -10,7 +10,7 @@ import {
 } from "@nextui-org/react";
 import React, { useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import { Subtitle } from "@/app/components/Text";
+import { Subtitle, WithGradient } from "@/app/components/Text";
 
 export const SignupForm = ({
   formKey,
@@ -28,7 +28,7 @@ export const SignupForm = ({
     <Container xs id={"enroll"}>
       <Spacer y={4} />
       <Card variant="bordered">
-        <Card.Body>
+        <Card.Body css={{ overflow: "hidden" }}>
           <Grid.Container gap={1} justify="center">
             <Grid xs={12} md={10} justify={"center"}>
               <Container responsive>
@@ -39,7 +39,8 @@ export const SignupForm = ({
                   }}
                 >
                   Leave us your email and we&apos;ll reach out in no time.
-                  Let&apos;s see how we can make Open Source better, together.
+                  Let&apos;s see how we can make open-source better,{" "}
+                  <WithGradient>together</WithGradient>.
                 </Text>
               </Container>
             </Grid>
@@ -106,9 +107,21 @@ export const SignupForm = ({
                     field="role"
                     errors={state.errors}
                   />
+                  <input
+                    type="hidden"
+                    id="role"
+                    name="role"
+                    required
+                    value={role}
+                  />
+                  <ValidationError
+                    prefix="Role"
+                    field="role"
+                    errors={state.errors}
+                  />
                 </Grid>
                 <Spacer x={1} />
-                <Grid xs={12} sm={7}>
+                <Grid xs={12} sm={7} direction={"column"}>
                   <Input
                     css={{
                       width: "100%",
