@@ -187,8 +187,8 @@ export default function Index() {
         </Text>
         <Spacer y={2} />
         <Text>
-          Whether you're an engineer, engineering manager, or CTO, feel free to
-          contact us, and let's kick off the ride together.
+          Whether you're an engineer, engineering manager, or CTO, leave us your
+          e-mail, and let's kick off the ride together.
         </Text>
       </Container>
       <SignupForm formKey={"xzbqjjog"} preselectedRole={"business"} />
