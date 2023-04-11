@@ -8,6 +8,8 @@ export async function GET(request: Request) {
     await prisma.repository.findMany({
       select: {
         name: true,
+      },
+      where: {
         isActive: true,
       },
     })
