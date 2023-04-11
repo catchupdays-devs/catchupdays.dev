@@ -34,7 +34,7 @@ model RepositoriesOnOrganizations {
   repository     Repository   @relation(fields: [repositoryId], references: [id])
   repositoryId   Int
   assignedAt     DateTime     @default(now())
-  assignedBy     String
+  assignedBy     String       @default("")
 
   @@id([organizationId, repositoryId])
 }
@@ -51,7 +51,7 @@ model LabelsOnRepositories {
   repository   Repository @relation(fields: [repositoryId], references: [id])
   repositoryId Int
   assignedAt   DateTime   @default(now())
-  assignedBy   String
+  assignedBy   String     @default("")
 
   @@id([labelId, repositoryId])
 }
@@ -68,7 +68,7 @@ model LanguagesOnRepositories {
   repository   Repository @relation(fields: [repositoryId], references: [id])
   repositoryId Int
   assignedAt   DateTime   @default(now())
-  assignedBy   String
+  assignedBy   String     @default("")
 
   @@id([languageId, repositoryId])
 }
@@ -85,7 +85,7 @@ model LibrariesOnRepositories {
   repository   Repository @relation(fields: [repositoryId], references: [id])
   repositoryId Int
   assignedAt   DateTime   @default(now())
-  assignedBy   String
+  assignedBy   String     @default("")
 
   @@id([libraryId, repositoryId])
 }
