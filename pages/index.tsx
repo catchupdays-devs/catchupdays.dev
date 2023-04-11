@@ -38,34 +38,34 @@ export default function Index() {
               lineHeight: 1.4,
             }}
           >
-            We are connecting the companies with&nbsp;the&nbsp;open&#8209;source
-            software maintainers to keep the&nbsp;software free
-            and&nbsp;sustainable for everyone.
+            We connect companies with open&#8209;source software maintainers
+            to&nbsp;keep the software free and&nbsp;awesome for&nbsp;everyone.
           </Text>
         </Row>
         <Spacer y={6} />
       </Container>
       <Container xs>
         <Text>
-          Companies all around the world rely on open-source software in their
-          products. It&apos;s in their best interest to try and make such
-          software better.
+          There is a massive disconnect between the open-source community and
+          its most prominent users - the companies relying on it.
         </Text>
         <Spacer y={1} />
         <Text>
           That&apos;s where we come in - we help companies and employees
-          organize their time so employees can <Circled>catchup</Circled>
+          organize their time so employees can <Circled>catch up</Circled>
           on all those improvements to critical open-source libraries
-          they&apos;ve been putting aside, while the open source maintainers
-          help us keep the <Link href="/wishlist">wishlist</Link> curated and up
-          to date.
+          they&apos;ve been putting aside, while the open&#8209;source
+          maintainers help us keep the <Link href="/wishlist">
+            wishlist
+          </Link>{" "}
+          curated and up to date.
         </Text>
         <Spacer y={1} />
         <Text>
           Whether you&apos;re an open-source maintainer interested in getting
-          help with your project, engineer looking in making difference in
-          open-source space, or a CTO of a company relying on OS, you&apos;re in
-          the right place.
+          help with your project, an engineer looking to make a&nbsp;difference
+          in the&nbsp;open-source space, or a&nbsp;CTO of a&nbsp;company relying
+          on open-source, you&apos;re in&nbsp;the&nbsp;right place.
         </Text>
         <Spacer y={2} />
       </Container>
@@ -75,7 +75,7 @@ export default function Index() {
             <CardLink
               title={"Companies"}
               text={
-                "Would you like to ensure your apps are as stable and as neat as possible?"
+                "Would you like to ensure your apps are as stable and neat as possible?"
               }
               href={"/for-companies"}
               variant={"A"}
@@ -86,7 +86,7 @@ export default function Index() {
             <CardLink
               title={"Maintainers"}
               text={
-                "Would you like to get help with your project by the actual users?"
+                "Would you like to get help with your project from the actual users?"
               }
               href={"/for-maintainers"}
               variant={"B"}

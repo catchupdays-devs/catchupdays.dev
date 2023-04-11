@@ -7,8 +7,8 @@ export const Footer = () => {
       <Spacer y={6} />
       <Row justify={"center"}>
         <Text color="$gray600" small css={{ textAlign: "center" }}>
-          Catchup Days is organized and operated by the Open Source Software
-          Institute z.ú., registered at the Municipal Court in Prague.
+          Catchup Days initiative is organized and operated by the Open Source
+          Software Institute z.ú., registered at the Municipal Court in Prague.
         </Text>
       </Row>
       <Row justify={"center"}>

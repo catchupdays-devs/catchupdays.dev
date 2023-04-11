@@ -32,9 +32,9 @@ export default function Index() {
             lineHeight: 1.4,
           }}
         >
-          Let&apos;s face it - the open-source is broken. The biggest users of
-          any OS rely on it for their business, yet, just a fraction supports OS
-          projects in&nbsp;any&nbsp;way. Let&apos;s change that.
+          Let's face it - the open-source is broken. The biggest open-source
+          users rely on it for their business, yet just a fraction supports
+          those projects in any way. Let's change that.
         </Text>
         <Spacer y={2} />
       </Container>
@@ -42,12 +42,12 @@ export default function Index() {
         <Text>
           <strong>Let&apos;s start with how we can help you!</strong> What we do
           is help maintainers develop their projects by connecting them to the
-          companies relying on their such software. We do that in two ways:
+          companies relying on their software. We do that in two ways:
         </Text>
         <ul>
           <li>
-            By making it possible for employees to periodically dedicate their
-            time to you project development.
+            By making it possible for employees of companies around the world to
+            dedicate their time to your project development periodically.
           </li>
           <li>
             By providing companies with a ways to advertise on your projects
@@ -56,19 +56,19 @@ export default function Index() {
         </ul>
         <Text>Let&apos;s start with the first point.</Text>
         <Spacer y={2} />
-        <Subtitle>Get more collaborators</Subtitle>
+        <Subtitle>Get More Collaborators</Subtitle>
         <Text>
           How this works is that companies, in good faith, agree for their
-          employees to dedicate time to open-source during the working hours.
-          After all, it&apos;s in their best interest to make this software the
-          best version of itself. This usually takes a format of recurring
-          (~montly) events, where employees can take a day or two to work on
-          open-source projects, but differs from company to company.
+          employees to dedicate time to open-source during working hours. After
+          all, making this software the best version of itself is in their best
+          interest. This usually takes a format of recurring (~ monthly) events,
+          where employees can take a day or two to work on open-source projects,
+          but it differs from company to company.
         </Text>
         <Text>
-          It&apos;s completely up to the employee what said project is going to
-          be, or whether they are going to participate at all, but as you can
-          guess, many feel the need to give back to the community.
+          It's entirely up to the employee what the said project would be, or
+          whether they will participate​ at all, but as you can guess, many feel
+          the need to give back to the community.
         </Text>
         <Text>
           The next step is to discover how they can help. This is where the{" "}
@@ -80,36 +80,37 @@ export default function Index() {
         </Text>
         <Text>
           <Underline>This is where we need your help</Underline>. Since the
-          employee time is limited to some extent (up to the company to decide,
-          but mostly 2 days a month), the issues need to be something that can
-          be done is such short time. After all, it&apos;s never good to leave a
-          work half done lying around for a month.
+          employee's time is limited to some extent (up to the company to
+          decide, but usually two days a month), the issues need to be something
+          that can be done quickly. After all, leaving work half-done and lying
+          around for a month is never good.
         </Text>
         <Text>
-          That&apos;s why we filter the issues with{" "}
-          <code>good first issue</code> and <code>catchup days</code> labels.
-          Since you are the best person to decide on what is a good issue for a
-          limited time, we would ask you to actively curate the issues on your
-          repositories and assign labels accordingly.
+          That&apos;s why we filter the issues with <code>catchup days</code>,{" "}
+          <code>good first issue</code> and <code>help wanted</code> labels.
+          Since a maintainer is the best person to decide on what is a good
+          issue for a&nbsp;limited time, we would ask you to actively curate the
+          issues on your repositories and assign labels accordingly.
         </Text>
         <Text>Now, let&apos;s talk money...</Text>
         <Spacer y={2} />
-        <Subtitle>Get financial support</Subtitle>
+        <Subtitle>Get Financial Support</Subtitle>
         <Text>
-          Every OS collaborating with us can place a little banner advertising
-          Catchup&nbsp;Days on their GitHub repository, or their documentation
-          site. This is completely optional, but encouraged. This banner is
-          mainly used for promoting <Circled>Catchup&nbsp;Days</Circled>{" "}
-          initiative further, and for randomly advertising other OS projects
-          collaborating with us. OS projects helping other OS projects -
-          isn&apos;t that great?!
+          Every open-source collaborating with us can place a little banner
+          advertising Catchup Days on their GitHub repository or their
+          documentation site. This is entirely optional but encouraged. This
+          banner is mainly used to promote the{" "}
+          <Circled>Catchup&nbsp;Days</Circled> initiative further and randomly
+          advertise other open-source projects collaborating with us. OS
+          projects helping other OS projects - isn't that great?!
         </Text>
         <Text>
           But back to business - we also offer this advertising space to
-          companies collaborating with us, where they can pay to place their
-          logo for certain time, on a chosen OS projects. Any time this happens,
-          the funds are fully donated to the OS projects involved, through
-          platform we agree on (Open Collective, GitHub Sponsors, etc.).
+          companies collaborating with us, who can pay to place their
+          advertisement on your repository for a specific time. Any time this
+          happens, the funds are entirely donated to the open-source projects
+          involved through the means we agree on (Open Collective, GitHub
+          Sponsors, etc.).
         </Text>
       </Container>
       <SignupForm formKey={"xzbqjjog"} preselectedRole={"maintainer"} />

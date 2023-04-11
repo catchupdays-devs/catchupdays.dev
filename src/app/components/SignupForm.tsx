@@ -38,8 +38,8 @@ export const SignupForm = ({
                     textAlign: "center",
                   }}
                 >
-                  Leave us your email and we&apos;ll reach out in no time.
-                  Let&apos;s see how we can make open-source better,{" "}
+                  Leave us your email, and we&apos;ll reach out in no time.
+                  Let&apos;s see how we can make open-source better{" "}
                   <WithGradient>together</WithGradient>.
                 </Text>
               </Container>
