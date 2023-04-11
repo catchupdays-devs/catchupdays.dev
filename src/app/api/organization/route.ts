@@ -13,9 +13,14 @@ export async function GET(request: Request) {
   const org = await prisma.organization.findFirst({
     where: {
       url: organization,
+      isActive: true,
     },
     include: {
-      repositories: { select: { repository: true } },
+      repositories: {
+        select: {
+          repository: true,
+        },
+      },
     },
   });
 
@@ -23,7 +28,9 @@ export async function GET(request: Request) {
     return new Response("{}", { status: 404 });
   }
 
-  const repos = org.repositories.map((repo) => repo.repository.name);
+  const repos = org.repositories
+    .filter((repo) => repo.repository.isActive)
+    .map((repo) => repo.repository.name);
 
   await prisma.$disconnect();
 

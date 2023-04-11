@@ -15,6 +15,7 @@ model Organization {
   name         String                        @unique
   url          String                        @unique
   repositories RepositoriesOnOrganizations[]
+  isActive     Boolean                       @default(true)
 }
 
 model Repository {
@@ -24,6 +25,7 @@ model Repository {
   labels       LabelsOnRepositories[]
   languages    LanguagesOnRepositories[]
   libraries    LibrariesOnRepositories[]
+  isActive     Boolean                       @default(true)
 }
 
 model RepositoriesOnOrganizations {

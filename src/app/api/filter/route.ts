@@ -8,6 +8,7 @@ export async function GET(request: Request) {
     await prisma.repository.findMany({
       select: {
         name: true,
+        isActive: true,
       },
     })
   ).map((label) => label.name);

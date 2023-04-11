@@ -129,6 +129,7 @@ export async function GET(request: Request) {
           OR: [
             ...repos.map((repo) => ({
               name: repo,
+              isActive: true,
             })),
           ],
         },
@@ -159,6 +160,7 @@ export async function GET(request: Request) {
     repositoryListToQuery = (
       await prisma.repository.findMany({
         where: {
+          isActive: true,
           OR: [
             ...languages.map((lang) => ({
               languages: { some: { language: { name: lang } } },
