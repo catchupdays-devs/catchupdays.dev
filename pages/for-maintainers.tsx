@@ -107,10 +107,10 @@ export default function Index() {
         <Text>
           But back to business - we also offer this advertising space to
           companies collaborating with us, who can pay to place their
-          advertisement on your repository for a specific time. Any time this
-          happens, the funds are entirely donated to the open-source projects
-          involved through the means we agree on (Open Collective, GitHub
-          Sponsors, etc.).
+          advertisement (usually job offers) on your repository for a specific
+          time. Any time this happens, the funds are entirely donated to the
+          open-source projects involved through the means we agree on (Open
+          Collective, GitHub Sponsors, etc.).
         </Text>
       </Container>
       <SignupForm formKey={"xzbqjjog"} preselectedRole={"maintainer"} />
