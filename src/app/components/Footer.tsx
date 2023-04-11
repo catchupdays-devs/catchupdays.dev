@@ -1,7 +1,5 @@
 import React from "react";
 import { Container, Text, Row, Spacer } from "@nextui-org/react";
-import Link from "next/link";
-import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -10,8 +8,7 @@ export const Footer = () => {
       <Row justify={"center"}>
         <Text color="$gray600" small css={{ textAlign: "center" }}>
           Catchup Days is organized and operated by the Open Source Software
-          Institute z.ú., registered at the Municipal Court in Prague. IČO
-          123456789.
+          Institute z.ú., registered at the Municipal Court in Prague.
         </Text>
       </Row>
       <Row justify={"center"}>
