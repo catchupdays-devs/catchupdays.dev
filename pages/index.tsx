@@ -15,7 +15,7 @@ export default function Index() {
   return (
     <main>
       <Head>
-        <title>Catchup Days</title>
+        <title>Catchup Days - Let's Make Open Source Better, Together</title>
         <meta property="og:title" content="Catchup Days" key="title" />
       </Head>
       <Container md>
