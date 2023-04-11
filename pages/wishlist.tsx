@@ -350,13 +350,15 @@ export default function Wishlist() {
                         >
                           <Link href={issue.url}>
                             <Text>{issue.title}</Text>
+                          </Link>
+                          {" | "}
+                          <Link href={issue.url}>
                             <Text
                               css={{
                                 display: "inline-block",
                                 color: "$gray700",
                               }}
                             >
-                              {" | "}
                               {issue.repository}
                             </Text>
                           </Link>

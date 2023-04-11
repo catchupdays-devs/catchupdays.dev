@@ -25,8 +25,25 @@ const globalStyles = globalCss({
     margin: "0 auto 20px",
   },
   td: {
-    p: {
-      margin: 0,
+    whiteSpace: "nowrap",
+
+    a: {
+      display: "inline !important",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      maxWidth: "100% !important",
+
+      p: {
+        display: "inline !important",
+        margin: 0,
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        maxWidth: "100% !important",
+
+        "@media screen and (max-width: 600px)": {
+          fontSize: "14px !important",
+        },
+      },
     },
   },
 });
