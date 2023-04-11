@@ -1,10 +1,6 @@
-import { WishlistResponse } from "@/app/types";
-
 import { PrismaClient } from "@prisma/client";
 
 const { Octokit } = require("@octokit/core");
-
-const TESTING = false;
 
 const prisma = new PrismaClient();
 const octokit = new Octokit({
@@ -21,7 +17,7 @@ const getRepoIssues = async (owner: string, repo: string) => {
           }
           issues(
             first: 20
-            filterBy: { labels: ["catchup-days", "good-first-issue", "good first issue"] }
+            filterBy: { labels: ["catchup-days", "good-first-issue", "good first issue", "help wanted"] }
             orderBy: { direction: DESC, field: COMMENTS }
             states: [OPEN]
           ) {
