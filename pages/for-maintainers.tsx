@@ -105,7 +105,7 @@ export default function Index() {
           projects helping other OS projects - isn't that great?!
         </Text>
         <Text>
-          But back to business - we also offer this advertising space to
+          But back to business - we will be offering this advertising space to
           companies collaborating with us, who can pay to place their
           advertisement (usually job offers) on your repository for a specific
           time. Any time this happens, the funds are entirely donated to the

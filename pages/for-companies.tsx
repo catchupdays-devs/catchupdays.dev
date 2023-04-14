@@ -172,11 +172,12 @@ export default function Index() {
         </Text>
         <Subtitle>Advertise!</Subtitle>
         <Text>
-          Not convinced yet? We also offer advertising opportunities to the
-          companies that work with us. GitHub repositories and documentation
-          websites of all those open-source organizations are mainly visited by
-          devs, so it's the perfect opportunity for you to promote your company
-          if you need skilled workers using the same stack you are.
+          Not convinced yet? We are also preparing a platform for advertising,
+          which will be offered to the companies that work with us. GitHub
+          repositories and documentation websites of all those open-source
+          organizations are mainly visited by devs, so it's the perfect
+          opportunity for you to promote your company if you need skilled
+          workers using the same stack you are.
         </Text>
         <Text>
           By working with us, you'll get access to this super-specific
