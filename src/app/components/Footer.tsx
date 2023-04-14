@@ -8,7 +8,8 @@ export const Footer = () => {
       <Row justify={"center"}>
         <Text color="$gray600" small css={{ textAlign: "center" }}>
           Catchup Days initiative is organized and operated by the Open Source
-          Software Institute z.ú., registered at the Municipal Court in Prague.
+          Software Institute z.ú., a non-profit organization registered at the
+          Municipal Court in Prague. IČO: 18045570.
         </Text>
       </Row>
       <Row justify={"center"}>
