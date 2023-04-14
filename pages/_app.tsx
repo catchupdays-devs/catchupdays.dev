@@ -13,6 +13,7 @@ import "@/app/globals.css";
 import { Navigation } from "@/app/components/Navigation";
 import { Footer } from "@/app/components/Footer";
 import favicon from "@/app/favicon.ico";
+import ogImage from "@/app/images/og.png";
 import Head from "next/head";
 import { globalCss } from "@stitches/react";
 
@@ -114,6 +115,15 @@ function MyApp({
     <>
       <Head>
         <link rel="icon" type="image/x-icon" href={favicon.src} />
+        <meta
+          property="og:title"
+          content="Catchup Days - Let's Make Open Source Better, Together"
+        />
+        <meta
+          property="og:description"
+          content="We connect companies with open source software maintainers to keep the software free and awesome for everyone."
+        />
+        <meta property="og:image" content={ogImage.src} />
       </Head>
       {isBrowser && (
         <NextUIProvider theme={theme}>

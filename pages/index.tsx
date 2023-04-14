@@ -16,7 +16,6 @@ export default function Index() {
     <main>
       <Head>
         <title>Catchup Days - Let's Make Open Source Better, Together</title>
-        <meta property="og:title" content="Catchup Days" key="title" />
       </Head>
       <Container md>
         <Spacer y={4} />
