@@ -4,6 +4,7 @@ import NextJsLink from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { styled } from "@stitches/react";
+import github from "@/app/images/github.svg";
 
 const items = {
   Companies: "/for-companies",
@@ -40,6 +41,17 @@ export const Navigation = () => {
         ))}
       </Navbar.Content>
       <Navbar.Content>
+        <Navbar.Item hideIn="xs">
+          <Navbar.Link href="https://www.github.com/catchupdays">
+            <Image
+              src={github.src}
+              alt="Catchup Days GitHub"
+              width={26}
+              height={26}
+              priority
+            />
+          </Navbar.Link>
+        </Navbar.Item>
         <Navbar.Item>
           <Button
             /* @ts-ignore */
@@ -87,6 +99,24 @@ export const Navigation = () => {
             </Link>
           </Navbar.CollapseItem>
         ))}
+        <Navbar.CollapseItem
+          key="https://www.github.com/catchupdays"
+          /* @ts-ignore */
+          activeColor="black"
+        >
+          <Link
+            color="inherit"
+            css={{
+              minWidth: "100%",
+              display: "block",
+              fontSize: "36px",
+              fontWeight: "900",
+            }}
+            href="https://www.github.com/catchupdays"
+          >
+            GitHub
+          </Link>
+        </Navbar.CollapseItem>
       </Navbar.Collapse>
     </Navbar>
   );
