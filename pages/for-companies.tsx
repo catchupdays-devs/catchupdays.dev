@@ -57,7 +57,7 @@ export default function Index() {
             libraries the company is using.
           </li>
           <li>
-            Oh, and we also provide companies with way to advertise on many
+            Oh, and we also preparing a way for companies to advertise on many
             GitHub repositories of open-source software they use, but about that
             later.
           </li>
