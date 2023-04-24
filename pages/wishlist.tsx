@@ -7,6 +7,7 @@ import {
   Loading,
   Badge,
   Link,
+  Avatar,
 } from "@nextui-org/react";
 import Head from "next/head";
 import { useQuery } from "react-query";
@@ -15,7 +16,7 @@ import React, { useState } from "react";
 import { FiltersResponse, WishlistResponse } from "@/app/types";
 import { ListDisplaySwitch } from "@/app/components/ListDisplaySwitch";
 import { useFilters } from "@/app/components/useFilters";
-import { IssuesTable } from "@/app/components/IssuesTable";
+import { fadeIn, IssuesTable } from "@/app/components/IssuesTable";
 import { useListDisplay } from "@/app/components/useListDisplay";
 
 const processWishlistData = (data: WishlistResponse | undefined) => {
@@ -236,7 +237,7 @@ export default function Wishlist() {
                   />
                 </Row>
                 {listDisplay === "list" ? (
-                  <IssuesTable issues={issues} />
+                  <IssuesTable issues={issues} displayLogos={true} />
                 ) : (
                   Object.entries(issuesGroupedByRepo).map(([repo, issues]) => {
                     return (
@@ -245,12 +246,24 @@ export default function Wishlist() {
                           h4
                           css={{
                             textAlign: "left",
-                            marginTop: "30px",
+                            margin: "40px 0 5px 0",
+                            lineHeight: 1,
+                            animation: `${fadeIn} 300ms ease forwards`,
                           }}
                         >
+                          <Avatar
+                            size={"sm"}
+                            squared
+                            src={issues[0].owner?.avatarUrl}
+                            css={{
+                              display: "inline-flex",
+                              margin: "-4px 10px 4px -40px",
+                            }}
+                            bordered
+                          />
                           {repo}
                         </Text>
-                        <IssuesTable issues={issues} />
+                        <IssuesTable displayLogos={false} issues={issues} />
                       </React.Fragment>
                     );
                   })
