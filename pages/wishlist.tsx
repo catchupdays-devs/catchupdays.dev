@@ -10,6 +10,7 @@ import {
   Table,
   Link,
   Avatar,
+  Button,
 } from "@nextui-org/react";
 import Head from "next/head";
 import { useQuery } from "react-query";
@@ -17,6 +18,10 @@ import { WishlistForm } from "@/app/components/WishlistForm";
 import { styled } from "@stitches/react";
 import React, { useEffect, useState } from "react";
 import { FiltersResponse, WishlistResponse } from "@/app/types";
+import list from "@/app/images/list.svg";
+import headlinedList from "@/app/images/headlined-list.svg";
+import github from "@/app/images/github.svg";
+import Image from "next/image";
 
 const ReactionFullAmount = styled("span", {
   opacity: 1,
@@ -88,6 +93,10 @@ export default function Wishlist() {
   const [activeAttributes, setActiveAttributes] = React.useState(
     new Set<string>([])
   );
+  const [listDisplay, setListDisplay] = useState<"list" | "headlinedList">(
+    "list"
+  );
+
   const updateAttributes = (type: string, attrs: typeof activeAttributes) => {
     const currentSet = new Set([...activeAttributes]);
 
@@ -142,6 +151,20 @@ export default function Wishlist() {
     },
     {}
   );
+  const issues = data?.issues;
+  const issuesGroupedByRepo = data?.issues.reduce((acc, issue) => {
+    if (acc[issue.repository]) {
+      return {
+        ...acc,
+        [issue.repository]: [...acc[issue.repository], issue],
+      };
+    }
+
+    return {
+      ...acc,
+      [issue.repository]: [issue],
+    };
+  }, {});
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -302,131 +325,282 @@ export default function Wishlist() {
         {!isLoading ? (
           <Grid.Container gap={1} justify="center">
             {data?.repos.length ? (
-              <Table
-                striped
-                sticked
-                compact
-                selectionMode="none"
-                aria-label="Wishlist based on filters above"
-                css={{
-                  height: "auto",
-                  minWidth: "912px",
-                  background: "#fff",
-                }}
-              >
-                <Table.Header>
-                  <Table.Column> </Table.Column>
-                  <Table.Column>Title</Table.Column>
-                  {/*<Table.Column>Added</Table.Column>*/}
-                  {/*<Table.Column>Author</Table.Column>*/}
-                  <Table.Column
+              <>
+                <Row justify={"flex-end"}>
+                  <Button.Group flat size={"sm"} color="neutral">
+                    <Button onPress={() => setListDisplay("list")}>
+                      <Image
+                        style={{
+                          filter:
+                            listDisplay === "list"
+                              ? "drop-shadow(0 0 2px 2px rgb(0 0 0 / 0))"
+                              : "",
+                        }}
+                        src={list.src}
+                        alt="List"
+                        width={14}
+                        height={14}
+                        priority
+                      />
+                    </Button>
+                    <Button onPress={() => setListDisplay("headlinedList")}>
+                      <Image
+                        style={{
+                          filter:
+                            listDisplay === "headlinedList"
+                              ? "drop-shadow(0 0 2px 2px rgb(0 0 0 / 0))"
+                              : "",
+                        }}
+                        src={headlinedList.src}
+                        alt="Headlined List"
+                        width={14}
+                        height={14}
+                        priority
+                      />
+                    </Button>
+                  </Button.Group>
+                </Row>
+                {listDisplay === "list" ? (
+                  <Table
+                    striped
+                    sticked
+                    compact
+                    selectionMode="none"
+                    aria-label="Wishlist based on filters above"
                     css={{
-                      minWidth: "240px",
-                      textAlign: "right",
+                      height: "auto",
+                      minWidth: "912px",
+                      background: "#fff",
                     }}
                   >
-                    Reactions
-                  </Table.Column>
-                </Table.Header>
-                <Table.Body>
-                  {data?.issues.map((issue) => {
-                    return (
-                      <Table.Row key={issue.id}>
-                        <Table.Cell
-                          css={{
-                            maxWidth: "50px",
-                          }}
-                        >
-                          <Avatar
-                            size={"xs"}
-                            squared
-                            src={issue.owner?.avatarUrl}
-                          />
-                        </Table.Cell>
-                        <Table.Cell
-                          css={{
-                            maxWidth: "400px",
-                          }}
-                        >
-                          <Link href={issue.url}>
-                            <Text>{issue.title}</Text>
-                          </Link>
-                          {" | "}
-                          <Link href={issue.url}>
-                            <Text
+                    <Table.Header>
+                      <Table.Column> </Table.Column>
+                      <Table.Column>Title</Table.Column>
+                      {/*<Table.Column>Added</Table.Column>*/}
+                      {/*<Table.Column>Author</Table.Column>*/}
+                      <Table.Column
+                        css={{
+                          minWidth: "240px",
+                          textAlign: "right",
+                        }}
+                      >
+                        Reactions
+                      </Table.Column>
+                    </Table.Header>
+                    <Table.Body>
+                      {issues.map((issue) => {
+                        return (
+                          <Table.Row key={issue.id}>
+                            <Table.Cell
                               css={{
-                                display: "inline-block",
-                                color: "$gray700",
+                                maxWidth: "50px",
                               }}
                             >
-                              {issue.repository}
-                            </Text>
-                          </Link>
-                        </Table.Cell>
-                        {/*<Table.Cell>*/}
-                        {/*  {new Intl.DateTimeFormat("en-GB", {*/}
-                        {/*    dateStyle: "full",*/}
-                        {/*  }).format(new Date(issue.createdAt))}*/}
-                        {/*</Table.Cell>*/}
-                        {/*<Table.Cell>*/}
-                        {/*  {issue.author ? (*/}
-                        {/*    <User*/}
-                        {/*      src={issue.author.avatarUrl}*/}
-                        {/*      name={issue.author.login}*/}
-                        {/*      size={"xs"}*/}
-                        {/*    />*/}
-                        {/*  ) : null}*/}
-                        {/*</Table.Cell>*/}
-                        <Table.Cell>
-                          {issue.reactions.TOTAL ? (
-                            <Row justify={"flex-end"}>
-                              <ReactionHolder>
-                                <ReactionFullAmount>
-                                  {issue.reactions.TOTAL === 100
-                                    ? "100+"
-                                    : issue.reactions.TOTAL}
-                                </ReactionFullAmount>
-                                <Reaction
-                                  num={issue.reactions.LAUGH}
-                                  icon="😄"
-                                />
-                                <Reaction
-                                  num={issue.reactions.HOORAY}
-                                  icon="🎉"
-                                />
-                                <Reaction
-                                  num={issue.reactions.CONFUSED}
-                                  icon="😕"
-                                />
-                                <Reaction
-                                  num={issue.reactions.HEART}
-                                  icon="❤️"
-                                />
-                                <Reaction
-                                  num={issue.reactions.EYES}
-                                  icon="👀"
-                                />
-                                <Reaction
-                                  num={issue.reactions.ROCKET}
-                                  icon="🚀"
-                                />
-                                <Reaction
-                                  num={issue.reactions.THUMBS_DOWN}
-                                  icon="👎"
-                                />
-                                <Reaction
-                                  num={issue.reactions.THUMBS_UP}
-                                  icon="👍"
-                                />
-                              </ReactionHolder>
-                            </Row>
-                          ) : null}
-                        </Table.Cell>
-                      </Table.Row>
+                              <Avatar
+                                size={"xs"}
+                                squared
+                                src={issue.owner?.avatarUrl}
+                              />
+                            </Table.Cell>
+                            <Table.Cell
+                              css={{
+                                maxWidth: "400px",
+                              }}
+                            >
+                              <Link href={issue.url}>
+                                <Text>{issue.title}</Text>
+                              </Link>
+                              {" | "}
+                              <Link href={issue.url}>
+                                <Text
+                                  css={{
+                                    display: "inline-block",
+                                    color: "$gray700",
+                                  }}
+                                >
+                                  {issue.repository}
+                                </Text>
+                              </Link>
+                            </Table.Cell>
+                            <Table.Cell>
+                              {issue.reactions.TOTAL ? (
+                                <Row justify={"flex-end"}>
+                                  <ReactionHolder>
+                                    <ReactionFullAmount>
+                                      {issue.reactions.TOTAL === 100
+                                        ? "100+"
+                                        : issue.reactions.TOTAL}
+                                    </ReactionFullAmount>
+                                    <Reaction
+                                      num={issue.reactions.LAUGH}
+                                      icon="😄"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.HOORAY}
+                                      icon="🎉"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.CONFUSED}
+                                      icon="😕"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.HEART}
+                                      icon="❤️"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.EYES}
+                                      icon="👀"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.ROCKET}
+                                      icon="🚀"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.THUMBS_DOWN}
+                                      icon="👎"
+                                    />
+                                    <Reaction
+                                      num={issue.reactions.THUMBS_UP}
+                                      icon="👍"
+                                    />
+                                  </ReactionHolder>
+                                </Row>
+                              ) : null}
+                            </Table.Cell>
+                          </Table.Row>
+                        );
+                      })}
+                    </Table.Body>
+                  </Table>
+                ) : (
+                  Object.entries(issuesGroupedByRepo).map(([repo, issues]) => {
+                    return (
+                      <React.Fragment key={repo}>
+                        <Text
+                          h4
+                          css={{
+                            textAlign: "left",
+                            marginTop: "30px",
+                          }}
+                        >
+                          {repo}
+                        </Text>
+                        <Table
+                          striped
+                          sticked
+                          compact
+                          selectionMode="none"
+                          aria-label="Wishlist based on filters above"
+                          css={{
+                            height: "auto",
+                            minWidth: "912px",
+                            background: "#fff",
+                          }}
+                        >
+                          <Table.Header>
+                            <Table.Column> </Table.Column>
+                            <Table.Column>Title</Table.Column>
+                            {/*<Table.Column>Added</Table.Column>*/}
+                            {/*<Table.Column>Author</Table.Column>*/}
+                            <Table.Column
+                              css={{
+                                minWidth: "240px",
+                                textAlign: "right",
+                              }}
+                            >
+                              Reactions
+                            </Table.Column>
+                          </Table.Header>
+                          <Table.Body>
+                            {issues.map((issue) => {
+                              return (
+                                <Table.Row key={issue.id}>
+                                  <Table.Cell
+                                    css={{
+                                      maxWidth: "50px",
+                                    }}
+                                  >
+                                    <Avatar
+                                      size={"xs"}
+                                      squared
+                                      src={issue.owner?.avatarUrl}
+                                    />
+                                  </Table.Cell>
+                                  <Table.Cell
+                                    css={{
+                                      maxWidth: "400px",
+                                    }}
+                                  >
+                                    <Link href={issue.url}>
+                                      <Text>{issue.title}</Text>
+                                    </Link>
+                                    {" | "}
+                                    <Link href={issue.url}>
+                                      <Text
+                                        css={{
+                                          display: "inline-block",
+                                          color: "$gray700",
+                                        }}
+                                      >
+                                        {issue.repository}
+                                      </Text>
+                                    </Link>
+                                  </Table.Cell>
+                                  <Table.Cell>
+                                    {issue.reactions.TOTAL ? (
+                                      <Row justify={"flex-end"}>
+                                        <ReactionHolder>
+                                          <ReactionFullAmount>
+                                            {issue.reactions.TOTAL === 100
+                                              ? "100+"
+                                              : issue.reactions.TOTAL}
+                                          </ReactionFullAmount>
+                                          <Reaction
+                                            num={issue.reactions.LAUGH}
+                                            icon="😄"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.HOORAY}
+                                            icon="🎉"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.CONFUSED}
+                                            icon="😕"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.HEART}
+                                            icon="❤️"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.EYES}
+                                            icon="👀"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.ROCKET}
+                                            icon="🚀"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.THUMBS_DOWN}
+                                            icon="👎"
+                                          />
+                                          <Reaction
+                                            num={issue.reactions.THUMBS_UP}
+                                            icon="👍"
+                                          />
+                                        </ReactionHolder>
+                                      </Row>
+                                    ) : null}
+                                  </Table.Cell>
+                                </Table.Row>
+                              );
+                            })}
+                          </Table.Body>
+                        </Table>
+                      </React.Fragment>
                     );
-                  })}
-                </Table.Body>
-              </Table>
+                  })
+                )}
+              </>
             ) : (
               <Container>
                 <Spacer y={5} />
