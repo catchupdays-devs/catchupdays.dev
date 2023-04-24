@@ -46,10 +46,26 @@ export default function Index() {
       </Container>
       <Container md>
         <Hero />
-        <Spacer y={2} />
+        <Spacer
+          y={4}
+          css={{
+            display: "none",
+            "@xs": { display: "none" },
+            "@sm": { display: "block" },
+          }}
+        />
+
+        <Spacer
+          y={1}
+          css={{
+            display: "block",
+            "@xs": { display: "block" },
+            "@sm": { display: "none" },
+          }}
+        />
       </Container>
       <Container xs>
-        <Subtitle>Win-Win-Win situation</Subtitle>
+        <Subtitle>Win-Win-Win Situation</Subtitle>
         <Text>
           There is a massive disconnect between the open-source community and
           its most prominent users - the companies relying on it.
