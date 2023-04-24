@@ -33,7 +33,7 @@ export const IssuesTable = (props: { issues: Issue[] }) => {
       </Table.Header>
       <Table.Body>
         {props.issues.map((issue) => (
-          <Table.Row>
+          <Table.Row key={issue.id}>
             <Table.Cell
               css={{
                 maxWidth: "50px",
