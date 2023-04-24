@@ -59,7 +59,12 @@ export const Navigation = () => {
             ghost
             auto
             flat
-            href={asPath.startsWith("/wishlist") ? "/#enroll" : "#enroll"}
+            href={
+              asPath.startsWith("/for-companies") ||
+              asPath.startsWith("/for-maintainers")
+                ? "#enroll"
+                : "/#enroll"
+            }
             as={NextJsLink}
           >
             Enroll
