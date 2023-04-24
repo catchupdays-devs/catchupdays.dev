@@ -7,7 +7,7 @@ export const Link = styled(NextLink, {
   textDecoration: "underline",
   //fontWeight: "bold",
   color: "var(--nextui-colors-gray600);",
-  fontSize: "16px",
+  fontSize: "14px",
   margin: "0 20px 0 0",
 
   "@media only screen and (min-width: 520px)": {
@@ -25,7 +25,7 @@ export const Footer = () => {
             color="$gray600"
             css={{
               textAlign: "left",
-              fontSize: "16px",
+              fontSize: "14px",
               margin: "0",
               lineHeight: "1.2",
               //fontWeight: "bold",
