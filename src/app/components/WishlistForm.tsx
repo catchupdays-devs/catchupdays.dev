@@ -220,7 +220,7 @@ const Label = ({
           textAlign: "center",
           lineHeight: "11px",
           display: "inline-block",
-          padding: "0 1px 0 0",
+          padding: "1px 1px 0 0",
         }}
         onClick={removeItem}
       >
