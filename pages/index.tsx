@@ -18,14 +18,12 @@ export default function Index() {
       <Head>
         <title>Catchup Days - Let's Make Open Source Better, Together</title>
       </Head>
-      <Container md>
+      <Container md justify={"center"}>
         <Spacer y={4} />
-        <Row justify={"center"}>
-          <MainTitle>
-            Contributing to open-source <br /> is the ultimate{" "}
-            <WithGradient black>company benefit</WithGradient>
-          </MainTitle>
-        </Row>
+        <MainTitle>
+          Contributing <br /> to open-source <br /> is the ultimate{" "}
+          <WithGradient black>company benefit</WithGradient>
+        </MainTitle>
         <Spacer y={1} />
       </Container>
       <Container xs>

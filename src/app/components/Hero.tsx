@@ -68,11 +68,11 @@ export const Hero = () => {
           <Card variant="bordered">
             <Card.Body>
               <Text h4 css={{ marginBottom: 0 }}>
-                <WithGradient>Companies</WithGradient> build better apps,
+                <WithGradient>Companies</WithGradient> build exceptional apps,
               </Text>
               <Text css={{ margin: "0" }}>
-                keep their <strong>customers happy</strong>, and make the
-                employees healthy and <strong>engaged</strong>.
+                keep their <strong>customers happy</strong>, and make employees
+                healthy and <strong>engaged</strong>.
               </Text>
             </Card.Body>
           </Card>
@@ -102,14 +102,14 @@ export const Hero = () => {
           />
           <Card variant="bordered">
             <Card.Body>
-              <Text h4 css={{ margin: "0" }}>
+              <Text h4 css={{ margin: "0 0 2px" }}>
                 <WithGradient>Employees</WithGradient> become better
                 professionals,
               </Text>
               <Text css={{ margin: "0" }}>
-                understand their <strong>daily tools</strong> better, and build{" "}
-                <strong>reputation</strong> with public contributions to
-                open-source.
+                have a deeper <strong>understanding</strong> of their daily
+                tools, and build a&nbsp;<strong>reputation</strong> with public
+                contributions.
               </Text>
             </Card.Body>
           </Card>
@@ -134,11 +134,11 @@ export const Hero = () => {
           <Card variant="bordered">
             <Card.Body>
               <Text h4 css={{ margin: "0" }}>
-                <WithGradient>Maintainers</WithGradient> can focus on roadmap,
+                <WithGradient>Maintainers</WithGradient> focus on the roadmap,
               </Text>
               <Text css={{ margin: "0" }}>
                 get engineers to help <strong>build the project</strong>, build
-                better software <strong>faster</strong>, and can get financial
+                superior software <strong>faster</strong>, and can get financial
                 support.
               </Text>
             </Card.Body>

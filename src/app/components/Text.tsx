@@ -23,6 +23,10 @@ export const MainTitle = styled("h1", {
     span: {
       fontSize: "6vw",
     },
+
+    br: {
+      display: "none",
+    },
   },
 
   "@media only screen and (min-width: 1280px)": {
