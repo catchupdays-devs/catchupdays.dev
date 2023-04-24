@@ -137,8 +137,8 @@ export const Hero = () => {
                 <WithGradient>Maintainers</WithGradient> focus on the roadmap,
               </Text>
               <Text css={{ margin: "0" }}>
-                get engineers to help <strong>build the project</strong>, build
-                superior software <strong>faster</strong>, and can get financial
+                get devs to help <strong>build the project</strong>, build
+                better software <strong>faster</strong>, and can get financial
                 support.
               </Text>
             </Card.Body>
