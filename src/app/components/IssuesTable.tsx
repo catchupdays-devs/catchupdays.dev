@@ -14,6 +14,26 @@ export const StyledTable = styled(Table, {
   animation: `${fadeIn} 300ms ease forwards`,
 });
 
+export const VisitedDot = styled("a", {
+  display: "block !important",
+  position: "absolute",
+  top: "50%",
+  left: "-1px",
+  width: "5px",
+  height: "26px",
+  borderRadius: "50%",
+  transition: ".2s",
+  color: "#fff",
+  fontSize: "18px",
+  transform: "translateY(-50%)",
+  verticalAlign: "middle",
+  pointerEvents: "none",
+
+  "&:visited": {
+    color: "black",
+  },
+});
+
 export const IssuesTable = (props: {
   issues: Issue[];
   displayLogos: boolean;
@@ -61,6 +81,7 @@ export const IssuesTable = (props: {
                   maxWidth: "50px",
                 }}
               >
+                <VisitedDot href={issue.url}>•</VisitedDot>
                 <Avatar size={"xs"} squared src={issue.owner?.avatarUrl} />
               </Table.Cell>
             ) : (
@@ -70,7 +91,7 @@ export const IssuesTable = (props: {
                   maxWidth: "0",
                 }}
               >
-                {" "}
+                <VisitedDot href={issue.url}>•</VisitedDot>
               </Table.Cell>
             )}
             <Table.Cell
