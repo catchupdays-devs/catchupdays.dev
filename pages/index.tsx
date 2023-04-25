@@ -10,6 +10,7 @@ import {
 } from "@/app/components/Text";
 import React from "react";
 import { CardLink } from "@/app/components/CardLink";
+import { Hero } from "@/app/components/Hero";
 
 export default function Index() {
   return (
@@ -17,14 +18,12 @@ export default function Index() {
       <Head>
         <title>Catchup Days - Let's Make Open Source Better, Together</title>
       </Head>
-      <Container md>
+      <Container md justify={"center"}>
         <Spacer y={4} />
-        <Row justify={"center"}>
-          <MainTitle>
-            Let&apos;s Make Open Source <br /> Better,{" "}
-            <WithGradient black>Together</WithGradient>
-          </MainTitle>
-        </Row>
+        <MainTitle>
+          Contributing <br /> to open-source <br /> is&nbsp;the&nbsp;ultimate{" "}
+          <WithGradient black>company benefit</WithGradient>
+        </MainTitle>
         <Spacer y={1} />
       </Container>
       <Container xs>
@@ -37,27 +36,54 @@ export default function Index() {
               lineHeight: 1.4,
             }}
           >
-            We connect companies with open&#8209;source software maintainers
-            to&nbsp;keep the software free and&nbsp;awesome for&nbsp;everyone.
+            We connect best companies with open‑source maintainers to keep the
+            software free and excellent for everyone.
           </Text>
         </Row>
-        <Spacer y={6} />
+        <Spacer y={1} />
+      </Container>
+      <Container md>
+        <Hero />
+        <Spacer
+          y={4}
+          css={{
+            display: "none",
+            "@xs": { display: "none" },
+            "@sm": { display: "block" },
+          }}
+        />
+
+        <Spacer
+          y={1}
+          css={{
+            display: "block",
+            "@xs": { display: "block" },
+            "@sm": { display: "none" },
+          }}
+        />
       </Container>
       <Container xs>
+        <Subtitle>Win-Win-Win Situation</Subtitle>
         <Text>
           There is a massive disconnect between the open-source community and
           its most prominent users - the companies relying on it.
         </Text>
         <Spacer y={1} />
         <Text>
-          That&apos;s where we come in - we help companies and employees
-          organize their time so employees can <Circled>catch up</Circled>
-          on all those improvements to critical open-source libraries
-          they&apos;ve been putting aside, while the open&#8209;source
-          maintainers help us keep the <Link href="/wishlist">
-            wishlist
-          </Link>{" "}
-          curated and up to date.
+          That’s where we come in:
+          <ul>
+            <li>
+              We help <strong>companies</strong> to find time for their
+              employees to <Circled>catch&nbsp;up</Circled> on those
+              open&#8209;source libraries contributions they have wished to make
+              for so long.
+            </li>
+            <li>
+              We also help <strong>open-source maintainers</strong> to build
+              a&nbsp;curated <Link href="/wishlist">wishlist</Link> of tasks
+              that would fit the catch&nbsp;up agenda.
+            </li>
+          </ul>
         </Text>
         <Spacer y={1} />
         <Text>

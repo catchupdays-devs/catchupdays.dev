@@ -9,27 +9,31 @@ export const MainTitle = styled("h1", {
   textAlign: "center",
   lineHeight: 1.2,
   fontWeight: "900",
-  fontSize: "12vw",
+  fontSize: "10vw",
   width: "100%",
 
   span: {
-    fontSize: "11.9vw",
+    fontSize: "10vw",
     display: "inline-block",
   },
 
   "@media only screen and (min-width: 520px)": {
-    fontSize: "8vw",
+    fontSize: "6vw",
 
     span: {
-      fontSize: "8vw",
+      fontSize: "6vw",
+    },
+
+    br: {
+      display: "none",
     },
   },
 
   "@media only screen and (min-width: 1280px)": {
-    fontSize: "100px",
+    fontSize: "65px",
 
     span: {
-      fontSize: "100px",
+      fontSize: "65px",
     },
   },
 });

@@ -57,7 +57,7 @@ export default function Index() {
             libraries the company is using.
           </li>
           <li>
-            Oh, and we also provide companies with way to advertise on many
+            Oh, and we also preparing a way for companies to advertise on many
             GitHub repositories of open-source software they use, but about that
             later.
           </li>
@@ -188,8 +188,8 @@ export default function Index() {
         </Text>
         <Spacer y={2} />
         <Text>
-          Whether you're an engineer, engineering manager, or CTO, leave us your
-          e-mail, and let's kick off the ride together.
+          Whether you're an engineer, engineering manager, HR manager, or CTO,
+          leave us your e-mail, and let's kick off the ride together.
         </Text>
       </Container>
       <SignupForm formKey={"xzbqjjog"} preselectedRole={"business"} />
