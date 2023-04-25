@@ -22,6 +22,7 @@ export const LinesContainer = styled("div", {
 export const Lines = styled("div", {
   position: "absolute",
   display: "none",
+  backgroundSize: "100% 100%",
 
   "@media only screen and (min-width: 960px)": {
     display: "block",
@@ -38,10 +39,10 @@ export const Lines = styled("div", {
       },
       b: {
         backgroundImage: `url(${line2.src})`,
-        width: "327px",
-        height: "169px",
+        width: "344px",
+        height: "167px",
         top: "30px",
-        left: "80%",
+        left: "82%",
       },
       c: {
         backgroundImage: `url(${line3.src})`,
@@ -93,7 +94,7 @@ export const Hero = () => {
             <Lines position={"b"} />
           </LinesContainer>
           <Spacer
-            y={4}
+            y={5}
             css={{
               display: "none",
               "@xs": { display: "none" },
