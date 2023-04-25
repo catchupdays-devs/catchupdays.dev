@@ -21,7 +21,7 @@ export default function Index() {
       <Container md justify={"center"}>
         <Spacer y={4} />
         <MainTitle>
-          Contributing <br /> to open-source <br /> is the ultimate{" "}
+          Contributing <br /> to open-source <br /> is&nbsp;the&nbsp;ultimate{" "}
           <WithGradient black>company benefit</WithGradient>
         </MainTitle>
         <Spacer y={1} />
@@ -36,7 +36,7 @@ export default function Index() {
               lineHeight: 1.4,
             }}
           >
-            We connect companies with open‑source maintainers to keep the
+            We connect best companies with open‑source maintainers to keep the
             software free and excellent for everyone.
           </Text>
         </Row>

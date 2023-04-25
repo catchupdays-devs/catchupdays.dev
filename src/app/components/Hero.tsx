@@ -71,8 +71,8 @@ export const Hero = () => {
                 <WithGradient>Companies</WithGradient> build exceptional apps,
               </Text>
               <Text css={{ margin: "0" }}>
-                keep their <strong>customers happy</strong>, and make employees
-                healthy and <strong>engaged</strong>.
+                keep their <strong>customers happy</strong>, and make employees{" "}
+                <strong>engaged</strong> and delighted.
               </Text>
             </Card.Body>
           </Card>
