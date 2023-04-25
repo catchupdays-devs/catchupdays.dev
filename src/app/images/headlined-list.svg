@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="421px" height="384px" viewBox="0 0 421 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.1 (89650) - https://sketch.com -->
+    <title>list</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-702.000000, -1131.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="list" transform="translate(702.000000, 1131.000000)">
+                <path d="M19.1818182,0 C8.571875,0 0,14.3 0,32 C0,49.7 8.571875,64 19.1818182,64 L191.818182,64 C202.428125,64 211,49.7 211,32 C211,14.3 202.428125,0 191.818182,0 L19.1818182,0 Z M38.2727273,160 C17.103125,160 0,174.3 0,192 C0,209.7 17.103125,224 38.2727273,224 L382.727273,224 C403.896875,224 421,209.7 421,192 C421,174.3 403.896875,160 382.727273,160 L38.2727273,160 Z M38.2727273,320 C17.103125,320 0,334.3 0,352 C0,369.7 17.103125,384 38.2727273,384 L382.727273,384 C403.896875,384 421,369.7 421,352 C421,334.3 403.896875,320 382.727273,320 L38.2727273,320 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
