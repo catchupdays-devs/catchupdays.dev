@@ -32,7 +32,6 @@ export default function Index() {
           Software Institute&nbsp;z.ú., a non-profit organization registered at
           the Municipal Court in Prague.
         </Text>
-
         <Subtitle>Address</Subtitle>
         <Text>
           Open Source Software Institute z. ú. <br />
@@ -40,13 +39,11 @@ export default function Index() {
           120 00 Prague 2 <br />
           Czech Republic
         </Text>
-        <Spacer y={2} />
         <Subtitle>Contact Information</Subtitle>
         <Text>
           Email for general queries: hello@catchupdays.dev <br />
           Email for legal matters: legal@catchupdays.dev
         </Text>
-
         <Subtitle>VAT ID</Subtitle>
         <Text>
           Czech Republic personal identification number (IČO): 18045570

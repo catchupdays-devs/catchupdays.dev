@@ -10,7 +10,7 @@ export const Link = styled(NextLink, {
   fontSize: "14px",
   margin: "0 20px 0 0",
 
-  "@media only screen and (min-width: 520px)": {
+  "@media only screen and (min-width: 650px)": {
     margin: "0 0 0 20px",
   },
 });
@@ -20,7 +20,7 @@ export const Footer = () => {
     <Container sm>
       <Spacer y={6} />
       <Grid.Container gap={2} alignItems={"center"}>
-        <Grid md={8} direction={"column"} alignItems={"flex-start"}>
+        <Grid sm={8} direction={"column"} alignItems={"flex-start"}>
           <Text
             color="$gray600"
             css={{
@@ -35,7 +35,7 @@ export const Footer = () => {
             Institute z.ú. All rights reserved.
           </Text>
         </Grid>
-        <Grid md={4} justify={"flex-end"}>
+        <Grid sm={4} justify={"flex-end"}>
           <Link href={"/legal-notice"}>Legal</Link>
           <Link href={"mailto:hello@catchupdays.dev"}>Contact</Link>
         </Grid>
