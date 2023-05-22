@@ -1,10 +1,11 @@
 import fs from "fs";
 import path from "path";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const filePath = path.resolve("./", "src/app/images/banner.png");
+const filePath = path.resolve("./", "src/app/images/banner-min.png");
 const imageBuffer = fs.readFileSync(filePath);
 
-export default function Image(req, res) {
+export default function Image(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader("Content-Type", "image/jpg");
   res.send(imageBuffer);
 }
