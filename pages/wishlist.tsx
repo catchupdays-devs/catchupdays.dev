@@ -8,16 +8,18 @@ import {
   Badge,
   Link,
   Avatar,
+  Tooltip,
 } from "@nextui-org/react";
 import Head from "next/head";
 import { useQuery } from "react-query";
 import { WishlistForm } from "@/app/components/WishlistForm";
-import React, { useState } from "react";
-import { FiltersResponse, WishlistResponse } from "@/app/types";
+import React from "react";
+import { FiltersResponse, Issue, WishlistResponse } from "@/app/types";
 import { ListDisplaySwitch } from "@/app/components/ListDisplaySwitch";
 import { useFilters } from "@/app/components/useFilters";
 import { fadeIn, IssuesTable } from "@/app/components/IssuesTable";
 import { useListDisplay } from "@/app/components/useListDisplay";
+import { Info } from "lucide-react";
 
 const processWishlistData = (data: WishlistResponse | undefined) => {
   if (data) {
@@ -31,15 +33,21 @@ const processWishlistData = (data: WishlistResponse | undefined) => {
           return {
             ...acc,
             // @ts-ignore
-            [issue.repository]: [...acc[issue.repository], issue],
+            [issue.repository]: {
+              issues: [...acc[issue.repository].issues, issue],
+              ideal: issue.ideal,
+            },
           };
         }
 
         return {
           ...acc,
-          [issue.repository]: [issue],
+          [issue.repository]: {
+            issues: [issue],
+            ideal: issue.ideal,
+          },
         };
-      }, {}) as Record<string, WishlistResponse["issues"]>,
+      }, {}) as Record<string, { issues: Issue[]; ideal: boolean }>,
     };
   }
 
@@ -237,9 +245,9 @@ export default function Wishlist() {
                   />
                 </Row>
                 {listDisplay === "list" ? (
-                  <IssuesTable issues={issues} displayLogos={true} />
+                  <IssuesTable issues={issues} displayFullInfo={true} />
                 ) : (
-                  Object.entries(issuesGroupedByRepo).map(([repo, issues]) => {
+                  Object.entries(issuesGroupedByRepo).map(([repo, group]) => {
                     return (
                       <React.Fragment key={repo}>
                         <Text
@@ -248,6 +256,8 @@ export default function Wishlist() {
                             textAlign: "left",
                             margin: "40px 0 5px 0",
                             lineHeight: 1,
+                            verticalAlign: "middle",
+                            display: "flex",
                             animation: `${fadeIn} 300ms ease forwards`,
                           }}
                         >
@@ -261,9 +271,32 @@ export default function Wishlist() {
                             }}
                             bordered
                           />
-                          {repo}
+                          <span>{repo}</span>
+                          {!group.ideal ? (
+                            <Tooltip
+                              style={{
+                                display: "inline-block",
+                                margin: "0 0 0 8px",
+                              }}
+                              content={
+                                "These issues might be not ideal. Maintainers don't currently have a well sorted list of good issues for outside devs."
+                              }
+                            >
+                              <Info
+                                style={{
+                                  cursor: "pointer",
+
+                                  //color: "var(--nextui-colors-red800)",
+                                }}
+                                size={18}
+                              />
+                            </Tooltip>
+                          ) : null}
                         </Text>
-                        <IssuesTable displayLogos={false} issues={issues} />
+                        <IssuesTable
+                          displayFullInfo={false}
+                          issues={group.issues}
+                        />
                       </React.Fragment>
                     );
                   })

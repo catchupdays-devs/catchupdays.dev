@@ -26,6 +26,7 @@ export type Issue = {
   reactions: TReactions;
   url: string;
   id: string;
+  ideal: boolean;
 };
 
 export type WishlistResponse = {

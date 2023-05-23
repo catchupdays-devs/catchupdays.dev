@@ -1,8 +1,9 @@
-import { Avatar, Link, Row, Table, Text } from "@nextui-org/react";
+import { Avatar, Link, Row, Tooltip, Table, Text } from "@nextui-org/react";
 import { Reactions } from "@/app/components/Reactions";
 import React from "react";
 import { Issue } from "@/app/types";
 import { keyframes, styled } from "@stitches/react";
+import { Info } from "lucide-react";
 
 export const fadeIn = keyframes({
   "0%": { transform: "translate3d(0, -4px, 0)", opacity: 0 },
@@ -36,7 +37,7 @@ export const VisitedDot = styled("a", {
 
 export const IssuesTable = (props: {
   issues: Issue[];
-  displayLogos: boolean;
+  displayFullInfo: boolean;
 }) => {
   return (
     <StyledTable
@@ -54,7 +55,7 @@ export const IssuesTable = (props: {
       <Table.Header>
         <Table.Column
           css={{
-            display: props.displayLogos ? "50px" : "0px",
+            display: props.displayFullInfo ? "50px" : "0px",
           }}
         >
           {" "}
@@ -62,6 +63,15 @@ export const IssuesTable = (props: {
         <Table.Column>Title</Table.Column>
         {/*<Table.Column>Added</Table.Column>*/}
         {/*<Table.Column>Author</Table.Column>*/}
+        <Table.Column
+          css={{
+            minWidth: "30px",
+            textAlign: "right",
+            display: props.displayFullInfo ? "50px" : "0px",
+          }}
+        >
+          {" "}
+        </Table.Column>
         <Table.Column
           css={{
             minWidth: "240px",
@@ -74,7 +84,7 @@ export const IssuesTable = (props: {
       <Table.Body>
         {props.issues.map((issue) => (
           <Table.Row key={issue.id}>
-            {props.displayLogos ? (
+            {props.displayFullInfo ? (
               <Table.Cell
                 css={{
                   padding: "0",
@@ -82,7 +92,9 @@ export const IssuesTable = (props: {
                 }}
               >
                 <VisitedDot href={issue.url}>•</VisitedDot>
-                <Avatar size={"xs"} squared src={issue.owner?.avatarUrl} />
+                {issue.owner?.avatarUrl ? (
+                  <Avatar size={"xs"} squared src={issue.owner?.avatarUrl} />
+                ) : null}
               </Table.Cell>
             ) : (
               <Table.Cell
@@ -114,6 +126,39 @@ export const IssuesTable = (props: {
                 </Text>
               </Link>
             </Table.Cell>
+            {props.displayFullInfo ? (
+              <Table.Cell
+                css={{
+                  minWidth: "30px",
+                  textAlign: "right",
+                }}
+              >
+                {issue.ideal ? null : (
+                  <Tooltip
+                    content={
+                      "This issue might be not ideal. Maintainers don't currently have a well sorted list of good issues for outside devs."
+                    }
+                  >
+                    <Info
+                      style={{
+                        cursor: "pointer",
+                        //color: "var(--nextui-colors-red800)",
+                      }}
+                      size={18}
+                    />
+                  </Tooltip>
+                )}
+              </Table.Cell>
+            ) : (
+              <Table.Cell
+                css={{
+                  padding: "0",
+                  maxWidth: "0",
+                }}
+              >
+                {" "}
+              </Table.Cell>
+            )}
             <Table.Cell>
               {issue.reactions.TOTAL ? (
                 <Row justify={"flex-end"}>
