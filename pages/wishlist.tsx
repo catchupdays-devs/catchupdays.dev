@@ -32,8 +32,8 @@ const processWishlistData = (data: WishlistResponse | undefined) => {
         if (acc[issue.repository]) {
           return {
             ...acc,
-            // @ts-ignore
             [issue.repository]: {
+              // @ts-ignore
               issues: [...acc[issue.repository].issues, issue],
               ideal: issue.ideal,
             },
