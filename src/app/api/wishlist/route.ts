@@ -77,6 +77,8 @@ const formatIssuesResponse = (
 const getRepoIssues = async (owner: string, repo: string) => {
   const cachedIssues = await kv.get(`repo:${owner}:${repo}`);
 
+  console.log(`KV store hit for repo ${owner}/${repo}`);
+
   if (cachedIssues) {
     return cachedIssues as any;
   }
@@ -280,8 +282,7 @@ export async function GET(request: Request) {
       .map((repo) => repo.name);
   }
 
-  const repositoryListToIgnored = repositoryListToQuery.slice(10);
-  repositoryListToQuery = repositoryListToQuery.slice(0, 10);
+  const repositoryListToIgnored: string[] = [];
 
   const issuesOfAllRepos = await Promise.all(
     repositoryListToQuery.map((repo) => {
