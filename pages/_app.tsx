@@ -47,6 +47,12 @@ const globalStyles = globalCss({
       },
     },
   },
+
+  ".nextui-dropdown-item-content": {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  }
 });
 
 const queryClient = new QueryClient();
