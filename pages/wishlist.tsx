@@ -23,11 +23,18 @@ import { Info } from "lucide-react";
 
 const processWishlistData = (data: WishlistResponse | undefined) => {
   if (data) {
+    const sortedIssues = [...data?.issues];
+    sortedIssues.sort(function (a, b) {
+      return a.repository
+        .toLowerCase()
+        .localeCompare(b.repository.toLowerCase());
+    });
+
     return {
       repos: data.repos,
       ignoredRepos: data?.ignoredRepos,
       issues: data?.issues,
-      issuesGroupedByRepo: data?.issues.reduce((acc, issue) => {
+      issuesGroupedByRepo: sortedIssues.reduce((acc, issue) => {
         // @ts-ignore
         if (acc[issue.repository]) {
           return {

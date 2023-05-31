@@ -30,7 +30,10 @@ export async function GET(request: Request) {
 
   const repos = org.repositories
     .filter((repo) => repo.repository.isActive)
-    .map((repo) => repo.repository.name);
+    .map((repo) => repo.repository.name)
+    .sort(function (a, b) {
+      return a.toLowerCase().localeCompare(b.toLowerCase());
+    });
 
   await prisma.$disconnect();
 
