@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { kv } from "@vercel/kv";
 
 const { Octokit } = require("@octokit/core");
 
@@ -74,6 +75,12 @@ const formatIssuesResponse = (
 };
 
 const getRepoIssues = async (owner: string, repo: string) => {
+  const cachedIssues = await kv.get(`repo:${owner}:${repo}`);
+
+  if (cachedIssues) {
+    return cachedIssues as any;
+  }
+
   const idealIssuesResponse = await octokit.graphql(
     `
       query($owner: String!, $name: String!) {
@@ -117,13 +124,19 @@ const getRepoIssues = async (owner: string, repo: string) => {
   );
 
   if (idealIssuesResponse.repository.issues.edges.length) {
-    return formatIssuesResponse(
+    const formattedIssues = formatIssuesResponse(
       true,
       owner,
       repo,
       idealIssuesResponse.repository.owner?.avatarUrl,
       idealIssuesResponse.repository.issues.edges
     );
+
+    await kv.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
+      ex: 60 * 60 * 24,
+    });
+
+    return formattedIssues;
   }
 
   const nonIdealIssuesResponse = await octokit.graphql(
@@ -167,13 +180,19 @@ const getRepoIssues = async (owner: string, repo: string) => {
     }
   );
 
-  return formatIssuesResponse(
+  const formattedIssues = formatIssuesResponse(
     false,
     owner,
     repo,
     nonIdealIssuesResponse.repository.owner?.avatarUrl,
     nonIdealIssuesResponse.repository.issues.edges.slice(10)
   );
+
+  await kv.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
+    ex: 60 * 60 * 24,
+  });
+
+  return formattedIssues;
 };
 
 export async function GET(request: Request) {
@@ -276,6 +295,7 @@ export async function GET(request: Request) {
       Object.entries(repoIssues).reduce((prev: any[], [repo, issues]) => {
         return [
           ...prev,
+          // @ts-ignore
           issues.map((issues: any) => {
             return {
               repository: repo,

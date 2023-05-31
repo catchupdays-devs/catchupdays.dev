@@ -6,11 +6,29 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: "/api/organization",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "s-maxage=0, stale-while-revalidate=59",
+          },
+        ],
+      },
+      {
+        source: "/api/filter",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "s-maxage=0, stale-while-revalidate=59",
+          },
+        ],
+      },
+      {
         source: "/api/wishlist",
         headers: [
           {
             key: "Cache-Control",
-            value: "s-maxage=86400, stale-while-revalidate=59",
+            value: "s-maxage=0, stale-while-revalidate=59",
           },
         ],
       },
