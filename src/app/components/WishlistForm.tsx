@@ -145,7 +145,7 @@ const Input = ({
           </InputWrapper>
         </Card.Body>
       </Card>
-      {openAutocomplete && text.length >= 2 ? (
+      {openAutocomplete && text.length >= 2 && autocomplete.length ? (
         <Dropdown isOpen={true} placement="bottom-left" closeOnSelect={true}>
           <Dropdown.Trigger
             css={{ position: "absolute", bottom: 0, left: 0, zIndex: -1 }}
