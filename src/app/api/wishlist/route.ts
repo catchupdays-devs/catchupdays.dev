@@ -77,9 +77,9 @@ const formatIssuesResponse = (
 const getRepoIssues = async (owner: string, repo: string) => {
   const cachedIssues = await kv.get(`repo:${owner}:${repo}`);
 
-  console.log(`KV store hit for repo ${owner}/${repo}`);
-
   if (cachedIssues) {
+    console.log(`KV store hit for repo ${owner}/${repo}`);
+
     return cachedIssues as any;
   }
 
