@@ -264,7 +264,7 @@ export default function Wishlist() {
                           <Avatar
                             size={"sm"}
                             squared
-                            src={issues[0].owner?.avatarUrl}
+                            src={group.issues[0].owner?.avatarUrl}
                             css={{
                               display: "inline-flex",
                               margin: "-4px 10px 4px -40px",
