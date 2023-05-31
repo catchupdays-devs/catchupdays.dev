@@ -191,6 +191,26 @@ export default function Wishlist() {
               lineHeight: 1.4,
             }}
           >
+            <span
+              style={{
+                display: "inline-block",
+                margin: "0 0 5px 0",
+              }}
+            >
+              Following repositories are being queried based on your filter:
+            </span>
+            {repos.map((repo) => (
+              <Badge
+                key={repo}
+                css={{ margin: "0 0 5px 5px" }}
+                disableOutline
+                variant="flat"
+                isSquared
+                size={"xs"}
+              >
+                {repo}
+              </Badge>
+            ))}
             <div>
               <span
                 style={{
