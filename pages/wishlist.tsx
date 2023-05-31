@@ -191,26 +191,6 @@ export default function Wishlist() {
               lineHeight: 1.4,
             }}
           >
-            <span
-              style={{
-                display: "inline-block",
-                margin: "0 0 5px 0",
-              }}
-            >
-              Following repositories are being queried based on your filter:
-            </span>
-            {repos.map((repo) => (
-              <Badge
-                key={repo}
-                css={{ margin: "0 0 5px 5px" }}
-                disableOutline
-                variant="flat"
-                isSquared
-                size={"xs"}
-              >
-                {repo}
-              </Badge>
-            ))}
             <div>
               <span
                 style={{
@@ -218,9 +198,6 @@ export default function Wishlist() {
                   margin: "0 0 5px 0",
                 }}
               >
-                {ignoredRepos?.length
-                  ? `${ignoredRepos.length} repositories were ignored because the filter is too broad. `
-                  : null}
                 If you want some other repositories, please specify which or
                 make the filter more restrictive.
               </span>
