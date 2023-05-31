@@ -24,7 +24,9 @@ export async function GET(request: Request) {
       repos: {
         title: "Repository",
         key: "repo",
-        items: repos,
+        items: repos.sort(function (a, b) {
+          return a.toLowerCase().localeCompare(b.toLowerCase());
+        }),
         color: "primary",
       },
       libraries: {
