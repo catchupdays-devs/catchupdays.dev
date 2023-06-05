@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Redis } from "@upstash/redis";
 
 const redis = new Redis({
-  url: "https://lasting-ewe-37108.upstash.io",
+  url: "https://eu1-true-wildcat-39814.upstash.io",
   token: process.env.UPSTASH_TOKEN!,
 });
 
