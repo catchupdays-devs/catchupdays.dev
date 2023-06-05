@@ -192,7 +192,9 @@ const getRepoIssues = async (owner: string, repo: string) => {
     owner,
     repo,
     nonIdealIssuesResponse.repository.owner?.avatarUrl,
-    nonIdealIssuesResponse.repository.issues.edges.slice(10)
+    nonIdealIssuesResponse.repository.issues.edges.length > 10
+      ? nonIdealIssuesResponse.repository.issues.edges.slice(10)
+      : nonIdealIssuesResponse.repository.issues.edges
   );
 
   await redis.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
