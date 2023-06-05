@@ -1,5 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: "https://lasting-ewe-37108.upstash.io",
+  token: process.env.UPSTASH_TOKEN!,
+});
 
 const { Octokit } = require("@octokit/core");
 
@@ -75,7 +80,7 @@ const formatIssuesResponse = (
 };
 
 const getRepoIssues = async (owner: string, repo: string) => {
-  const cachedIssues = await kv.get(`repo:${owner}:${repo}`);
+  const cachedIssues = await redis.get(`repo:${owner}:${repo}`);
 
   if (cachedIssues) {
     console.log(`KV store hit for repo ${owner}/${repo}`);
@@ -134,7 +139,7 @@ const getRepoIssues = async (owner: string, repo: string) => {
       idealIssuesResponse.repository.issues.edges
     );
 
-    await kv.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
+    await redis.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
       ex: 60 * 60 * 24,
     });
 
@@ -190,7 +195,7 @@ const getRepoIssues = async (owner: string, repo: string) => {
     nonIdealIssuesResponse.repository.issues.edges.slice(10)
   );
 
-  await kv.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
+  await redis.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
     ex: 60 * 60 * 24,
   });
 
