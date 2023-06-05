@@ -30,7 +30,7 @@ export async function GET(request: Request) {
         color: "primary",
       },
       libraries: {
-        title: "Libraries",
+        title: "Stack",
         key: "library",
         items: libraries,
         color: "secondary",
