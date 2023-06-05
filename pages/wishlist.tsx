@@ -199,18 +199,36 @@ export default function Wishlist() {
             >
               Following repositories are being queried based on your filter:
             </span>
-            {repos.map((repo) => (
-              <Badge
-                key={repo}
-                css={{ margin: "0 0 5px 5px" }}
-                disableOutline
-                variant="flat"
-                isSquared
-                size={"xs"}
-              >
-                {repo}
-              </Badge>
-            ))}
+            {repos.map((repo) => {
+              if (listDisplay === "headlinedList") {
+                return (
+                  <a href={`#${repo}`} key={repo}>
+                    <Badge
+                      css={{ margin: "0 0 5px 5px", cursor: "pointer" }}
+                      disableOutline
+                      variant="flat"
+                      isSquared
+                      size={"xs"}
+                    >
+                      {repo}
+                    </Badge>
+                  </a>
+                );
+              }
+
+              return (
+                <Badge
+                  key={repo}
+                  css={{ margin: "0 0 5px 5px" }}
+                  disableOutline
+                  variant="flat"
+                  isSquared
+                  size={"xs"}
+                >
+                  {repo}
+                </Badge>
+              );
+            })}
             <div>
               <span
                 style={{
@@ -264,6 +282,7 @@ export default function Wishlist() {
                             display: "flex",
                             animation: `${fadeIn} 300ms ease forwards`,
                           }}
+                          id={repo}
                         >
                           <Avatar
                             size={"sm"}
