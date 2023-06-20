@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/app/db";
 
 export async function GET(request: Request) {
   const labels = (await prisma.label.findMany()).map((label) => label.name);

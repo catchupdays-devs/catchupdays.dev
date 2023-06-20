@@ -1,14 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-import { Redis } from "@upstash/redis";
-
-const redis = new Redis({
-  url: "https://eu1-true-wildcat-39814.upstash.io",
-  token: process.env.UPSTASH_TOKEN!,
-});
+import { prisma } from "@/app/db";
+import { kv } from "@/app/kv";
 
 const { Octokit } = require("@octokit/core");
 
-const prisma = new PrismaClient();
 const octokit = new Octokit({
   auth: process.env.GH_TOKEN,
 });
@@ -80,7 +74,7 @@ const formatIssuesResponse = (
 };
 
 const getRepoIssues = async (owner: string, repo: string) => {
-  const cachedIssues = await redis.get(`repo:${owner}:${repo}`);
+  const cachedIssues = await kv.get(`repo:${owner}:${repo}`);
 
   if (cachedIssues) {
     console.log(`KV store hit for repo ${owner}/${repo}`);
@@ -139,7 +133,7 @@ const getRepoIssues = async (owner: string, repo: string) => {
       idealIssuesResponse.repository.issues.edges
     );
 
-    await redis.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
+    await kv.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
       ex: 60 * 60 * 24,
     });
 
@@ -197,7 +191,7 @@ const getRepoIssues = async (owner: string, repo: string) => {
       : nonIdealIssuesResponse.repository.issues.edges
   );
 
-  await redis.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
+  await kv.set(`repo:${owner}:${repo}`, JSON.stringify(formattedIssues), {
     ex: 60 * 60 * 24,
   });
 

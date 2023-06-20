@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Organization {
+  id           Int                           @id @default(autoincrement())
+  name         String                        @unique
+  url          String                        @unique
+  repositories RepositoriesOnOrganizations[]
+  isActive     Boolean                       @default(true)
+}
+
+model Repository {
+  id           Int                           @id @default(autoincrement())
+  name         String                        @unique
+  repositories RepositoriesOnOrganizations[]
+  labels       LabelsOnRepositories[]
+  languages    LanguagesOnRepositories[]
+  libraries    LibrariesOnRepositories[]
+  isActive     Boolean                       @default(true)
+}
+
+model RepositoriesOnOrganizations {
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  repository     Repository   @relation(fields: [repositoryId], references: [id])
+  repositoryId   Int
+  assignedAt     DateTime     @default(now())
+  assignedBy     String       @default("")
+
+  @@id([organizationId, repositoryId])
+}
+
+model Label {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @unique
+  LabelsOnRepositories LabelsOnRepositories[]
+}
+
+model LabelsOnRepositories {
+  label        Label      @relation(fields: [labelId], references: [id])
+  labelId      Int
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  repositoryId Int
+  assignedAt   DateTime   @default(now())
+  assignedBy   String     @default("")
+
+  @@id([labelId, repositoryId])
+}
+
+model Language {
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @unique
+  LanguagesOnRepositories LanguagesOnRepositories[]
+}
+
+model LanguagesOnRepositories {
+  language     Language   @relation(fields: [languageId], references: [id])
+  languageId   Int
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  repositoryId Int
+  assignedAt   DateTime   @default(now())
+  assignedBy   String     @default("")
+
+  @@id([languageId, repositoryId])
+}
+
+model Library {
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @unique
+  LibrariesOnRepositories LibrariesOnRepositories[]
+}
+
+model LibrariesOnRepositories {
+  library      Library    @relation(fields: [libraryId], references: [id])
+  libraryId    Int
+  repository   Repository @relation(fields: [repositoryId], references: [id])
+  repositoryId Int
+  assignedAt   DateTime   @default(now())
+  assignedBy   String     @default("")
+
+  @@id([libraryId, repositoryId])
+}
