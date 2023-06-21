@@ -36,7 +36,7 @@ export default function Index() {
         <Spacer y={4} />
         <Row justify={"center"}>
           <Link
-            href={"#"}
+            href={"https://youtu.be/WTSXl4RM2pQ"}
             target={"_blank"}
             style={{
               textDecoration: "none",
