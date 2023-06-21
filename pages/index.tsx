@@ -1,4 +1,4 @@
-import { Container, Text, Spacer, Grid, Row } from "@nextui-org/react";
+import { Container, Text, Spacer, Grid, Row, Badge } from "@nextui-org/react";
 import Head from "next/head";
 import { SignupForm } from "@/app/components/SignupForm";
 import {
@@ -11,6 +11,20 @@ import {
 import React from "react";
 import { CardLink } from "@/app/components/CardLink";
 import { Hero } from "@/app/components/Hero";
+import { keyframes, styled } from "@stitches/react";
+
+const bounce = keyframes({
+  "0%": { transform: "scale(1, 1)" },
+  "5%": { transform: "scale(0.9, 1.1)" },
+  "10%": { transform: "scale(1.1, 0.9)" },
+  "15%": { transform: "scale(0.95, 1.05)" },
+  "20%": { transform: "scale(1, 1)" },
+});
+const HighlightedBadge = styled(Badge, {
+  animation: `${bounce} 5s infinite`,
+  animationDelay: "2s",
+  textDecoration: "none",
+});
 
 export default function Index() {
   return (
@@ -20,6 +34,27 @@ export default function Index() {
       </Head>
       <Container md justify={"center"}>
         <Spacer y={4} />
+        <Row justify={"center"}>
+          <Link
+            href={"https://youtu.be/WTSXl4RM2pQ"}
+            target={"_blank"}
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <HighlightedBadge
+              variant={"bordered"}
+              size={"md"}
+              style={{
+                color: "black",
+                borderColor: "black",
+              }}
+            >
+              Watch the presentation - Are we farmers? 🤔
+            </HighlightedBadge>
+          </Link>
+        </Row>
+        <Spacer y={1} />
         <MainTitle>
           Contributing <br /> to open-source <br /> is&nbsp;the&nbsp;ultimate{" "}
           <WithGradient black>company benefit</WithGradient>
