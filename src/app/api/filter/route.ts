@@ -28,13 +28,13 @@ export async function GET(request: Request) {
         color: "primary",
       },
       libraries: {
-        title: "Stack",
+        title: "Relates to",
         key: "library",
         items: libraries,
         color: "secondary",
       },
       labels: {
-        title: "Labels",
+        title: "Stack",
         key: "label",
         items: labels,
         color: "warning",
