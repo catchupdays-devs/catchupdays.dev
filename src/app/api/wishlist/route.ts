@@ -90,9 +90,9 @@ const getRepoIssues = async (owner: string, repo: string) => {
             avatarUrl
           }
           issues(
-            first: 20
+            first: 40
             filterBy: { labels: ["catchup-days", "good-first-issue", "good first issue", "help wanted"] }
-            orderBy: { direction: DESC, field: COMMENTS }
+            orderBy: { direction: ASC, field: COMMENTS }
             states: [OPEN]
           ) {
             edges {
@@ -148,8 +148,8 @@ const getRepoIssues = async (owner: string, repo: string) => {
             avatarUrl
           }
           issues(
-            first: 20
-            orderBy: { direction: DESC, field: COMMENTS }
+            first: 40
+            orderBy: { direction: ASC, field: COMMENTS }
             states: [OPEN]
           ) {
             edges {
