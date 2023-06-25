@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
 import list from "@/app/images/list.svg";
 import headlinedList from "@/app/images/headlined-list.svg";
@@ -45,20 +45,37 @@ export const ListDisplaySwitch = (props: {
       <StyledButton
         onPress={() => props.onPress("list")}
         active={props.listDisplay === "list"}
+        style={{ padding: 0 }}
       >
-        <Image src={list.src} alt="List" width={14} height={14} priority />
+        <Tooltip content={"Sorted by relevance"} css={{ textAlign: "center" }}>
+          <Image
+            style={{ boxSizing: "initial", padding: "10px 18px" }}
+            src={list.src}
+            alt="List"
+            width={14}
+            height={14}
+            priority
+          />
+        </Tooltip>
       </StyledButton>
       <StyledButton
         onPress={() => props.onPress("headlinedList")}
         active={props.listDisplay === "headlinedList"}
+        style={{ padding: 0 }}
       >
-        <Image
-          src={headlinedList.src}
-          alt="Headlined List"
-          width={14}
-          height={14}
-          priority
-        />
+        <Tooltip
+          content={"Grouped by repo, sorted by relevance"}
+          css={{ textAlign: "center" }}
+        >
+          <Image
+            style={{ boxSizing: "initial", padding: "10px 18px" }}
+            src={headlinedList.src}
+            alt="Headlined List"
+            width={14}
+            height={14}
+            priority
+          />
+        </Tooltip>
       </StyledButton>
     </Button.Group>
   );
