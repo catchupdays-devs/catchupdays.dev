@@ -3,7 +3,8 @@ import { Reactions } from "@/app/components/Reactions";
 import React from "react";
 import { Issue } from "@/app/types";
 import { keyframes, styled } from "@stitches/react";
-import { Info } from "lucide-react";
+import { Info, Star, X } from "lucide-react";
+import { useIsAdmin } from "@/app/utils";
 
 export const fadeIn = keyframes({
   "0%": { transform: "translate3d(0, -4px, 0)", opacity: 0 },
@@ -36,9 +37,55 @@ export const VisitedDot = styled("a", {
 });
 
 export const IssuesTable = (props: {
+  banned: string[];
+  setBanned: (banned: string[]) => void;
+  featured: string[];
+  setFeatured: (featured: string[]) => void;
   issues: Issue[];
   displayFullInfo: boolean;
 }) => {
+  const isAdmin = useIsAdmin();
+
+  const toggleFeatured = async (url: string) => {
+    if (props.featured.includes(url)) {
+      await fetch("/api/featured", {
+        method: "post",
+        body: JSON.stringify({ url, delete: true }),
+      });
+
+      const newFeatured = new Set([...props.featured]);
+      newFeatured.delete(url);
+      props.setFeatured([...newFeatured]);
+    } else {
+      await fetch("/api/featured", {
+        method: "post",
+        body: JSON.stringify({ url, delete: false }),
+      });
+
+      props.setFeatured([...props.featured, url]);
+    }
+  };
+
+  const toggleBanned = async (url: string) => {
+    if (props.banned.includes(url)) {
+      await fetch("/api/banned", {
+        method: "post",
+        body: JSON.stringify({ url, delete: true }),
+      });
+
+      const newBanned = new Set([...props.banned]);
+      newBanned.delete(url);
+      props.setBanned([...newBanned]);
+    } else {
+      await fetch("/api/banned", {
+        method: "post",
+        body: JSON.stringify({ url, delete: false }),
+      });
+
+      props.setBanned([...props.banned, url]);
+    }
+  };
+
   return (
     <StyledTable
       striped
@@ -111,6 +158,32 @@ export const IssuesTable = (props: {
                 maxWidth: "400px",
               }}
             >
+              {isAdmin ? (
+                <React.Fragment>
+                  <Star
+                    onClick={() => toggleFeatured(issue.url)}
+                    size={18}
+                    style={{
+                      display: "inline-flex",
+                      margin: "2px 4px -2px 0",
+                      cursor: "pointer",
+                      color: props.featured.includes(issue.url)
+                        ? "orange"
+                        : "black",
+                    }}
+                  />
+                  <X
+                    onClick={() => toggleBanned(issue.url)}
+                    size={18}
+                    style={{
+                      display: "inline-flex",
+                      margin: "2px 4px -2px 0",
+                      cursor: "pointer",
+                      color: props.banned.includes(issue.url) ? "red" : "black",
+                    }}
+                  />
+                </React.Fragment>
+              ) : null}
               <Link href={issue.url}>
                 <Text>{issue.title}</Text>
               </Link>

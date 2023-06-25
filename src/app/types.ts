@@ -30,6 +30,8 @@ export type Issue = {
 };
 
 export type WishlistResponse = {
+  banned: string[];
+  featured: string[];
   issues: Issue[];
   repos: string[];
   ignoredRepos: string[];

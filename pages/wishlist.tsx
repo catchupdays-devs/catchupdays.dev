@@ -13,17 +13,25 @@ import {
 import Head from "next/head";
 import { useQuery } from "react-query";
 import { WishlistForm } from "@/app/components/WishlistForm";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiltersResponse, Issue, WishlistResponse } from "@/app/types";
 import { ListDisplaySwitch } from "@/app/components/ListDisplaySwitch";
 import { useFilters } from "@/app/components/useFilters";
 import { fadeIn, IssuesTable } from "@/app/components/IssuesTable";
 import { useListDisplay } from "@/app/components/useListDisplay";
-import { Info } from "lucide-react";
+import { Info, Star } from "lucide-react";
+import { useIsAdmin } from "@/app/utils";
 
-const processWishlistData = (data: WishlistResponse | undefined) => {
+const processWishlistData = (
+  data: WishlistResponse | undefined,
+  isAdmin: boolean
+) => {
   if (data) {
-    const sortedIssues = [...data?.issues];
+    const issues = isAdmin
+      ? [...data?.issues]
+      : [...data?.issues.filter((i) => !data.banned.includes(i.url))];
+
+    const sortedIssues = [...issues];
     sortedIssues.sort(function (a, b) {
       return a.repository
         .toLowerCase()
@@ -31,9 +39,11 @@ const processWishlistData = (data: WishlistResponse | undefined) => {
     });
 
     return {
+      banned: data.banned,
+      featured: data.featured,
       repos: data.repos,
       ignoredRepos: data?.ignoredRepos,
-      issues: data?.issues,
+      issues: issues,
       issuesGroupedByRepo: sortedIssues.reduce((acc, issue) => {
         // @ts-ignore
         if (acc[issue.repository]) {
@@ -62,6 +72,8 @@ const processWishlistData = (data: WishlistResponse | undefined) => {
 };
 
 export default function Wishlist() {
+  const isAdmin = useIsAdmin();
+
   const {
     activeAttributes,
     addAttribute,
@@ -107,8 +119,23 @@ export default function Wishlist() {
     {}
   );
 
-  const { repos, ignoredRepos, issues, issuesGroupedByRepo } =
-    processWishlistData(data);
+  const { banned, featured, repos, ignoredRepos, issues, issuesGroupedByRepo } =
+    processWishlistData(data, isAdmin);
+
+  const [featuredList, setFeaturedList] = useState<string[]>(featured || []);
+  useEffect(() => {
+    if (featured) {
+      setFeaturedList(featured);
+    }
+  }, [featured]);
+  const featuredIssues = issues?.filter((i) => featuredList.includes(i.url));
+
+  const [bannedList, setBannedList] = useState<string[]>(banned || []);
+  useEffect(() => {
+    if (banned) {
+      setBannedList(banned);
+    }
+  }, [banned]);
 
   return (
     <main>
@@ -266,8 +293,48 @@ export default function Wishlist() {
                     listDisplay={listDisplay}
                   />
                 </Row>
+                {featuredIssues && featuredIssues.length ? (
+                  <React.Fragment>
+                    <Text
+                      h4
+                      css={{
+                        textAlign: "left",
+                        margin: "40px 0 5px 0",
+                        lineHeight: 1,
+                        verticalAlign: "middle",
+                        display: "flex",
+                        animation: `${fadeIn} 300ms ease forwards`,
+                      }}
+                    >
+                      <Star
+                        size={18}
+                        style={{
+                          display: "inline-flex",
+                          margin: "0 4px 0 0",
+                        }}
+                      />
+                      <span>Featured</span>
+                    </Text>
+                    <IssuesTable
+                      banned={bannedList}
+                      setBanned={setBannedList}
+                      featured={featuredList}
+                      setFeatured={setFeaturedList}
+                      displayFullInfo={true}
+                      issues={featuredIssues}
+                    />
+                    <Spacer y={2} />
+                  </React.Fragment>
+                ) : null}
                 {listDisplay === "list" ? (
-                  <IssuesTable issues={issues} displayFullInfo={true} />
+                  <IssuesTable
+                    banned={bannedList}
+                    setBanned={setBannedList}
+                    featured={featuredList}
+                    setFeatured={setFeaturedList}
+                    issues={issues}
+                    displayFullInfo={true}
+                  />
                 ) : (
                   Object.entries(issuesGroupedByRepo).map(([repo, group]) => {
                     return (
@@ -317,6 +384,10 @@ export default function Wishlist() {
                           ) : null}
                         </Text>
                         <IssuesTable
+                          banned={bannedList}
+                          setBanned={setBannedList}
+                          featured={featuredList}
+                          setFeatured={setFeaturedList}
                           displayFullInfo={false}
                           issues={group.issues}
                         />

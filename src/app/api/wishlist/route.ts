@@ -313,10 +313,25 @@ export async function GET(request: Request) {
     return issueB?.reactions?.TOTAL - issueA?.reactions?.TOTAL;
   });
 
-  await prisma.$disconnect();
+  const featured = await prisma.featured.findMany();
+  const banned = await prisma.banned.findMany();
 
   return new Response(
     JSON.stringify({
+      featured: issues
+        .filter((issue) =>
+          // @ts-ignore
+          featured.find((f) => f.url === issue.url)
+        )
+        // @ts-ignore
+        .map((i) => i.url),
+      banned: issues
+        .filter((issue) =>
+          // @ts-ignore
+          banned.find((f) => f.url === issue.url)
+        )
+        // @ts-ignore
+        .map((i) => i.url),
       issues,
       repos: repositoryListToQuery,
       ignoredRepos: repositoryListToIgnored,

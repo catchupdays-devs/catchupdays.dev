@@ -16,6 +16,7 @@ import favicon from "@/app/favicon.ico";
 import ogImage from "@/app/images/og.png";
 import Head from "next/head";
 import { globalCss } from "@stitches/react";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,7 +53,7 @@ const globalStyles = globalCss({
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
-  }
+  },
 });
 
 const queryClient = new QueryClient();
@@ -67,7 +68,7 @@ export const useBlobityInstance = () => {
 
 function MyApp({
   Component,
-  pageProps,
+  pageProps: { session, ...pageProps },
 }: {
   Component: React.FC;
   pageProps: any;
@@ -132,17 +133,19 @@ function MyApp({
         <meta property="og:image" content={ogImage.src} />
       </Head>
       {isBrowser && (
-        <NextUIProvider theme={theme}>
-          <BlobityContext.Provider value={null}>
-            <QueryClientProvider client={queryClient}>
-              <div style={{ ...inter.style }}>
-                <Navigation />
-                <Component {...pageProps} />
-                <Footer />
-              </div>
-            </QueryClientProvider>
-          </BlobityContext.Provider>
-        </NextUIProvider>
+        <SessionProvider session={session}>
+          <NextUIProvider theme={theme}>
+            <BlobityContext.Provider value={null}>
+              <QueryClientProvider client={queryClient}>
+                <div style={{ ...inter.style }}>
+                  <Navigation />
+                  <Component {...pageProps} />
+                  <Footer />
+                </div>
+              </QueryClientProvider>
+            </BlobityContext.Provider>
+          </NextUIProvider>
+        </SessionProvider>
       )}
     </>
   );

@@ -89,3 +89,14 @@ model LibrariesOnRepositories {
 
   @@id([libraryId, repositoryId])
 }
+
+model Featured {
+  id           Int                           @id @default(autoincrement())
+  url          String                        @unique
+}
+
+model Banned {
+  id           Int                           @id @default(autoincrement())
+  url          String                        @unique
+}
+
