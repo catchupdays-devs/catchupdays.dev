@@ -148,7 +148,7 @@ const getRepoIssues = async (owner: string, repo: string) => {
             avatarUrl
           }
           issues(
-            first: 40
+            first: 15
             orderBy: { direction: ASC, field: COMMENTS }
             states: [OPEN]
           ) {
