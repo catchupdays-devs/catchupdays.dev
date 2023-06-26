@@ -1,1 +1,5 @@
-export const ADMIN_USERNAMES = ["catchupdays-devs", "LuckyLuky", "bretproft"];
+export const ADMIN_EMAILS = [
+  "hello@catchupdays.dev",
+  "8luckyluky8@gmail.com",
+  "bproft@gmail.com",
+];

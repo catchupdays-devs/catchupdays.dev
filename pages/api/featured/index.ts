@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/app/db";
-import { ADMIN_USERNAMES } from "@/app/const";
+import { ADMIN_EMAILS } from "@/app/const";
 
 export default async function handler(
   request: NextApiRequest,
@@ -13,7 +13,7 @@ export default async function handler(
   if (
     request.method === "POST" &&
     session &&
-    ADMIN_USERNAMES.includes(session.user!.name!)
+    ADMIN_EMAILS.includes(session.user!.email!)
   ) {
     const body: { url: string; delete: boolean } = JSON.parse(request.body);
 
